@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
     margin: 0;
     padding: 0;
@@ -956,4 +957,964 @@ header p {
 .logo-img:hover {
     transform: scale(1.08);
     filter: drop-shadow(0 0 15px gold);
+=======
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    color: #333;
+
+    background: 
+        linear-gradient(rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+        url("https://images.unsplash.com/photo-1529699211952-734e80c4d42b") center/cover no-repeat;
+
+    background-attachment: scroll;
+}
+
+/* HEADER */
+header {
+    background: linear-gradient(135deg, #111, #333);
+    color: white;
+    text-align: center;
+    padding: 20px 15px;
+}
+header h1 {
+    font-size: 38px;
+    font-weight: 700;
+    margin: 5px 0;
+}
+
+header p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 0;
+}
+
+/* NAV */
+nav {
+    background: rgba(34, 34, 34, 0.95);
+    text-align: center;
+    padding: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(6px);
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: #ffcc00;
+    color: #111;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+                url("ajedrez1.png") center/110% no-repeat;
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 140px 20px;
+    min-height: 80vh;
+}
+
+.hero h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+
+
+/* SECCIONES */
+section {
+    padding: 70px 20px;
+    text-align: center;
+}
+
+#servicios {
+    background: #f9f9f9;
+}
+
+#servicios h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #111;
+}
+
+/* CARDS */
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    width: 260px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.10);
+    transition: 0.3s ease;
+    text-align: center;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+
+
+/* NOSOTROS */
+#nosotros {
+    background: white;
+    max-width: 900px;
+    margin: auto;
+}
+
+#nosotros p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+}
+
+/* CONTACTO */
+#contacto {
+    background: #111;
+    color: white;
+}
+
+#contacto p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+#contacto a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+#contacto a:hover {
+    text-decoration: underline;
+}
+
+#contacto img {
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* FOOTER */
+footer {
+    background: linear-gradient(90deg, #111, #222);
+    color: white;
+    text-align: center;     
+    padding: 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* WHATSAPP FLOTANTE */
+
+
+.whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 58px;
+    height: 58px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    transition: 0.25s ease;
+    z-index: 1000;
+}
+
+
+
+.whatsapp-float:hover {
+    transform: scale(1.08);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+
+    header h1 {
+        font-size: 26px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+
+    nav a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    section {
+        padding: 50px 15px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .formulario button {
+    width: 100%;
+}
+
+}
+.practice-btn {
+    background: #ffcc00;
+    color: #111;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.practice-btn:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+.prof-card {
+    text-align: center;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    background: #111;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    margin: 0 auto 10px auto;
+    font-weight: bold;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.prof-card h3 {
+    margin-bottom: 5px;
+    color: #111;
+}
+
+.prof-card p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #444;
+}
+.btn-inscribir {
+    display: inline-block;
+    margin-top: 15px;
+    background: #25D366;
+    color: white;
+    padding: 12px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-inscribir:hover {
+    background: #1ebe5d;
+    transform: scale(1.05);
+}
+.formulario {
+    max-width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.formulario textarea {
+    resize: none;
+    height: 80px;
+}
+
+.formulario button {
+    background: linear-gradient(135deg, #25D366, #1ebe5d);
+    color: white;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: 0.3s ease;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.formulario button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+.formulario button:hover {
+    background: #ffcc00;
+    color: #111;
+}
+button {
+    background: #ffcc00;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s ease;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #e6b800;
+    transform: scale(1.05);
+}
+section {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+#modalidad {
+    background: white;
+}
+
+#modalidad .card {
+    border-top: 4px solid #111;
+    transition: 0.3s;
+}
+
+#modalidad .card:hover {
+    transform: scale(1.03);
+}
+header p {
+    font-size: 14px;
+    opacity: 0.85;
+    letter-spacing: 2px;
+}
+#testimonios {
+    background: #f9f9f9;
+}
+
+#testimonios .card {
+    font-style: italic;
+    border-bottom: 4px solid #ffcc00;
+    transition: 0.3s;
+}
+
+#testimonios .card:hover {
+    transform: translateY(-6px);
+}
+@media (max-width: 768px) {
+
+    /* HEADER más limpio */
+    header h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 13px;
+    }
+
+    /* NAV más ordenado */
+    nav {
+        padding: 10px;
+    }
+
+    nav a {
+        display: block;
+        margin: 8px 0;
+        font-size: 14px;
+    }
+
+    /* HERO más ajustado */
+   .hero {
+    background: 
+        linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url("logo.png") center/contain no-repeat;
+
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 140px 20px;
+    min-height: 80vh;
+}
+.hero {
+    background-size: 500px;
+}
+
+
+    .hero h2 {
+        font-size: 20px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    /* BOTÓN HERO */
+    .btn-inscribir {
+        width: 90%;
+        display: block;
+        margin: 15px auto;
+        font-size: 16px;
+    }
+
+    /* CARDS en columna */
+    .cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 95%;
+    }
+
+    /* SECCIONES más compactas */
+    section {
+        padding: 40px 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+}
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+.descripcion {
+    padding: 70px 20px;
+    background: #fff;
+}
+
+.desc-contenedor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1100px;
+    margin: auto;
+    flex-wrap: wrap;
+}
+
+.desc-texto {
+    flex: 1;
+    min-width: 280px;
+}
+
+.desc-texto h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+    color: #111;
+}
+
+.desc-texto p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+.desc-imagen {
+    flex: 1;
+    min-width: 280px;
+}
+
+.desc-imagen img {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.fade-text {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aparecer 1.5s ease forwards;
+}
+
+@keyframes aparecer {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.typewriter {
+    overflow: hidden;
+    border-right: 3px solid #fff;
+    white-space: nowrap;
+    width: 0;
+    animation: typing 4s steps(45) forwards, blink 0.7s infinite;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+#elegirnos {
+    background: #ffffff;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+#elegirnos h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #111;
+}
+
+#elegirnos .card {
+    border-top: 4px solid #25D366;
+    transition: 0.3s;
+}
+
+#elegirnos .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+#clases {
+    background: #f9f9f9;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+#clases h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #111;
+}
+
+#clases .card {
+    transition: 0.3s;
+}
+
+#clases .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+.btn-elige {
+    display: inline-block;
+    margin-top: 25px;
+    background: linear-gradient(135deg, #25D366, #1ebe5d);
+    color: white;
+    padding: 14px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.btn-elige:hover {
+    transform: scale(1.05);
+}
+#horarios {
+    background: #f9f9f9;
+    padding: 70px 20px;
+    text-align: center;
+}
+
+#horarios h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+    color: #111;
+}
+
+#horarios .card {
+    border-top: 4px solid #ffcc00;
+    transition: 0.3s;
+}
+
+#horarios .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+#clase-gratis {
+    background: linear-gradient(135deg, #111, #333);
+    color: white;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+#clase-gratis h2 {
+    font-size: 32px;
+    margin-bottom: 30px;
+}
+
+#clase-gratis .card {
+    background: white;
+    color: #333;
+    border-top: 4px solid #ffcc00;
+    transition: 0.3s;
+}
+
+#clase-gratis .card:hover {
+    transform: translateY(-8px);
+}
+
+.btn-gratis {
+    display: inline-block;
+    margin-top: 25px;
+    background: #ffcc00;
+    color: #111;
+    padding: 14px 22px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.btn-gratis:hover {
+    transform: scale(1.05);
+    background: #e6b800;
+}
+
+.titulo-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.pawn-header {
+    display: inline-block;
+    font-size: 40px;
+    animation: flotarPeon 2s ease-in-out infinite, brillo 2.5s infinite;
+    
+    /* EFECTO DORADO */
+    filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.8));
+}
+
+/* Flotación */
+@keyframes flotarPeon {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+
+/* BRILLO DORADO */
+@keyframes brillo {
+    0% {
+        filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4));
+        color: #d4af37;
+    }
+    50% {
+        filter: drop-shadow(0 0 12px rgba(255, 215, 0, 1));
+        color: #ffd700;
+    }
+    100% {
+        filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4));
+        color: #d4af37;
+    }
+}
+
+@keyframes flotarPeon {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.logo-tablero {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.tablero-mini {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+
+    border: 2px solid #d4af37;
+    border-radius: 6px;
+    overflow: hidden;
+
+    box-shadow:
+        0 0 10px rgba(255, 215, 0, 0.6),
+        0 0 18px rgba(255, 215, 0, 0.4);
+
+    animation: flotar 2s ease-in-out infinite;
+}
+
+/* cada cuadrito visible */
+.tablero-mini div {
+    width: 100%;
+    height: 100%;
+}
+
+/* 🔥 PATRÓN AJEDREZ REAL (4x4) */
+.tablero-mini div:nth-child(1),
+.tablero-mini div:nth-child(3),
+.tablero-mini div:nth-child(6),
+.tablero-mini div:nth-child(8),
+.tablero-mini div:nth-child(9),
+.tablero-mini div:nth-child(11),
+.tablero-mini div:nth-child(14),
+.tablero-mini div:nth-child(16) {
+    background: #d4af37; /* dorado */
+}
+
+.tablero-mini div:nth-child(2),
+.tablero-mini div:nth-child(4),
+.tablero-mini div:nth-child(5),
+.tablero-mini div:nth-child(7),
+.tablero-mini div:nth-child(10),
+.tablero-mini div:nth-child(12),
+.tablero-mini div:nth-child(13),
+.tablero-mini div:nth-child(15) {
+    
+    background: #111; /* negro */
+}
+
+/* animación */
+@keyframes flotar {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+.tablero-mini {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+
+    border: 1.5px solid #0b0b0a; /* 👈 marco delgadito dorado */
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 0 6px rgba(255, 215, 0, 0.4),
+        0 0 12px rgba(255, 215, 0, 0.3);
+
+    animation: flotar 2s ease-in-out infinite;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 10px;
+}
+
+.logo-icon {
+    font-size: 40px;
+    background: linear-gradient(45deg, #d4af37, #f5d76e);
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.logo-text h1 {
+    margin: 0;
+    font-size: 34px;
+    font-weight: 800;
+    letter-spacing: 3px;
+
+    /* COLOR DORADO REAL */
+    background: linear-gradient(
+        180deg,
+        #fff6b7 0%,
+        #ffd700 30%,
+        #d4af37 60%,
+        #b8962e 100%
+    );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    /* BORDE OSCURO como logo */
+    -webkit-text-stroke: 1px #222;
+
+    /* SOMBRA PROFESIONAL */
+    text-shadow:
+        0 2px 4px rgba(0,0,0,0.6),
+        0 0 8px rgba(255,215,0,0.4);
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logo-img {
+    width: 80px;
+    height: auto;
+}
+
+.logo-text {
+    text-align: left;
+}
+.logo-text p {
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+
+    /* COLOR tipo logo (gris elegante) */
+    color: #aaa;
+
+    /* línea decorativa */
+    position: relative;
+}
+
+/* líneas a los lados como el logo */
+.logo-text p::before,
+.logo-text p::after {
+    content: "";
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: #aaa;
+    margin: 0 10px;
+    vertical-align: middle;
+}
+
+
+
+
+@keyframes brilloTexto {
+    0% {
+        filter: brightness(1);
+    }
+    100% {
+        filter: brightness(1.3);
+    }
+}
+.logo {
+    animation: aparecerLogo 1.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes aparecerLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* ===== ANIMACIONES LOGO ===== */
+
+.logo {
+    animation: aparecerLogo 1.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes aparecerLogo {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-text h1 {
+    animation: brilloLujo 3s ease-in-out infinite alternate;
+}
+
+@keyframes brilloLujo {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(1.3); }
+}
+
+.logo-img {
+    width: 80px;
+    filter: drop-shadow(0 0 8px gold);
+    transition: 0.4s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 15px gold);
+>>>>>>> 08d9cdd6d0ce916d8b1b60f563f30511aa3bfd55
 }
