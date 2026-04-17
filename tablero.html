@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ajedrez vs IA</title>
+
+<style>
+body {
+    font-family: Arial;
+    text-align: center;
+    background: #f4f4f4;
+}
+
+h1 {
+    background: black;
+    color: white;
+    padding: 15px;
+}
+
+#board {
+    width: 480px;
+    height: 480px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    border: 3px solid black;
+}
+
+.square {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38px;
+}
+
+.white { background: #f0d9b5; }
+.black { background: #b58863; }
+
+.piece {
+    cursor: pointer;
+    user-select: none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>♟️ Juega contra la IA</h1>
+
+<div id="board"></div>
+
+<script>
+const piezas = {
+    br:"♜", bn:"♞", bb:"♝", bq:"♛", bk:"♚", bp:"♟",
+    wr:"♖", wn:"♘", wb:"♗", wq:"♕", wk:"♔", wp:"♙"
+};
+
+let boardState = [
+["br","bn","bb","bq","bk","bb","bn","br"],
+["bp","bp","bp","bp","bp","bp","bp","bp"],
+["","","","","","","",""],
+["","","","","","","",""],
+["","","","","","","",""],
+["","","","","","","",""],
+["wp","wp","wp","wp","wp","wp","wp","wp"],
+["wr","wn","wb","wq","wk","wb","wn","wr"]
+];
+
+let turn = "w";
+let selected = null;
+
+const board = document.getElementById("board");
+
+function drawBoard() {
+    board.innerHTML = "";
+
+    for (let r = 0; r < 8; r++) {
+        for (let c = 0; c < 8; c++) {
+
+            const square = document.createElement("div");
+            square.classList.add("square");
+
+            if ((r + c) % 2 === 0) square.classList.add("white");
+            else square.classList.add("black");
+
+            square.dataset.r = r;
+            square.dataset.c = c;
+
+            const piece = boardState[r][c];
+
+            if (piece) {
+                const span = document.createElement("span");
+                span.textContent = piezas[piece];
+                span.classList.add("piece");
+                square.appendChild(span);
+            }
+
+            square.onclick = () => handleClick(r, c);
+
+            board.appendChild(square);
+        }
+    }
+}
+
+function handleClick(r, c) {
+    if (turn !== "w") return; // solo jugador blanco
+
+    const piece = boardState[r][c];
+
+    if (selected) {
+        if (isValidMove(selected.r, selected.c, r, c)) {
+            boardState[r][c] = boardState[selected.r][selected.c];
+            boardState[selected.r][selected.c] = "";
+            selected = null;
+            turn = "b";
+            drawBoard();
+            setTimeout(aiMove, 500);
+        } else {
+            selected = null;
+        }
+    } else {
+        if (piece && piece[0] === "w") {
+            selected = {r, c};
+        }
+    }
+}
+
+// MOVIMIENTOS BÁSICOS
+function isValidMove(r1, c1, r2, c2) {
+    const p = boardState[r1][c1];
+    const target = boardState[r2][c2];
+
+    if (!p) return false;
+    if (target && target[0] === p[0]) return false;
+
+    let dr = r2 - r1;
+    let dc = c2 - c1;
+
+    const type = p[1];
+
+    // PEÓN
+    if (type === "p") {
+        let dir = p[0] === "w" ? -1 : 1;
+
+        if (dc === 0 && !target) {
+            if (dr === dir) return true;
+        }
+
+        if (Math.abs(dc) === 1 && dr === dir && target) return true;
+    }
+
+    // TORRE
+    if (type === "r") {
+        if (r1 === r2 || c1 === c2) return true;
+    }
+
+    // CABALLO
+    if (type === "n") {
+        if ((Math.abs(dr) === 2 && Math.abs(dc) === 1) ||
+            (Math.abs(dr) === 1 && Math.abs(dc) === 2)) return true;
+    }
+
+    // ALFIL
+    if (type === "b") {
+        if (Math.abs(dr) === Math.abs(dc)) return true;
+    }
+
+    // REINA
+    if (type === "q") {
+        if (r1 === r2 || c1 === c2 || Math.abs(dr) === Math.abs(dc)) return true;
+    }
+
+    // REY
+    if (type === "k") {
+        if (Math.abs(dr) <= 1 && Math.abs(dc) <= 1) return true;
+    }
+
+    return false;
+}
+
+// IA SIMPLE (random)
+function aiMove() {
+    let moves = [];
+
+    for (let r1 = 0; r1 < 8; r1++) {
+        for (let c1 = 0; c1 < 8; c1++) {
+
+            let p = boardState[r1][c1];
+            if (!p || p[0] !== "b") continue;
+
+            for (let r2 = 0; r2 < 8; r2++) {
+                for (let c2 = 0; c2 < 8; c2++) {
+
+                    if (isValidMove(r1, c1, r2, c2)) {
+                        moves.push({r1, c1, r2, c2});
+                    }
+                }
+            }
+        }
+    }
+
+    if (moves.length === 0) return;
+
+    let move = moves[Math.floor(Math.random() * moves.length)];
+
+    boardState[move.r2][move.c2] = boardState[move.r1][move.c1];
+    boardState[move.r1][move.c1] = "";
+
+    turn = "w";
+    drawBoard();
+}
+
+drawBoard();
+</script>
+
+</body>
+</html>
