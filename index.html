@@ -528,14 +528,23 @@ ${mensajeExtra || "Sin mensaje"}
     // Inicializar el tablero editable con piezas sueltas (sparePieces)
     // Inicializar el tablero editable apuntando a las imágenes en la nube
     // Inicializar el tablero editable con las imágenes oficiales de Chessboardjs
+    // Configuración con piezas de texto (Unicode) para evitar bloqueos de imagen
+    var piezasSimbolos = {
+        'wP': '♟', 'wR': '♜', 'wN': '♞', 'wB': '♝', 'wQ': '♛', 'wK': '♚',
+        'bP': '♙', 'bR': '♖', 'bN': '♘', 'bB': '♗', 'bQ': '♕', 'bK': '♔'
+    };
+
     var boardConfig = {
         draggable: true,
         dropOffBoard: 'trash',
         sparePieces: true,
         position: 'start',
-        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
+        pieceTheme: function(piece) {
+            // En vez de un archivo, creamos un elemento de texto con el símbolo
+            return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"><text x="50%" y="50%" font-size="32" dominant-baseline="middle" text-anchor="middle">' + piezasSimbolos[piece] + '</text></svg>';
+        }
     };
-    var miTablero = Chessboard('boardProblemas', boardConfig);
+     var miTablero = Chessboard('boardProblemas', boardConfig);
 
     // Acciones de los botones
     $('#setFenBtn').on('click', function() {
