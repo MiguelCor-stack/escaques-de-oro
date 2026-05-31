@@ -527,14 +527,15 @@ ${mensajeExtra || "Sin mensaje"}
 <script>
     // Inicializar el tablero editable con piezas sueltas (sparePieces)
     // Inicializar el tablero editable apuntando a las imágenes en la nube
+    // Inicializar el tablero editable con las imágenes oficiales de Chessboardjs
     var boardConfig = {
         draggable: true,
         dropOffBoard: 'trash',
         sparePieces: true,
         position: 'start',
-        pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png'
+        pieceTheme: 'https://chessboardjs.com/img/chesspieces/wikipedia/{piece}.png'
     };
-    var miTablero = Chessboard('boardProblemas', boardConfig);git
+    var miTablero = Chessboard('boardProblemas', boardConfig);
 
     // Acciones de los botones
     $('#setFenBtn').on('click', function() {
