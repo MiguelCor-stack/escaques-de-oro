@@ -526,11 +526,13 @@ ${mensajeExtra || "Sin mensaje"}
 <!-- LÓGICA DEL CREADOR DE PROBLEMAS -->
 <script>
     // Inicializar el tablero editable con piezas sueltas (sparePieces)
+    // Inicializar el tablero editable apuntando a las imágenes en la nube
     var boardConfig = {
         draggable: true,
         dropOffBoard: 'trash',
         sparePieces: true,
-        position: 'start'
+        position: 'start',
+        pieceTheme: 'https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/img/chesspieces/wikipedia/{piece}.png'
     };
     var miTablero = Chessboard('boardProblemas', boardConfig);
 
