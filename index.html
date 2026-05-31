@@ -554,7 +554,7 @@ ${mensajeExtra || "Sin mensaje"}
    // Captura garantizada: Descarga el diagrama como imagen PNG
     $('#copyImgBtn').on('click', function() {
         mostrarMensaje("Generando archivo de imagen...");
-        var selectorTablero = document.getElementById('boardProblemas');
+        var selectorTablero = document.querySelector('#boardProblemas .board-b72b1');
         
         html2canvas(selectorTablero, {
             useCORS: true,
