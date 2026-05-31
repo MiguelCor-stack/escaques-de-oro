@@ -549,42 +549,28 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
+   // Captura garantizada: Descarga el diagrama como imagen PNG
     $('#copyImgBtn').on('click', function() {
-        mostrarMensaje("Generando imagen limpia...");
+        mostrarMensaje("Generando archivo de imagen...");
         var selectorTablero = document.getElementById('boardProblemas');
         
         html2canvas(selectorTablero, {
-            allowTaint: true,
             useCORS: true,
-            scale: 2,
-            logging: false
+            scale: 2
         }).then(canvas => {
-            try {
-                canvas.toBlob(function(blob) {
-                    if (!blob) {
-                        mostrarMensaje("Error al generar la imagen.");
-                        return;
-                    }
-                    const item = new ClipboardItem({ "image/png": blob });
-                    navigator.clipboard.write([item]).then(function() {
-                        mostrarMensaje("¡Copiado! Usa Ctrl+V en Word 📄");
-                    }, function(err) {
-                        mostrarMensaje("Error de permisos al copiar.");
-                    });
-                }, 'image/png');
-            } catch (e) {
-                mostrarMensaje("Error de seguridad en el navegador.");
-            }
-        });
-    });
-            canvas.toBlob(function(blob) {
-                const item = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([item]).then(function() {
-                    mostrarMensaje("¡Copiado! Usa Ctrl+V en Word 📄");
-                }, function(err) {
-                    mostrarMensaje("Error al copiar al portapapeles.");
-                });
-            }, 'image/png');
+            // Convertir a enlace de descarga
+            var enlace = document.createElement('a');
+            enlace.download = 'diagrama-ajedrez.png';
+            enlace.href = canvas.toDataURL('image/png');
+            
+            // Simular el clic para que se descargue solo
+            document.body.appendChild(enlace);
+            enlace.click();
+            document.body.removeChild(enlace);
+            
+            mostrarMensaje("¡Imagen descargada! Búscala en tus Descargas 📥");
+        }).catch(err => {
+            mostrarMensaje("Error al generar el archivo.");
         });
     });
 
