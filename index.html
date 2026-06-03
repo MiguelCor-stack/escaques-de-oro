@@ -545,7 +545,10 @@ ${mensajeExtra || "Sin mensaje"}
         var fen = $('#fenInput').val().trim();
         if (fen) { miTablero.position(fen); mostrarMensaje("¡FEN cargado!"); }
     });
-    $('#clearBtn').on('click', function() { miTablero.clear(); });
+    $('#clearBtn').on('click', function() { 
+    miTablero.clear(); 
+    $('.indicador-mas, .indicador-circulo, .indicador-menos').removeClass('indicador-mas indicador-circulo indicador-menos');
+});
     $('#startBtn').on('click', function() { miTablero.start(); });
     $('#flipBtn').on('click', function() { miTablero.flip(); });
 
