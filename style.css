@@ -447,18 +447,40 @@ button:hover {
     color: #e67e22;
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
-/* Ajuste exclusivo para el botón verde del menú en pantallas de celular */
+/* Corrección total para el menú en celulares */
 @media (max-width: 768px) {
-    /* Buscamos el botón verde dentro de la barra de navegación */
-    nav a[href="#creador"], 
-    .nav-links a:contains("Creador Diagramas"),
+    /* Forzamos a que la barra de enlaces tire los elementos hacia abajo */
+    nav .nav-links, 
+    nav ul {
+        display: flex !important;
+        flex-direction: column !important; /* Los alinea uno debajo del otro */
+        align-items: center !important;
+        background-color: #111 !important; /* Fondo oscuro para que se note */
+        padding: 10px 0 !important;
+        width: 100% !important;
+    }
+
+    /* Le damos espacio a cada enlace para que no se amontonen */
+    nav ul li, 
+    nav .nav-links a,
     nav ul li a {
-        /* Si se ve muy grande o descuadrado, le damos un tamaño adaptable */
+        display: block !important;
+        margin: 8px 0 !important;
+        font-size: 16px !important;
+        text-align: center !important;
+        width: 90% !important;
+    }
+
+    /* El botón verde de Creador Diagramas ahora tendrá su propio espacio limpio */
+    nav ul li a[href="#creador"],
+    .nav-links a.creador-btn,
+    nav a[href="#creador"] {
         display: inline-block !important;
-        width: auto !important;
-        padding: 8px 12px !important;
-        font-size: 14px !important;
-        margin: 5px auto !important;
-        text-align: center;
+        background-color: #2ecc71 !important;
+        color: white !important;
+        padding: 10px 20px !important;
+        border-radius: 5px !important;
+        font-weight: bold !important;
+        width: auto !important; /* Que no se encoja horizontalmente */
     }
 }
