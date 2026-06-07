@@ -1,4 +1,4 @@
-// 1. Referencias de los elementos del HTML
+// 1. Referencias únicas y limpias de los elementos del HTML
 const tournamentForm = document.getElementById('tournament-form');
 const tournamentList = document.getElementById('tournament-list');
 const playersTableBody = document.getElementById('players-table-body');
@@ -6,60 +6,73 @@ const pairingsList = document.getElementById('pairings-list');
 const currentRoundLabel = document.getElementById('current-round-label');
 const playerForm = document.getElementById('form-alumnos');
 
+// Variable global para controlar qué torneo estamos arbitrando en esta pantalla
+let idTorneoActivo = null;
+
 // 2. Cargar torneos guardados al iniciar la página
 document.addEventListener('DOMContentLoaded', () => {
     const savedTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
     renderTournaments(savedTournaments);
+    
+    // Si hay al menos un torneo, seleccionamos el primero automáticamente para las pruebas
+    if (savedTournaments.length > 0) {
+        idTorneoActivo = savedTournaments[0].id;
+        actualizarTablaPosiciones();
+    }
 });
 
-// 3. Capturar el evento de enviar el formulario
+// 3. Capturar el evento de enviar el formulario de Torneos
 tournamentForm.addEventListener('submit', (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault();
 
-    // Obtener los valores de los inputs
     const title = document.getElementById('title').value;
     const date = document.getElementById('date').value;
     const type = document.getElementById('type').value;
     const venue = document.getElementById('venue').value;
     const price = document.getElementById('price').value;
 
-    // Crear un objeto único para el nuevo torneo
     const newTournament = {
-        id: Date.now(), // ID único usando la hora exacta
+        id: Date.now(),
         title,
         date,
         type,
         venue,
-        price
+        price,
+        jugadores: [],
+        partidasRonda: [],
+        rondaActual: 0
     };
 
-    // Obtener la lista actual, meter el nuevo y guardar en localStorage
     const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
     currentTournaments.push(newTournament);
     localStorage.setItem('torneos', JSON.stringify(currentTournaments));
 
-    // Volver a dibujar la lista en pantalla y limpiar el formulario
+    // Activar el torneo recién creado
+    idTorneoActivo = newTournament.id;
+
     renderTournaments(currentTournaments);
+    actualizarTablaPosiciones();
     tournamentForm.reset();
 });
 
-// 4. Función para dibujar las tarjetas en el HTML
+// 4. Función para dibujar las tarjetas de los torneos en el HTML
 function renderTournaments(tournaments) {
-    // Limpiamos el contenedor para que no se dupliquen
     tournamentList.innerHTML = '';
 
-    // Si no hay torneos, podemos dejar un mensaje limpio
     if (tournaments.length === 0) {
         tournamentList.innerHTML = `<p style="color: #718096; grid-column: 1/-1; text-align: center;">No hay torneos programados. ¡Registra el primero!</p>`;
         return;
     }
 
-    // Recorrer cada torneo y crear su estructura visual
     tournaments.forEach(tournament => {
         const card = document.createElement('div');
         card.classList.add('tournament-card');
         
-        // Elegir el color del badge según el ritmo de juego
+        // Resaltar visualmente si es el torneo que estamos gestionando activo
+        if (tournament.id === idTorneoActivo) {
+            card.style.border = "2px solid #2ecc71";
+        }
+
         const badgeClass = tournament.type === 'Blitz' ? 'badge-blitz' : 'badge-rapid';
 
         card.innerHTML = `
@@ -69,6 +82,7 @@ function renderTournaments(tournaments) {
             <p><strong>Local:</strong> ${tournament.venue}</p>
             <p><strong>Inscripción:</strong> S/. ${tournament.price}</p>
             <div class="card-actions">
+                <button class="btn-primary" style="background: #3498db; margin-right: 5px;" onclick="seleccionarTorneo(${tournament.id})">Arbitrar</button>
                 <button class="btn-danger" onclick="deleteTournament(${tournament.id})">Eliminar</button>
             </div>
         `;
@@ -76,26 +90,55 @@ function renderTournaments(tournaments) {
     });
 }
 
+// Cambiar de torneo activo en la administración
+window.seleccionarTorneo = function(id) {
+    idTorneoActivo = id;
+    const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
+    renderTournaments(currentTournaments);
+    actualizarTablaPosiciones();
+    
+    const torneo = currentTournaments.find(t => t.id === idTorneoActivo);
+    if (torneo && currentRoundLabel) {
+        currentRoundLabel.innerText = torneo.rondaActual > 0 ? `Ronda Actual: Ronda ${torneo.rondaActual}` : "Ronda Actual: Esperando Inicio";
+        if (typeof renderPairings === 'function') renderPairings(torneo.partidasRonda || []);
+    }
+};
+
 // 5. Función para eliminar un torneo
 window.deleteTournament = function(id) {
     let currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
-    // Filtrar la lista para remover el torneo seleccionado
     currentTournaments = currentTournaments.filter(t => t.id !== id);
     localStorage.setItem('torneos', JSON.stringify(currentTournaments));
-    // Refrescar la pantalla
+    
+    if (idTorneoActivo === id) {
+        idTorneoActivo = currentTournaments.length > 0 ? currentTournaments[0].id : null;
+    }
+    
     renderTournaments(currentTournaments);
+    actualizarTablaPosiciones();
 };
 
-// Inscribir Jugador con control de colores y progresivo
+// 6. Inscribir Alumno al Torneo Activo Seleccionado
 if (playerForm) {
     playerForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        if (!idTorneoActivo) return;
-
-        const name = document.getElementById('player-name').value;
-        const elo = parseInt(document.getElementById('player-elo').value) || 0;
-
+        
         const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
+        
+        // Si no hay ningún torneo creado, le avisamos al usuario
+        if (!idTorneoActivo || currentTournaments.length === 0) {
+            alert("Por favor, registra o selecciona un torneo arriba primero antes de inscribir alumnos.");
+            return;
+        }
+
+        const nameInput = document.getElementById('player-name');
+        const eloInput = document.getElementById('player-elo');
+        
+        const name = nameInput.value.trim();
+        const elo = parseInt(eloInput.value) || 0;
+
+        if (!name) return;
+
         const torneoIndex = currentTournaments.findIndex(t => t.id === idTorneoActivo);
 
         if (torneoIndex !== -1) {
@@ -103,27 +146,78 @@ if (playerForm) {
                 currentTournaments[torneoIndex].jugadores = [];
             }
 
+            // Insertamos el jugador con la estructura exacta que pide tu motor Suizo
             currentTournaments[torneoIndex].jugadores.push({
                 idJugador: Date.now(),
-                name,
-                elo,
+                name: name,
+                elo: elo,
                 puntos: 0,
                 historialRivales: [],
-                historialColores: [],       // Para controlar la alternancia
-                historialPuntosRonda: [],   // Para el desempate Progresivo
-                colorObligatorio: null      // Para evitar que repitan piezas
+                historialColores: [],       
+                historialPuntosRonda: [],   
+                colorObligatorio: null,
+                buchholz: 0,
+                progresivo: 0
             });
 
             localStorage.setItem('torneos', JSON.stringify(currentTournaments));
-            renderJugadores(currentTournaments[torneoIndex].jugadores);
-            renderTournaments(currentTournaments);
-            playerForm.reset();
-            document.getElementById('player-name').focus();
+            
+            // Limpiar inputs
+            nameInput.value = '';
+            eloInput.value = '';
+            nameInput.focus();
+
+            // Refrescar vistas
+            actualizarTablaPosiciones();
         }
     });
 }
 
-// Marcar resultado y guardar historial de colores y puntos para Progresivo
+// 7. Función auxiliar unificada para dibujar la tabla de posiciones en vivo
+function actualizarTablaPosiciones() {
+    if (!playersTableBody) return;
+    playersTableBody.innerHTML = '';
+
+    if (!idTorneoActivo) {
+        playersTableBody.innerHTML = `<tr><td colspan="4" style="padding: 0.75rem; text-align: center; color: #718096;">Crea o selecciona un torneo para ver su tabla.</td></tr>`;
+        return;
+    }
+
+    const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
+    const torneo = currentTournaments.find(t => t.id === idTorneoActivo);
+
+    if (!torneo || !torneo.jugadores || torneo.jugadores.length === 0) {
+        playersTableBody.innerHTML = `<tr><td colspan="4" style="padding: 0.75rem; text-align: center; color: #718096;">No hay alumnos inscritos en este torneo aún.</td></tr>`;
+        return;
+    }
+
+    // Ordenar dinámicamente para la visualización en vivo
+    const jugadoresOrdenados = [...torneo.jugadores].sort((a, b) => b.puntos - a.puntos || b.elo - a.elo);
+
+    jugadoresOrdenados.forEach((jugador, index) => {
+        let medalla = "";
+        if (index === 0 && torneo.rondaActual > 0) medalla = "🥇 ";
+        if (index === 1 && torneo.rondaActual > 0) medalla = "🥈 ";
+        if (index === 2 && torneo.rondaActual > 0) medalla = "🥉 ";
+
+        const fila = document.createElement('tr');
+        fila.style.borderBottom = '1px solid #edf2f7';
+        fila.innerHTML = `
+            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;">${medalla}${jugador.name}</td>
+            <td style="padding: 0.75rem; color: #4a5568;">${jugador.elo || '---'}</td>
+            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;"><span style="background: #2ecc71; color: #fff; padding: 0.2rem 0.5rem; border-radius: 4px;">${jugador.puntos}</span></td>
+            <td style="padding: 0.75rem; color: #718096;"><span style="background: #f1c40f; color: #1a1a1a; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.85rem;">BH: ${jugador.buchholz || 0} | PROG: ${jugador.progresivo || 0}</span></td>
+        `;
+        playersTableBody.appendChild(fila);
+    });
+}
+
+// Función para compatibilidad con las llamadas del HTML de rondas anteriores
+window.renderJugadores = function(listaJugadores) {
+    actualizarTablaPosiciones();
+};
+
+// 8. Marcar resultado de partidas
 window.marcarResultado = function(mesa, resultado) {
     if (!idTorneoActivo) return;
     const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
@@ -139,7 +233,6 @@ window.marcarResultado = function(mesa, resultado) {
         const jBlancas = torneo.jugadores.find(j => j.idJugador === partida.blancas.idJugador);
         const jNegras = torneo.jugadores.find(j => j.idJugador === partida.negras.idJugador);
 
-        // 1. Asignar los puntos de la partida actual
         if (resultado === '1-0') {
             if (jBlancas) jBlancas.puntos += 1;
         } else if (resultado === '0-1') {
@@ -149,7 +242,6 @@ window.marcarResultado = function(mesa, resultado) {
             if (jNegras) jNegras.puntos += 0.5;
         }
 
-        // 2. Guardar el historial de rivales, colores y capturar puntos para el Progresivo
         if (jBlancas && jNegras) {
             jBlancas.historialRivales.push(jNegras.idJugador);
             jNegras.historialRivales.push(jBlancas.idJugador);
@@ -157,36 +249,31 @@ window.marcarResultado = function(mesa, resultado) {
             jBlancas.historialColores.push('B');
             jNegras.historialColores.push('N');
 
-            // Guardamos la foto del puntaje acumulado en esta ronda
             jBlancas.historialPuntosRonda.push(jBlancas.puntos);
             jNegras.historialPuntosRonda.push(jNegras.puntos);
         }
 
-        // Si la mesa es un BYE (jugador que descansó)
         if (partida.mesa === 'BYE' && jBlancas) {
             jBlancas.historialColores.push('BYE');
             jBlancas.historialPuntosRonda.push(jBlancas.puntos);
         }
 
-        // Verificar si terminó la ronda entera
         const pendientes = torneo.partidasRonda.filter(p => !p.terminada);
         if (pendientes.length === 0) {
             torneo.partidasRonda = []; 
             alert("¡Ronda completada! Los puntos y colores han sido registrados con éxito.");
         }
 
-        // Guardar todo en LocalStorage
         const idx = currentTournaments.findIndex(t => t.id === idTorneoActivo);
         currentTournaments[idx] = torneo;
         localStorage.setItem('torneos', JSON.stringify(currentTournaments));
 
-        // Refrescar las tablas visuales
-        if (typeof renderJugadores === 'function') renderJugadores(torneo.jugadores);
+        actualizarTablaPosiciones();
         if (typeof renderPairings === 'function') renderPairings(torneo.partidasRonda);
     }
 };
 
-// Calcular Desempates Automáticos: Buchholz y Progresivo
+// 9. Calcular Desempates Finales
 window.calcularDesempates = function() {
     if (!idTorneoActivo) return;
     const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
@@ -194,19 +281,14 @@ window.calcularDesempates = function() {
 
     if (!torneo) return;
 
-    // 1. Procesar los desempates matemáticos para cada jugador
     torneo.jugadores.forEach(jugador => {
-        // --- Cálculo del Buchholz ---
         let sumaBuchholz = 0;
         jugador.historialRivales.forEach(idRival => {
             const rival = torneo.jugadores.find(j => j.idJugador === idRival);
-            if (rival) {
-                sumaBuchholz += rival.puntos;
-            }
+            if (rival) sumaBuchholz += rival.puntos;
         });
         jugador.buchholz = sumaBuchholz;
 
-        // --- Cálculo del Progresivo ---
         let sumaProgresivo = 0;
         if (jugador.historialPuntosRonda && jugador.historialPuntosRonda.length > 0) {
             sumaProgresivo = jugador.historialPuntosRonda.reduce((total, pts) => total + pts, 0);
@@ -214,43 +296,15 @@ window.calcularDesempates = function() {
         jugador.progresivo = sumaProgresivo;
     });
 
-    // Guardar los cálculos en el LocalStorage
     const idx = currentTournaments.findIndex(t => t.id === idTorneoActivo);
     currentTournaments[idx] = torneo;
     localStorage.setItem('torneos', JSON.stringify(currentTournaments));
 
-    // 2. Ordenar bajo el criterio estricto del torneo
-    const ordenFinal = [...torneo.jugadores].sort((a, b) => {
-        return b.puntos - a.puntos || 
-               (b.buchholz || 0) - (a.buchholz || 0) || 
-               (b.progresivo || 0) - (a.progresivo || 0) || 
-               b.elo - a.elo;
-    });
-    
-    // 3. Pintar los resultados ordenados en la tabla del HTML
-    if (playersTableBody) {
-        playersTableBody.innerHTML = '';
-        ordenFinal.forEach((j, index) => {
-            let medalla = "";
-            if (index === 0) medalla = "🥇 ";
-            if (index === 1) medalla = "🥈 ";
-            if (index === 2) medalla = "🥉 ";
-
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><strong>${medalla}${j.name}</strong></td>
-                <td>${j.elo || '---'}</td>
-                <td><span style="background: #2ecc71; color: #fff; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold;">${j.puntos}</span></td>
-                <td><span style="background: #f1c40f; color: #1a1a1a; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: bold;">BH: ${j.buchholz || 0} | PROG: ${j.progresivo || 0}</span></td>
-            `;
-            playersTableBody.appendChild(row);
-        });
-    }
-
-    alert("🏆 ¡Torneo Finalizado! Tabla ordenada por Puntos, Buchholz y Progresivo.");
+    actualizarTablaPosiciones();
+    alert("🏆 ¡Torneo Finalizado! Tabla ordenada con desempates oficiales.");
 };
 
-// Motor de Emparejamiento Suizo Inteligente con control de colores y rivales
+// 10. Motor Suizo Inteligente
 window.generarRonda = function() {
     if (!idTorneoActivo) return;
     const currentTournaments = JSON.parse(localStorage.getItem('torneos')) || [];
@@ -262,18 +316,15 @@ window.generarRonda = function() {
     }
 
     if (torneo.partidasRonda && torneo.partidasRonda.length > 0) {
-        alert("Debes terminar y marcar todos los resultados de la ronda actual antes de generar la siguiente.");
+        alert("Debes marcar todos los resultados antes de la siguiente ronda.");
         return;
     }
 
     torneo.rondaActual = (torneo.rondaActual || 0) + 1;
-    
-    // 1. Ordenar jugadores por puntuación acumulada, y luego por Elo
     let disponibles = [...torneo.jugadores].sort((a, b) => b.puntos - a.puntos || b.elo - a.elo);
     let partidas = [];
     let mesa = 1;
 
-    // 2. Control de BYE (Si son impares, el de menor puntaje descansa y gana 1 punto automático)
     if (disponibles.length % 2 !== 0) {
         const jugadorBye = disponibles.pop(); 
         partidas.push({
@@ -292,34 +343,26 @@ window.generarRonda = function() {
         }
     }
 
-    // 3. Bucle de emparejamiento con validación de rivales y colores
     while (disponibles.length > 0) {
         let jugadorA = disponibles.shift(); 
         let mejorRivalIndex = -1;
 
-        // Buscar un rival que no haya jugado antes con jugadorA
         for (let i = 0; i < disponibles.length; i++) {
             if (!jugadorA.historialRivales.includes(disponibles[i].idJugador)) {
                 mejorRivalIndex = i;
-                break; // Encontramos al rival ideal en su mismo grupo de puntos
+                break;
             }
         }
 
-        // Si ya jugó con todos los que quedan, rompemos la regla para no trabar el torneo
-        if (mejorRivalIndex === -1) {
-            mejorRivalIndex = 0;
-        }
+        if (mejorRivalIndex === -1) mejorRivalIndex = 0;
 
         let jugadorB = disponibles.splice(mejorRivalIndex, 1)[0];
-
-        // 4. Decidir quién va con Blancas y quién con Negras (Alternancia)
         let ultimoColorA = jugadorA.historialColores[jugadorA.historialColores.length - 1] || null;
         let ultimoColorB = jugadorB.historialColores[jugadorB.historialColores.length - 1] || null;
         
         let blancas = jugadorA;
         let negras = jugadorB;
 
-        // Si el jugador A jugó con blancas la ronda anterior, ahora le toca negras
         if (ultimoColorA === 'B' || ultimoColorB === 'N') {
             blancas = jugadorB;
             negras = jugadorA;
@@ -336,80 +379,10 @@ window.generarRonda = function() {
 
     torneo.partidasRonda = partidas;
     
-    // Guardar cambios en el localStorage
     const idx = currentTournaments.findIndex(t => t.id === idTorneoActivo);
     currentTournaments[idx] = torneo;
     localStorage.setItem('torneos', JSON.stringify(currentTournaments));
 
-    // Refrescar interfaz
     if (currentRoundLabel) currentRoundLabel.innerText = `Ronda Actual: Ronda ${torneo.rondaActual}`;
     if (typeof renderPairings === 'function') renderPairings(torneo.partidasRonda);
 };
-
-// Escuchar cuando se da clic al botón verde de Inscribir Alumno
-if (playerForm) {
-    playerForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const nameInput = document.getElementById('player-name');
-        const eloInput = document.getElementById('player-elo');
-        
-        if (!nameInput.value.trim()) return;
-
-        // Crear el nuevo jugador con sus datos de desempate limpios
-        const nuevoJugador = {
-            id: Date.now(),
-            nombre: nameInput.value.trim(),
-            elo: parseInt(eloInput.value) || 0,
-            puntos: 0,
-            buccholz: 0,
-            progresivo: 0,
-            historialPuntos: [],
-            oponentes: [],
-            colorPrevio: null,
-            historialColores: []
-        };
-
-        // Si no existe la lista de jugadores en memoria, la creamos
-        if (!window.jugadoresTorneo) {
-            window.jugadoresTorneo = [];
-        }
-
-        // Agregar al alumno a la lista
-        window.jugadoresTorneo.push(nuevoJugador);
-
-        // Limpiar las cajitas de texto del formulario
-        nameInput.value = '';
-        eloInput.value = '';
-
-        // Actualizar la tabla visualmente para que aparezca el alumno
-        actualizarTablaPosiciones();
-    });
-}
-
-// Función auxiliar para dibujar los alumnos en la tabla
-function actualizarTablaPosiciones() {
-    if (!playersTableBody) return;
-    
-    playersTableBody.innerHTML = '';
-    
-    if (!window.jugadoresTorneo || window.jugadoresTorneo.length === 0) {
-        playersTableBody.innerHTML = `<tr><td colspan="4" style="padding: 0.75rem; text-align: center; color: #718096;">No hay alumnos inscritos aún.</td></tr>`;
-        return;
-    }
-
-    window.jugadoresTorneo.forEach((jugador) => {
-        const fila = document.createElement('tr');
-        fila.style.borderBottom = '1px solid #edf2f7';
-        fila.innerHTML = `
-            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;">${jugador.nombre}</td>
-            <td style="padding: 0.75rem; color: #4a5568;">${jugador.elo || '---'}</td>
-            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;">${jugador.puntos}</td>
-            <td style="padding: 0.75rem; color: #718096;">0 | 0</td>
-        `;
-        playersTableBody.appendChild(fila);
-    });
-}
-
-// Ejecutar una vez al cargar para que la tabla no empiece rota
-actualizarTablaPosiciones();
