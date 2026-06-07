@@ -1,4 +1,4 @@
-// 1. Referencias únicas y limpias de los elementos del HTML
+alert("¡Sí, el archivo JavaScript está cargando correctamente!");
 const tournamentForm = document.getElementById('tournament-form');
 const tournamentList = document.getElementById('tournament-list');
 const playersTableBody = document.getElementById('players-table-body');
