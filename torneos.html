@@ -89,6 +89,22 @@
             <button class="btn-primary" style="width: auto; padding: 0.5rem 1rem; background-color: #f1c40f; color: #1a1a1a; font-weight: bold;" onclick="calcularDesempates()">🏆 Finalizar y Desempatar</button>
         </div>
 
+       <!-- Formulario para Registrar Alumnos -->
+        <h3 style="margin-top: 1.5rem;">Inscribir Alumno al Torneo</h3>
+        <form id="form-alumnos" style="background: #fff; padding: 1rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1.5rem; display: flex; gap: 1rem; align-items: flex-end;">
+            <div style="flex: 2; display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="player-name" style="font-weight: bold; color: #4a5568;">Nombre del Alumno:</label>
+                <input type="text" id="player-name" placeholder="Ej. Juan Pérez" required style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e0; border-radius: 4px;">
+            </div>
+            
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 0.5rem;">
+                <label for="player-elo" style="font-weight: bold; color: #4a5568;">Elo (Opcional):</label>
+                <input type="number" id="player-elo" placeholder="Ej. 1200" style="width: 100%; padding: 0.5rem; border: 1px solid #cbd5e0; border-radius: 4px;">
+            </div>
+
+            <button type="submit" style="width: auto; height: 40px; padding: 0 1.5rem; background-color: #2ecc71; border: none; color: white; font-weight: bold; border-radius: 4px; cursor: pointer;">➕ Inscribir</button>
+        </form>
+       
         <h3 style="margin-top: 1.5rem;">Tabla de Posiciones</h3>
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
             <thead>

@@ -4,6 +4,7 @@ const tournamentList = document.getElementById('tournament-list');
 const playersTableBody = document.getElementById('players-table-body');
 const pairingsList = document.getElementById('pairings-list');
 const currentRoundLabel = document.getElementById('current-round-label');
+const playerForm = document.getElementById('form-alumnos');
 
 // 2. Cargar torneos guardados al iniciar la página
 document.addEventListener('DOMContentLoaded', () => {
