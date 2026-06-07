@@ -345,3 +345,71 @@ window.generarRonda = function() {
     if (currentRoundLabel) currentRoundLabel.innerText = `Ronda Actual: Ronda ${torneo.rondaActual}`;
     if (typeof renderPairings === 'function') renderPairings(torneo.partidasRonda);
 };
+
+// Escuchar cuando se da clic al botón verde de Inscribir Alumno
+if (playerForm) {
+    playerForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const nameInput = document.getElementById('player-name');
+        const eloInput = document.getElementById('player-elo');
+        
+        if (!nameInput.value.trim()) return;
+
+        // Crear el nuevo jugador con sus datos de desempate limpios
+        const nuevoJugador = {
+            id: Date.now(),
+            nombre: nameInput.value.trim(),
+            elo: parseInt(eloInput.value) || 0,
+            puntos: 0,
+            buccholz: 0,
+            progresivo: 0,
+            historialPuntos: [],
+            oponentes: [],
+            colorPrevio: null,
+            historialColores: []
+        };
+
+        // Si no existe la lista de jugadores en memoria, la creamos
+        if (!window.jugadoresTorneo) {
+            window.jugadoresTorneo = [];
+        }
+
+        // Agregar al alumno a la lista
+        window.jugadoresTorneo.push(nuevoJugador);
+
+        // Limpiar las cajitas de texto del formulario
+        nameInput.value = '';
+        eloInput.value = '';
+
+        // Actualizar la tabla visualmente para que aparezca el alumno
+        actualizarTablaPosiciones();
+    });
+}
+
+// Función auxiliar para dibujar los alumnos en la tabla
+function actualizarTablaPosiciones() {
+    if (!playersTableBody) return;
+    
+    playersTableBody.innerHTML = '';
+    
+    if (!window.jugadoresTorneo || window.jugadoresTorneo.length === 0) {
+        playersTableBody.innerHTML = `<tr><td colspan="4" style="padding: 0.75rem; text-align: center; color: #718096;">No hay alumnos inscritos aún.</td></tr>`;
+        return;
+    }
+
+    window.jugadoresTorneo.forEach((jugador) => {
+        const fila = document.createElement('tr');
+        fila.style.borderBottom = '1px solid #edf2f7';
+        fila.innerHTML = `
+            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;">${jugador.nombre}</td>
+            <td style="padding: 0.75rem; color: #4a5568;">${jugador.elo || '---'}</td>
+            <td style="padding: 0.75rem; color: #2d3748; font-weight: bold;">${jugador.puntos}</td>
+            <td style="padding: 0.75rem; color: #718096;">0 | 0</td>
+        `;
+        playersTableBody.appendChild(fila);
+    });
+}
+
+// Ejecutar una vez al cargar para que la tabla no empiece rota
+actualizarTablaPosiciones();
