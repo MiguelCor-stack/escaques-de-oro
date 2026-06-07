@@ -1,4 +1,3 @@
-alert("¡Sí, el archivo JavaScript está cargando correctamente!");
 const tournamentForm = document.getElementById('tournament-form');
 const tournamentList = document.getElementById('tournament-list');
 const playersTableBody = document.getElementById('players-table-body');
@@ -386,3 +385,64 @@ window.generarRonda = function() {
     if (currentRoundLabel) currentRoundLabel.innerText = `Ronda Actual: Ronda ${torneo.rondaActual}`;
     if (typeof renderPairings === 'function') renderPairings(torneo.partidasRonda);
 };
+
+// 11. Función para dibujar los emparejamientos y botones de resultados en el HTML
+function renderPairings(partidas) {
+    if (!pairingsList) return;
+    pairingsList.innerHTML = '';
+
+    if (partidas.length === 0) {
+        pairingsList.innerHTML = `<p style="color: #718096; grid-column: 1/-1; text-align: center;">No hay partidas activas en esta ronda. ¡Genera la siguiente ronda arriba!</p>`;
+        return;
+    }
+
+    partidas.forEach(partida => {
+        const card = document.createElement('div');
+        card.style.background = '#fff';
+        card.style.padding = '1rem';
+        card.style.borderRadius = '8px';
+        card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.1)';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        card.style.gap = '0.5rem';
+
+        // Estilo si ya terminó la partida
+        if (partida.terminada) {
+            card.style.background = '#f7fafc';
+            card.style.borderLeft = '4px solid #cbd5e0';
+        } else {
+            card.style.borderLeft = '4px solid #3498db';
+        }
+
+        let contenidoAcciones = '';
+        if (!partida.terminada && partida.mesa !== 'BYE') {
+            contenidoAcciones = `
+                <div style="display: flex; gap: 0.25rem; margin-top: 0.5rem;">
+                    <button style="flex: 1; padding: 0.4rem; background: #2ecc71; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem;" onclick="marcarResultado(${partida.mesa}, '1-0')">1 - 0</button>
+                    <button style="flex: 1; padding: 0.4rem; background: #e67e22; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem;" onclick="marcarResultado(${partida.mesa}, '0.5-0.5')">½ - ½</button>
+                    <button style="flex: 1; padding: 0.4rem; background: #34495e; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.85rem;" onclick="marcarResultado(${partida.mesa}, '0-1')">0 - 1</button>
+                </div>
+            `;
+        } else if (partida.mesa === 'BYE') {
+            contenidoAcciones = `<span style="background: #edf2f7; color: #4a5568; padding: 0.25rem; text-align: center; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">Punto automático</span>`;
+        } else {
+            contenidoAcciones = `<span style="background: #2ecc71; color: white; padding: 0.25rem; text-align: center; border-radius: 4px; font-size: 0.85rem; font-weight: bold;">Resultado: ${partida.resultado}</span>`;
+        }
+
+        card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: #718096; font-weight: bold; border-bottom: 1px solid #edf2f7; padding-bottom: 0.25rem;">
+                <span>Mesa ${partida.mesa}</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.25rem; margin-top: 0.25rem;">
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="font-weight: 500; color: #2d3748;">⚪ ${partida.blancas.name}</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="font-weight: 500; color: #2d3748;">⚫ ${partida.negras.name}</span>
+                </div>
+            </div>
+            ${contenidoAcciones}
+        `;
+        pairingsList.appendChild(card);
+    });
+}
