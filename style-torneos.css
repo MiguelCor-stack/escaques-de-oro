@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f6f8;
+    color: #333;
+}
+
+.main-header {
+    background-color: #1a1a1a;
+    color: #fff;
+    text-align: center;
+    padding: 2.5rem 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.brand-title {
+    color: #f1c40f;
+    font-size: 2.4rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.brand-subtitle {
+    color: #ccc;
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    margin-top: 0.2rem;
+}
+
+.gold-line {
+    width: 120px;
+    height: 2px;
+    background-color: #f1c40f;
+    margin: 0.8rem auto;
+}
+
+.panel-tag {
+    color: #a0aec0;
+    font-size: 0.95rem;
+    font-style: italic;
+}
+
+.nav-back-container {
+    max-width: 1200px;
+    margin: 1.5rem auto 0 auto;
+    padding: 0 1rem;
+}
+
+.btn-back {
+    text-decoration: none;
+    color: #4a5568;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: #1a1a1a;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 1.5rem auto 3rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .container {
+        grid-template-columns: 360px 1fr;
+    }
+}
+
+.form-section, .list-section {
+    background: #fff;
+    padding: 1.8rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: #1a1a1a;
+    border-bottom: 2px solid #edf2f7;
+    padding-bottom: 0.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #4a5568;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 0.7rem;
+    border: 1px solid #cbd5e0;
+    border-radius: 5px;
+    font-size: 0.95rem;
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: #2ecc71;
+    color: #fff;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(46, 204, 113, 0.2);
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #27ae60;
+}
+
+.tournament-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.tournament-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.tournament-card h3 {
+    font-size: 1.1rem;
+    margin: 0.8rem 0 0.5rem 0;
+}
+
+.tournament-card p {
+    font-size: 0.9rem;
+    color: #718096;
+    margin-bottom: 0.3rem;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.btn-secondary, .btn-danger {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.btn-secondary { background: #e2e8f0; color: #4a5568; }
+.btn-danger { background: #fed7d7; color: #c53030; }
+
+.badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.badge-blitz { background-color: #feebc8; color: #c05621; }

@@ -4,19 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Escaques de Oro - Gestión de Torneos</title>
+    <link rel="stylesheet" href="style-torneos.css">
 </head>
 <body>
 
-    <header style="background-color: #1a1a1a; color: #fff; text-align: center; padding: 2rem;">
-        <h1 style="color: #f1c40f; margin: 0;">Escaques de Oro</h1>
-        <p style="color: #ccc; margin: 5px 0 0 0; letter-spacing: 2px;">ACADEMIA DE AJEDREZ</p>
-        <p style="color: #a0aec0; font-size: 0.9rem; margin-top: 15px;">Panel de Control - Gestión de Torneos</p>
+    <header class="main-header">
+        <div class="header-content">
+            <h1 class="brand-title">Escaques de Oro</h1>
+            <p class="brand-subtitle">ACADEMIA DE AJEDREZ</p>
+            <div class="gold-line"></div>
+            <p class="panel-tag">Panel de Control - Gestión de Torneos</p>
+        </div>
     </header>
 
-    <main style="max-width: 800px; margin: 2rem auto; padding: 0 1rem; font-family: sans-serif;">
-        <h2>Sección de Torneos en Construcción</h2>
-        <p>¡El archivo ya está creado correctamente!</p>
-        <a href="index.html">← Volver a la página principal</a>
+    <div class="nav-back-container">
+        <a href="index.html" class="btn-back">← Volver al Inicio</a>
+    </div>
+
+    <main class="container">
+        <section class="form-section">
+            <h2>Registrar Nuevo Torneo</h2>
+            <form id="tournament-form">
+                <div class="form-group">
+                    <label for="title">Nombre del Torneo:</label>
+                    <input type="text" id="title" placeholder="Ej. IRT Sub-2000" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Fecha del Evento:</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Ritmo de Juego:</label>
+                    <select id="type" required>
+                        <option value="">Selecciona un ritmo</option>
+                        <option value="Blitz">Blitz (Ej. 3+2)</option>
+                        <option value="Rápido">Rápido (Ej. 10+5)</option>
+                        <option value="Estándar">Estándar / Pensado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="venue">Local / Sede:</label>
+                    <input type="text" id="venue" placeholder="Ej. Plaza Center SMP" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="price">Costo de Inscripción (S/.):</label>
+                    <input type="number" id="price" placeholder="Ej. 50" min="0" required>
+                </div>
+
+                <button type="submit" class="btn-primary">Publicar Torneo</button>
+            </form>
+        </section>
+
+        <section class="list-section">
+            <h2>Torneos Programados</h2>
+            <div class="tournament-grid" id="tournament-list">
+                
+                <div class="tournament-card">
+                    <span class="badge badge-blitz">Blitz</span>
+                    <h3>Torneo Blitz de Prueba</h3>
+                    <p><strong>Fecha:</strong> 26 de Abril, 2026</p>
+                    <p><strong>Local:</strong> Plaza Center SMP</p>
+                    <p><strong>Inscripción:</strong> S/. 40</p>
+                    <div class="card-actions">
+                        <button class="btn-secondary">Editar</button>
+                        <button class="btn-danger">Eliminar</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
     </main>
 
 </body>
