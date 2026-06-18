@@ -49,6 +49,9 @@ h1 {
 <body>
 
 <h1>♟️ Juega contra la IA</h1>
+<button onclick="copiarParaWord()" style="display:block; margin: 10px auto; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
+    📋 Copiar Diagrama para Word
+</button>
 
 <div id="board"></div>
 
@@ -214,6 +217,22 @@ function aiMove() {
 }
 
 drawBoard();
+function copiarParaWord() {
+    const boardEl = document.getElementById("board");
+    const htmlParaCopiar = `
+    <div style="font-family: Arial; margin-bottom: 20px;">
+        <div style="display: grid; grid-template-columns: repeat(8, 60px); border: 3px solid black; width: 480px;">
+            ${boardEl.innerHTML}
+        </div>
+        <p>Notas del ejercicio: _________________________</p>
+    </div>
+    `;
+    const blob = new Blob([htmlParaCopiar], { type: 'text/html' });
+    const data = [new ClipboardItem({ 'text/html': blob })];
+    navigator.clipboard.write(data).then(() => {
+        alert("¡Diagrama copiado! Ya puedes ir a Word y pegar.");
+    });
+}
 </script>
 
 </body>
