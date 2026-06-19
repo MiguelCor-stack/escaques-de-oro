@@ -561,25 +561,19 @@ ${mensajeExtra || "Sin mensaje"}
 $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // Buscamos el contenedor principal
     var tablero = document.getElementById('boardProblemas');
 
     html2canvas(tablero, {
         useCORS: true,
-        scale: 2,
-        // Usamos una función para ignorar las piezas de repuesto
+        scale: 1, // <--- Esto hará que la imagen no salga gigante en Word
         ignoreElements: function(element) {
-            // Si el elemento tiene una clase que contiene "spare-pieces", lo ignoramos
-            if (element.className && typeof element.className === 'string' && element.className.indexOf('spare-pieces') !== -1) {
-                return true;
-            }
-            return false;
+            return element.className && typeof element.className === 'string' && element.className.indexOf('spare-pieces') !== -1;
         }
     }).then(canvas => {
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                alert("¡Diagrama copiado limpio!");
+                alert("¡Diagrama listo!");
                 mostrarMensaje("✅ ¡Copiado!");
             });
         });
