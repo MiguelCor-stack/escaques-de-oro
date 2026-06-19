@@ -559,14 +559,25 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
 $('#copyImgBtn').on('click', function() {
-    html2canvas(document.querySelector('.chessboard-63f77')).then(canvas => {
+    mostrarMensaje("⏳ Copiando...");
+
+    // Seleccionamos solo el elemento que dibuja el tablero (la clase interna)
+    // Esto hace que html2canvas ignore todo lo que esté fuera del tablero
+    var tablero = document.querySelector('.chessboard-63f77');
+
+    html2canvas(tablero, {
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
         canvas.toBlob(blob => {
-            navigator.clipboard.write([new ClipboardItem({"image/png": blob})]);
-            alert("¡Copiado!");
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                alert("¡Diagrama copiado!");
+                mostrarMensaje("✅ ¡Copiado!");
+            });
         });
     });
 });
-
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
         setTimeout(function() {
