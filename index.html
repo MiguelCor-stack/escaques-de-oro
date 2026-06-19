@@ -558,16 +558,18 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
+// Captura garantizada: Capturamos el contenedor con ID boardProblemas
 $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // Buscamos el contenedor principal del tablero de ajedrez
-    // '.chessboard-63f77' es la clase estándar de chessboard.js
-    var tablero = document.querySelector('.chessboard-63f77');
+    // Buscamos el elemento por el ID que definiste en tu HTML: id="boardProblemas"
+    var tablero = document.getElementById('boardProblemas');
 
     if (tablero) {
         html2canvas(tablero, {
             useCORS: true,
+            allowTaint: true,
+            backgroundColor: null,
             scale: 2
         }).then(canvas => {
             canvas.toBlob(blob => {
@@ -575,14 +577,17 @@ $('#copyImgBtn').on('click', function() {
                 navigator.clipboard.write([item]).then(() => {
                     alert("¡Diagrama copiado!");
                     mostrarMensaje("✅ ¡Copiado!");
+                }).catch(err => {
+                    console.error("Error al escribir en portapapeles:", err);
+                    mostrarMensaje("Error al copiar.");
                 });
             });
         }).catch(err => {
-            console.error("Error al capturar:", err);
-            mostrarMensaje("Error al capturar.");
+            console.error("Error en html2canvas:", err);
+            mostrarMensaje("Error al procesar imagen.");
         });
     } else {
-        console.error("El elemento .chessboard-63f77 no existe en el DOM");
+        console.error("No se encontró el elemento con ID boardProblemas");
         mostrarMensaje("Error: Tablero no encontrado.");
     }
 });
