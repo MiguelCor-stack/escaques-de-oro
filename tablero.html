@@ -49,7 +49,7 @@ h1 {
 <body>
 
 <h1>♟️ Juega contra la IA</h1>
-<button onclick="copiarParaWord()" style="display:block; margin: 10px auto; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
+<button id="btn-magico" style="display:block; margin: 10px auto; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
     📋 Copiar Diagrama para Word
 </button>
 
@@ -233,6 +233,10 @@ function copiarParaWord() {
         alert("¡Diagrama copiado! Ya puedes ir a Word y pegar.");
     });
 }
+document.getElementById("btn-magico").addEventListener("click", function(event) {
+    event.preventDefault();
+    copiarParaWord();
+});
 </script>
 
 </body>
