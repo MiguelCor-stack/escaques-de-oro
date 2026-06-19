@@ -484,3 +484,6 @@ button:hover {
         width: auto !important; /* Que no se encoja horizontalmente */
     }
 }
+#boardProblemas {
+    overflow: hidden !important;
+}
