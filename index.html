@@ -558,38 +558,33 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
-// Captura garantizada: Capturamos el contenedor con ID boardProblemas
 $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // Buscamos el elemento por el ID que definiste en tu HTML: id="boardProblemas"
+    // 1. Ocultamos las piezas de reserva antes de capturar
+    $('.spare-pieces-74924').css('display', 'none');
+
     var tablero = document.getElementById('boardProblemas');
 
-    if (tablero) {
-        html2canvas(tablero, {
-            useCORS: true,
-            allowTaint: true,
-            backgroundColor: null,
-            scale: 2
-        }).then(canvas => {
-            canvas.toBlob(blob => {
-                const item = new ClipboardItem({ "image/png": blob });
-                navigator.clipboard.write([item]).then(() => {
-                    alert("¡Diagrama copiado!");
-                    mostrarMensaje("✅ ¡Copiado!");
-                }).catch(err => {
-                    console.error("Error al escribir en portapapeles:", err);
-                    mostrarMensaje("Error al copiar.");
-                });
+    html2canvas(tablero, {
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
+        // 2. Volvemos a mostrar las piezas inmediatamente
+        $('.spare-pieces-74924').css('display', '');
+
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                alert("¡Diagrama copiado (limpio)!");
+                mostrarMensaje("✅ ¡Copiado!");
             });
-        }).catch(err => {
-            console.error("Error en html2canvas:", err);
-            mostrarMensaje("Error al procesar imagen.");
         });
-    } else {
-        console.error("No se encontró el elemento con ID boardProblemas");
-        mostrarMensaje("Error: Tablero no encontrado.");
-    }
+    }).catch(err => {
+        // En caso de error, también mostramos las piezas de nuevo
+        $('.spare-pieces-74924').css('display', '');
+        mostrarMensaje("Error al capturar.");
+    });
 });
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
