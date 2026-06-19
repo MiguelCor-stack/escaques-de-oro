@@ -559,26 +559,25 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
  $('#copyImgBtn').on('click', function() {
-    mostrarMensaje("⏳ Copiando...");
+    mostrarMensaje("⏳ Preparando...");
 
-    var contenedor = $('#boardProblemas');
-    var alturaOriginal = contenedor.css('height');
-    
-    // Forzamos al contenedor a medir solo lo que mide el tablero
-    contenedor.css('height', $('.chessboard-63f77').outerHeight() + 'px');
+    // 1. Identificamos el tablero real (la clase interna que dibuja las piezas)
+    var tablero = document.querySelector('.chessboard-63f77');
 
-    html2canvas(document.querySelector('#boardProblemas'), {
+    // 2. Usamos html2canvas solo sobre ese elemento
+    html2canvas(tablero, {
         useCORS: true,
-        scale: 2
+        scale: 2,
+        backgroundColor: null // Esto evita fondos negros o blancos extraños
     }).then(canvas => {
-        // Restauramos la altura original tras la captura
-        contenedor.css('height', alturaOriginal);
-
+        // 3. Convertimos a imagen y copiamos
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                alert("¡Copiado!");
+                alert("¡Copiado! Pega en Word con Ctrl + V.");
                 mostrarMensaje("✅ ¡Copiado!");
+            }).catch(err => {
+                mostrarMensaje("Error al copiar.");
             });
         });
     });

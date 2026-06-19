@@ -485,5 +485,13 @@ button:hover {
     }
 }
 #boardProblemas {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
     overflow: hidden !important;
+}
+
+#boardProblemas > div {
+    margin: 0 !important;
+    padding: 0 !important;
 }
