@@ -561,28 +561,30 @@ ${mensajeExtra || "Sin mensaje"}
 $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // 1. Ocultamos las piezas de reserva antes de capturar
-    $('.spare-pieces-74924').css('display', 'none');
-
+    // Buscamos el contenedor principal
     var tablero = document.getElementById('boardProblemas');
 
     html2canvas(tablero, {
         useCORS: true,
-        scale: 2
+        scale: 2,
+        // Usamos una función para ignorar las piezas de repuesto
+        ignoreElements: function(element) {
+            // Si el elemento tiene una clase que contiene "spare-pieces", lo ignoramos
+            if (element.className && typeof element.className === 'string' && element.className.indexOf('spare-pieces') !== -1) {
+                return true;
+            }
+            return false;
+        }
     }).then(canvas => {
-        // 2. Volvemos a mostrar las piezas inmediatamente
-        $('.spare-pieces-74924').css('display', '');
-
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                alert("¡Diagrama copiado (limpio)!");
+                alert("¡Diagrama copiado limpio!");
                 mostrarMensaje("✅ ¡Copiado!");
             });
         });
     }).catch(err => {
-        // En caso de error, también mostramos las piezas de nuevo
-        $('.spare-pieces-74924').css('display', '');
+        console.error("Error al capturar:", err);
         mostrarMensaje("Error al capturar.");
     });
 });
