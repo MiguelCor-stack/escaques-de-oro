@@ -559,20 +559,25 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
     $('#copyImgBtn').on('click', function() {
-    mostrarMensaje("Preparando para copiar...");
-    var selectorTablero = document.querySelector('#boardProblemas');
+    mostrarMensaje("⏳ Copiando...");
     
-    html2canvas(selectorTablero, {
+    // Escondemos las piezas de reserva temporalmente
+    $('.spare-pieces-74924').hide();
+
+    html2canvas(document.querySelector('#boardProblemas'), {
         useCORS: true,
         scale: 2
     }).then(canvas => {
+        // Volvemos a mostrar las piezas
+        $('.spare-pieces-74924').show();
+
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                mostrarMensaje("¡Copiado! Abre Word y presiona Ctrl + V");
+                alert("¡Diagrama copiado! Ya puedes pegar en Word.");
+                mostrarMensaje("✅ ¡Copiado!");
             }).catch(err => {
                 mostrarMensaje("Error: Revisa los permisos.");
-                console.error(err);
             });
         });
     });
