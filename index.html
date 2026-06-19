@@ -559,28 +559,24 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
     $('#copyImgBtn').on('click', function() {
-        mostrarMensaje("Generando archivo de imagen...");
-        var selectorTablero = document.querySelector('#boardProblemas .board-b72b1');
-        
-        html2canvas(selectorTablero, {
-            useCORS: true,
-            scale: 2
-        }).then(canvas => {
-            // Convertir a enlace de descarga
-            var enlace = document.createElement('a');
-            enlace.download = 'diagrama-ajedrez.png';
-            enlace.href = canvas.toDataURL('image/png');
-            
-            // Simular el clic para que se descargue solo
-            document.body.appendChild(enlace);
-            enlace.click();
-            document.body.removeChild(enlace);
-            
-            mostrarMensaje("¡Imagen descargada! Búscala en tus Descargas 📥");
-        }).catch(err => {
-            mostrarMensaje("Error al generar el archivo.");
+    mostrarMensaje("Preparando para copiar...");
+    var selectorTablero = document.querySelector('#boardProblemas');
+    
+    html2canvas(selectorTablero, {
+        useCORS: true,
+        scale: 2
+    }).then(canvas => {
+        canvas.toBlob(blob => {
+            const item = new ClipboardItem({ "image/png": blob });
+            navigator.clipboard.write([item]).then(() => {
+                mostrarMensaje("¡Copiado! Abre Word y presiona Ctrl + V");
+            }).catch(err => {
+                mostrarMensaje("Error: Revisa los permisos.");
+                console.error(err);
+            });
         });
     });
+});
 
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
