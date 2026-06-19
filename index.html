@@ -558,25 +558,22 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
-  $('#copyImgBtn').on('click', function() {
+ $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // 1. Ocultamos las piezas de reserva mediante CSS directamente
-    $('.spare-pieces-74924').css('display', 'none');
+    // Buscamos específicamente el tablero (el div que tiene las piezas) 
+    // dentro de #boardProblemas, ignorando el área de piezas de reserva.
+    var tableroPuro = document.querySelector('#boardProblemas > div:first-child');
 
-    // 2. Capturamos el tablero por su ID, que es fijo
-    html2canvas(document.querySelector('#boardProblemas'), {
+    html2canvas(tableroPuro, {
         useCORS: true,
         scale: 2,
-        backgroundColor: null // Fondo transparente
+        backgroundColor: null
     }).then(canvas => {
-        // 3. Volvemos a mostrar las piezas inmediatamente
-        $('.spare-pieces-74924').css('display', 'block');
-
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
-                alert("¡Diagrama copiado! Ya puedes pegar en Word.");
+                alert("¡Diagrama copiado!");
                 mostrarMensaje("✅ ¡Copiado!");
             }).catch(err => {
                 mostrarMensaje("Error al copiar.");
@@ -584,7 +581,7 @@ ${mensajeExtra || "Sin mensaje"}
         });
     });
 });
-
+ 
 
 
     function mostrarMensaje(msg) {
