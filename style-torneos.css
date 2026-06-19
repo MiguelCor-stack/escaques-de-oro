@@ -184,7 +184,6 @@ h2 {
 }
 .badge-blitz { background-color: #feebc8; color: #c05621; }
 #boardProblemas {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: inline-block !important;
+    overflow: hidden !important;
 }
