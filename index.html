@@ -558,30 +558,30 @@ ${mensajeExtra || "Sin mensaje"}
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
-    $('#copyImgBtn').on('click', function() {
+   $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
-    
-    // Escondemos las piezas de reserva temporalmente
-    $('.spare-pieces-74924').hide();
 
-    html2canvas(document.querySelector('#boardProblemas'), {
+    // Seleccionamos solo el elemento que dibuja el tablero, ignorando el área de piezas
+    // Esta clase 'chessboard-63f77' es la que usa la librería para el tablero puro
+    var tableroSolo = document.querySelector('.chessboard-63f77');
+
+    html2canvas(tableroSolo, {
         useCORS: true,
         scale: 2
     }).then(canvas => {
-        // Volvemos a mostrar las piezas
-        $('.spare-pieces-74924').show();
-
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
             navigator.clipboard.write([item]).then(() => {
                 alert("¡Diagrama copiado! Ya puedes pegar en Word.");
                 mostrarMensaje("✅ ¡Copiado!");
             }).catch(err => {
-                mostrarMensaje("Error: Revisa los permisos.");
+                mostrarMensaje("Error al copiar al portapapeles.");
+                console.error(err);
             });
         });
     });
 });
+
 
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
