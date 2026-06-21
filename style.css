@@ -492,7 +492,3 @@ button:hover {
 .spare-pieces-74924 {
     display: none !important;
 }
-#boardProblemas {
-    transform: scale(0.5); /* Esto reduce el tablero a la mitad de su tamaño original */
-    transform-origin: top left; /* Esto evita que el tablero se mueva de su lugar */
-}
