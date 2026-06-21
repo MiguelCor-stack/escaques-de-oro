@@ -576,9 +576,8 @@ $('#turnoBtn').on('click', function() {
         useCORS: true,
         backgroundColor: "#ffffff",
         // Aquí definimos el tamaño pequeño:
-        width: 250,
-        height: 250,
-        onclone: function(clonedDoc) {
+        scale: 1
+    onclone: function(clonedDoc) {
             var piezas = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
             piezas.forEach(function(el) {
                 el.style.display = 'none';
