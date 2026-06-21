@@ -577,12 +577,8 @@ $('#copyImgBtn').on('click', function() {
         useCORS: true,
         scale: 1, // <--- Esto hará que la imagen no salga gigante en Word
       ignoreElements: function(element) {
-                    // Ocultar botón y piezas extra
+                    // Solo ignoramos el botón, nada más
                     if (element.id === 'turnoBtn') return true;
-                    if (element.className && typeof element.className === 'string' && 
-                        element.className.indexOf('are-pieces-bottom') > -1) {
-                        return true;
-                    }
                     return false;
                 }
     }).then(canvas => {
