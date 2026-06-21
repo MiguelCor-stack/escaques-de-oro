@@ -576,9 +576,14 @@ $('#copyImgBtn').on('click', function() {
     html2canvas(tablero, {
         useCORS: true,
         scale: 1, // <--- Esto hará que la imagen no salga gigante en Word
-       ignoreElements: function(element) {
+      ignoreElements: function(element) {
+                    // Ocultar botón y piezas extra
                     if (element.id === 'turnoBtn') return true;
-                    return element.className && typeof element.className === 'string' && element.className.indexOf('escondido') > -1;
+                    if (element.className && typeof element.className === 'string' && 
+                        element.className.indexOf('are-pieces-bottom') > -1) {
+                        return true;
+                    }
+                    return false;
                 }
     }).then(canvas => {
         canvas.toBlob(blob => {
