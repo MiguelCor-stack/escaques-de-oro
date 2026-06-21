@@ -567,32 +567,36 @@ $('#turnoBtn').on('click', function() {
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
-$('#copyImgBtn').on('click', function() {
+   $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // Ocultar las piezas basándonos en el prefijo de la clase
-    $('[class^="spare-pieces-bottom"]').css('display', 'none');
+    var piezas = $('[class^="spare-pieces-bottom"]');
+    piezas.css('display', 'none');
 
     var tablero = document.getElementById('boardProblemas');
     
-    html2canvas(tablero, {
-        useCORS: true,
-        backgroundColor: "#ffffff",
-    }).then(canvas => {
-        // Volver a mostrar las piezas inmediatamente después de capturar
-        $('[class^="spare-pieces-bottom"]').css('display', '');
-        
-        canvas.toBlob(blob => {
-            navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-            .then(() => mostrarMensaje("✅ ¡Copiado!"))
-            .catch(() => mostrarMensaje("❌ Error al copiar"));
+    setTimeout(function() {
+        html2canvas(tablero, {
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            width: tablero.offsetWidth,
+            height: tablero.offsetHeight,
+            scale: 1
+        }).then(canvas => {
+            piezas.css('display', '');
+            
+            canvas.toBlob(blob => {
+                navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+                .then(() => mostrarMensaje("✅ ¡Copiado!"))
+                .catch(() => mostrarMensaje("❌ Error al copiar"));
+            });
+        }).catch(err => {
+            piezas.css('display', '');
+            mostrarMensaje("❌ Error al capturar");
         });
-    }).catch(err => {
-        // Si falla, volvemos a mostrar las piezas también
-        $('[class^="spare-pieces-bottom"]').css('display', '');
-        mostrarMensaje("❌ Error en captura");
-    });
-});    function mostrarMensaje(msg) {
+    }, 200);
+});
+    function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
         setTimeout(function() {
             if($('#statusMsg').text() === msg) $('#statusMsg').text('');
