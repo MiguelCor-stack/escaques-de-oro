@@ -512,11 +512,14 @@ ${mensajeExtra || "Sin mensaje"}
         <input type="text" id="fenInput" placeholder="Pegar código FEN aquí..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-            <button id="setFenBtn" style="padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Cargar FEN</button>
-            <button id="clearBtn" style="padding: 10px; background: #c0392b; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Vaciar Tablero</button>
-            <button id="startBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Posición Inicial</button>
-            <button id="flipBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Girar Vista</button>
-        </div>
+    <button id="turnoBtn" style="grid-column: span 2; padding: 10px; background: #333; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+        Turno: Blancas
+    </button>
+    <button id="setFenBtn" style="padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Cargar FEN</button>
+    <button id="clearBtn" style="padding: 10px; background: #c0392b; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Vaciar Tablero</button>
+    <button id="startBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Posición Inicial</button>
+    <button id="flipBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Girar Vista</button>
+</div>
         
         <button id="copyImgBtn" style="width: 100%; padding: 14px; background: #27ae60; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;">
             📸 Copiar Imagen para Word
@@ -541,7 +544,13 @@ ${mensajeExtra || "Sin mensaje"}
         pieceTheme: 'img/chesspieces/wikipedia/{piece}.png'
     };
     var miTablero = Chessboard('boardProblemas', boardConfig);
-
+     // Lógica para cambiar el turno
+let esTurnoBlancas = true;
+$('#turnoBtn').on('click', function() {
+    esTurnoBlancas = !esTurnoBlancas;
+    $(this).text(esTurnoBlancas ? "Turno: Blancas" : "Turno: Negras");
+    $(this).css("background-color", esTurnoBlancas ? "#333" : "#555");
+});
     // Acciones de los botones
     $('#setFenBtn').on('click', function() {
         var fen = $('#fenInput').val().trim();
@@ -566,9 +575,10 @@ $('#copyImgBtn').on('click', function() {
     html2canvas(tablero, {
         useCORS: true,
         scale: 1, // <--- Esto hará que la imagen no salga gigante en Word
-        ignoreElements: function(element) {
-            return element.className && typeof element.className === 'string' && element.className.indexOf('spare-pieces') !== -1;
-        }
+       ignoreElements: function(element) {
+                    if (element.id === 'turnoBtn') return true;
+                    return element.className && typeof element.className === 'string' && element.className.indexOf('escondido') > -1;
+                }
     }).then(canvas => {
         canvas.toBlob(blob => {
             const item = new ClipboardItem({ "image/png": blob });
