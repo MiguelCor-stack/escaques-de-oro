@@ -567,7 +567,7 @@ $('#turnoBtn').on('click', function() {
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
-   $('#copyImgBtn').on('click', function() {
+ $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
     var tablero = document.getElementById('boardProblemas');
@@ -575,21 +575,26 @@ $('#turnoBtn').on('click', function() {
     html2canvas(tablero, {
         useCORS: true,
         backgroundColor: "#ffffff",
-        // El truco está aquí: eliminamos las piezas solo en la copia de la captura
-        onclone: function (clonedDoc) {
-            var piezasExtra = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
-            piezasExtra.forEach(function(el) {
+        // Aquí definimos el tamaño pequeño:
+        width: 250,
+        height: 250,
+        onclone: function(clonedDoc) {
+            var piezas = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
+            piezas.forEach(function(el) {
                 el.style.display = 'none';
             });
         }
-    }).then(canvas => {
-        canvas.toBlob(blob => {
+    }).then(function(canvas) {
+        canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-            .then(() => mostrarMensaje("✅ ¡Copiado!"))
-            .catch(() => mostrarMensaje("❌ Error al copiar"));
+                .then(function() { mostrarMensaje("✅ ¡Copiado!"); })
+                .catch(function() { mostrarMensaje("❌ Error al copiar"); });
         });
+    }).catch(function() {
+        mostrarMensaje("❌ Error en captura");
     });
 });
+
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
         setTimeout(function() {
