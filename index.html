@@ -570,31 +570,25 @@ $('#turnoBtn').on('click', function() {
    $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    var piezas = $('[class^="spare-pieces-bottom"]');
-    piezas.css('display', 'none');
-
     var tablero = document.getElementById('boardProblemas');
-    
-    setTimeout(function() {
-        html2canvas(tablero, {
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            width: tablero.offsetWidth,
-            height: tablero.offsetHeight,
-            scale: 1
-        }).then(canvas => {
-            piezas.css('display', '');
-            
-            canvas.toBlob(blob => {
-                navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(() => mostrarMensaje("✅ ¡Copiado!"))
-                .catch(() => mostrarMensaje("❌ Error al copiar"));
+
+    html2canvas(tablero, {
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        // El truco está aquí: eliminamos las piezas solo en la copia de la captura
+        onclone: function (clonedDoc) {
+            var piezasExtra = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
+            piezasExtra.forEach(function(el) {
+                el.style.display = 'none';
             });
-        }).catch(err => {
-            piezas.css('display', '');
-            mostrarMensaje("❌ Error al capturar");
+        }
+    }).then(canvas => {
+        canvas.toBlob(blob => {
+            navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+            .then(() => mostrarMensaje("✅ ¡Copiado!"))
+            .catch(() => mostrarMensaje("❌ Error al copiar"));
         });
-    }, 200);
+    });
 });
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
