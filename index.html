@@ -574,13 +574,7 @@ $('#turnoBtn').on('click', function() {
 
     html2canvas(tablero, {
         useCORS: true,
-        backgroundColor: "#ffffff",
-        onclone: function(clonedDoc) {
-            var piezas = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
-            piezas.forEach(function(el) {
-                el.style.display = 'none';
-            });
-        }
+        backgroundColor: "#ffffff"
     }).then(function(canvas) {
         canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
