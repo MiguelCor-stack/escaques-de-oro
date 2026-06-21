@@ -575,9 +575,7 @@ $('#turnoBtn').on('click', function() {
     html2canvas(tablero, {
         useCORS: true,
         backgroundColor: "#ffffff",
-        // Aquí definimos el tamaño pequeño:
-        scale: 1
-    onclone: function(clonedDoc) {
+        onclone: function(clonedDoc) {
             var piezas = clonedDoc.querySelectorAll('[class*="spare-pieces"]');
             piezas.forEach(function(el) {
                 el.style.display = 'none';
@@ -586,14 +584,19 @@ $('#turnoBtn').on('click', function() {
     }).then(function(canvas) {
         canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado!"); })
-                .catch(function() { mostrarMensaje("❌ Error al copiar"); });
+                .then(function() { 
+                    mostrarMensaje("✅ ¡Copiado!"); 
+                })
+                .catch(function(err) { 
+                    mostrarMensaje("❌ Error al copiar"); 
+                    console.error(err);
+                });
         });
-    }).catch(function() {
+    }).catch(function(err) {
         mostrarMensaje("❌ Error en captura");
+        console.error(err);
     });
 });
-
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
         setTimeout(function() {
