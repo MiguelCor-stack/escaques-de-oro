@@ -50,9 +50,15 @@ h1 {
 
 <h1>♟️ Juega contra la IA</h1>
 <button id="btn-magico" style="display:block; margin: 10px auto; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
-    <button id="btn-magico" style="display:block; margin: 10px auto; padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
-    ✅ ESTA ES LA VERSION NUEVA
-</button>
+    <div style="text-align: center; margin: 15px;">
+    <button id="btn-magico" style="padding: 10px 20px; background: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;">
+        📸 Copiar diagrama a Word
+    </button>
+    
+    <button id="turnoBtn" style="padding: 10px 20px; font-weight: bold; cursor: pointer; border: 2px solid #333; background: #ffffff; color: #000; border-radius: 5px; margin-left: 10px;">
+        Turno: Blancas
+    </button>
+</div>
 </button>
 
 <div id="board"></div>
@@ -217,6 +223,16 @@ function aiMove() {
     turn = "w";
     drawBoard();
 }
+// Lógica para el botón de turno
+let esTurnoBlancas = true;
+const turnoBtn = document.getElementById('turnoBtn');
+
+turnoBtn.addEventListener('click', function() {
+    esTurnoBlancas = !esTurnoBlancas;
+    turnoBtn.innerText = esTurnoBlancas ? "Turno: Blancas" : "Turno: Negras";
+    turnoBtn.style.backgroundColor = esTurnoBlancas ? "#ffffff" : "#444444";
+    turnoBtn.style.color = esTurnoBlancas ? "#000000" : "#ffffff";
+});
 
 drawBoard();
 function copiarParaWord() {
