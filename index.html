@@ -570,27 +570,36 @@ $('#turnoBtn').on('click', function() {
 $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-  var tablero = document.getElementById('contenedorCaptura');
+  // ASÍ ES COMO DEBE QUEDAR
+$('#copyImgBtn').on('click', function() {
+    mostrarMensaje("⏳ Copiando...");
+
+    var tablero = document.getElementById('boardProblemas');
+    
     html2canvas(tablero, {
         useCORS: true,
-        scale: 1, // <--- Esto hará que la imagen no salga gigante en Word
-      ignoreElements: function(element) {
-                    // Solo ignoramos el botón, nada más
-                    if (element.id === 'turnoBtn') return true;
-                    return false;
-                }
+        allowTaint: true,
+        backgroundColor: "#ffffff",
+        ignoreElements: function(el) {
+            // Ignoramos el botón de turno y cualquier pieza extra que cause error
+            return el.id === 'turnoBtn' || el.classList.contains('spare-pieces');
+        }
     }).then(canvas => {
         canvas.toBlob(blob => {
-            const item = new ClipboardItem({ "image/png": blob });
-            navigator.clipboard.write([item]).then(() => {
-                alert("¡Diagrama listo!");
+            navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+            .then(() => {
                 mostrarMensaje("✅ ¡Copiado!");
+            })
+            .catch(err => {
+                console.error("Error en portapapeles:", err);
+                mostrarMensaje("❌ Error de permisos");
             });
         });
     }).catch(err => {
-        console.error("Error al capturar:", err);
-        mostrarMensaje("Error al capturar.");
+        console.error("Error en html2canvas:", err);
+        mostrarMensaje("❌ Error al capturar");
     });
+});
 });
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
