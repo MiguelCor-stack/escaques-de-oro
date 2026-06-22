@@ -567,20 +567,19 @@ $('#turnoBtn').on('click', function() {
     // Captura y exportación a Word
     // Captura y exportación a Word corregida para imágenes externas
    // Captura garantizada: Descarga el diagrama como imagen PNG
- $('#copyImgBtn').on('click', function() {
+$('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
     var tableroOriginal = document.querySelector('.chessboard-63f37');
     var clon = tableroOriginal.cloneNode(true);
     
-    // Eliminamos ambas secciones de piezas usando las clases exactas
+    // Eliminamos las piezas de arriba y abajo
     var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
     if (piezasAbajo) piezasAbajo.remove();
 
     var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
     if (piezasArriba) piezasArriba.remove();
 
-    // Posicionamos el clon fuera de la vista para capturarlo
     clon.style.position = 'absolute';
     clon.style.left = '-9999px';
     document.body.appendChild(clon);
@@ -591,10 +590,23 @@ $('#turnoBtn').on('click', function() {
     }).then(function(canvas) {
         document.body.removeChild(clon);
 
-        canvas.toBlob(function(blob) {
+        // --- AQUÍ SE REDIMENSIONA LA IMAGEN ---
+        var scaleCanvas = document.createElement('canvas');
+        var scaleCtx = scaleCanvas.getContext('2d');
+        
+        // Puedes cambiar 300 por 250 si quieres que sea más pequeña aún
+        var newWidth = 300; 
+        var newHeight = 300;
+        
+        scaleCanvas.width = newWidth;
+        scaleCanvas.height = newHeight;
+        
+        scaleCtx.drawImage(canvas, 0, 0, newWidth, newHeight);
+
+        scaleCanvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado perfectamente!"); })
-                .catch(function(err) { mostrarMensaje("❌ Error al copiar"); });
+                .then(function() { mostrarMensaje("✅ ¡Copiado en pequeño!"); })
+                .catch(function(err) { mostrarMensaje("❌ Error"); });
         });
     });
 });
