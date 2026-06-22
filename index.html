@@ -573,7 +573,6 @@ $('#copyImgBtn').on('click', function() {
     var tableroOriginal = document.querySelector('.chessboard-63f37');
     var clon = tableroOriginal.cloneNode(true);
     
-    // Eliminamos las piezas de arriba y abajo
     var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
     if (piezasAbajo) piezasAbajo.remove();
 
@@ -586,26 +585,25 @@ $('#copyImgBtn').on('click', function() {
 
     html2canvas(clon, {
         useCORS: true,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        width: 430,
+        height: 430
     }).then(function(canvas) {
         document.body.removeChild(clon);
 
-        // --- AQUÍ SE REDIMENSIONA LA IMAGEN ---
+        // --- ESCALADO A TAMAÑO PEQUEÑO ---
+        var newSize = 250; // <--- Cambia este valor: más bajo = más pequeña la imagen
         var scaleCanvas = document.createElement('canvas');
-        var scaleCtx = scaleCanvas.getContext('2d');
+        scaleCanvas.width = newSize;
+        scaleCanvas.height = newSize;
+        var ctx = scaleCanvas.getContext('2d');
         
-        // Puedes cambiar 300 por 250 si quieres que sea más pequeña aún
-        var newWidth = 300; 
-        var newHeight = 300;
-        
-        scaleCanvas.width = newWidth;
-        scaleCanvas.height = newHeight;
-        
-        scaleCtx.drawImage(canvas, 0, 0, newWidth, newHeight);
+        // Dibujamos el tablero original en el nuevo tamaño reducido
+        ctx.drawImage(canvas, 0, 0, newSize, newSize);
 
         scaleCanvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado en pequeño!"); })
+                .then(function() { mostrarMensaje("✅ ¡Copiado en tamaño pequeño!"); })
                 .catch(function(err) { mostrarMensaje("❌ Error"); });
         });
     });
