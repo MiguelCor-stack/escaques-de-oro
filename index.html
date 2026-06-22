@@ -573,15 +573,14 @@ $('#turnoBtn').on('click', function() {
     var tableroOriginal = document.querySelector('.chessboard-63f37');
     var clon = tableroOriginal.cloneNode(true);
     
-    // Eliminamos las piezas de abajo usando la clase exacta que encontramos
+    // Eliminamos ambas secciones de piezas usando las clases exactas
     var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
     if (piezasAbajo) piezasAbajo.remove();
 
-    // Nota: Si las de arriba también tienen una clase similar, 
-    // puedes añadir otra línea aquí para borrarlas también:
-    // var piezasArriba = clon.querySelector('.CLASE_PIEZAS_ARRIBA');
-    // if (piezasArriba) piezasArriba.remove();
+    var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
+    if (piezasArriba) piezasArriba.remove();
 
+    // Posicionamos el clon fuera de la vista para capturarlo
     clon.style.position = 'absolute';
     clon.style.left = '-9999px';
     document.body.appendChild(clon);
@@ -594,8 +593,8 @@ $('#turnoBtn').on('click', function() {
 
         canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado limpio!"); })
-                .catch(function(err) { mostrarMensaje("❌ Error"); });
+                .then(function() { mostrarMensaje("✅ ¡Copiado perfectamente!"); })
+                .catch(function(err) { mostrarMensaje("❌ Error al copiar"); });
         });
     });
 });
