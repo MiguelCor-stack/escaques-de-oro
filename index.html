@@ -587,11 +587,11 @@ $('#turnoBtn').on('click', function() {
 
         // --- LAS MEDIDAS DEL RECORTE ---
         // Estos números se basan en tu captura de 430x546
-        var x = 0;           // Empezamos desde el borde izquierdo
-        var y = 70;          // CORTAMOS los primeros 70px de ARRIBA (donde están las piezas negras)
-        var width = 430;     // Mantenemos el ancho total (tablero)
-        var height = 430 + 10; // Mantenemos la altura del tablero (430) y sumamos 10px abajo para no cortar
-
+        // --- AJUSTE FINO DE LAS MEDIDAS ---
+        var x = 0;           // Izquierda sin cambios
+        var y = 35;          // Reducimos de 70 a 35 (para que no corte el tablero)
+        var width = 430;     // Ancho total
+        var height = 450;    // Aumentamos a 450 para incluir un poco más hacia abajo
         // Establecemos las dimensiones del nuevo lienzo recortado
         croppedCanvas.width = width;
         croppedCanvas.height = height;
