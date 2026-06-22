@@ -570,12 +570,15 @@ $('#turnoBtn').on('click', function() {
  $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    var tablero = document.getElementById('boardProblemas');
-
+    var tablero = document.querySelector('.chessboard-63f37');
+    
     html2canvas(tablero, {
         useCORS: true,
-        backgroundColor: "#ffffff"
+        backgroundColor: "#ffffff",
+        width: tablero.offsetWidth,
+        height: tablero.offsetHeight
     }).then(function(canvas) {
+    
         canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
                 .then(function() { 
