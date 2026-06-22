@@ -570,39 +570,21 @@ $('#turnoBtn').on('click', function() {
  $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // 1. Identificamos el contenedor padre (boardProblemas)
-    // porque necesitamos capturar el tablero Y el espacio de arriba/abajo para luego recortar
-    var contenedor = document.getElementById('boardProblemas');
+    // Capturamos el elemento del tablero directamente
+    var tablero = document.querySelector('.chessboard-63f37');
 
-    html2canvas(contenedor, {
+    html2canvas(tablero, {
         useCORS: true,
         backgroundColor: "#ffffff",
-        // Hacemos la foto un poco más grande para asegurar que nada se corte
-        width: contenedor.offsetWidth,
-        height: contenedor.offsetHeight
+        // Esto asegura que capturemos el tamaño real del div del tablero
+        width: tablero.scrollWidth,
+        height: tablero.scrollHeight,
+        windowWidth: document.documentElement.offsetWidth,
+        windowHeight: document.documentElement.offsetHeight
     }).then(function(canvas) {
-        // 2. Creamos un nuevo lienzo (canvas) para hacer el recorte final
-        var croppedCanvas = document.createElement('canvas');
-        var croppedCtx = croppedCanvas.getContext('2d');
-
-        // --- LAS MEDIDAS DEL RECORTE ---
-        // Estos números se basan en tu captura de 430x546
-        // --- AJUSTE FINO DE LAS MEDIDAS ---
-        var x = 0;           // Izquierda sin cambios
-        var y = 35;          // Reducimos de 70 a 35 (para que no corte el tablero)
-        var width = 430;     // Ancho total
-        var height = 450;    // Aumentamos a 450 para incluir un poco más hacia abajo
-        // Establecemos las dimensiones del nuevo lienzo recortado
-        croppedCanvas.width = width;
-        croppedCanvas.height = height;
-
-        // 3. Dibujamos la parte que queremos de la foto original en el nuevo lienzo
-        croppedCtx.drawImage(canvas, x, y, width, height, 0, 0, width, height);
-
-        // 4. Copiamos el lienzo recortado al portapapeles
-        croppedCanvas.toBlob(function(blob) {
+        canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado limpio y cuadrado!"); })
+                .then(function() { mostrarMensaje("✅ ¡Copiado!"); })
                 .catch(function(err) { mostrarMensaje("❌ Error al copiar"); });
         });
     });
