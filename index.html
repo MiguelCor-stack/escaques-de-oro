@@ -570,29 +570,23 @@ $('#turnoBtn').on('click', function() {
  $('#copyImgBtn').on('click', function() {
     mostrarMensaje("⏳ Copiando...");
 
-    // 1. Buscamos todas las piezas de abajo en la página
-    var piezasAbajo = document.querySelectorAll('.spare-pieces-74924'); // Ajusta esta clase si es otra
-    
-    // 2. Las ocultamos temporalmente
-    piezasAbajo.forEach(function(pieza) {
-        pieza.style.display = 'none';
-    });
+    var tablero = document.querySelector('.chessboard-63f37');
 
-    // 3. Capturamos el tablero (el contenedor que sí contiene el tablero)
-    var tablero = document.getElementById('boardProblemas'); 
+    // Aplicamos estilos de recorte temporalmente
+    var originalStyle = tablero.getAttribute('style');
+    tablero.style.height = '430px'; // Forzamos la altura del cuadrado exacto
+    tablero.style.overflow = 'hidden';
 
     html2canvas(tablero, {
         useCORS: true,
         backgroundColor: "#ffffff"
     }).then(function(canvas) {
-        // 4. VOLVEMOS A MOSTRAR LAS PIEZAS para que el usuario no vea cambios
-        piezasAbajo.forEach(function(pieza) {
-            pieza.style.display = ''; 
-        });
+        // Restauramos el estilo original inmediatamente
+        tablero.setAttribute('style', originalStyle || '');
 
         canvas.toBlob(function(blob) {
             navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado!"); })
+                .then(function() { mostrarMensaje("✅ ¡Copiado limpio!"); })
                 .catch(function(err) { mostrarMensaje("❌ Error al copiar"); });
         });
     });
