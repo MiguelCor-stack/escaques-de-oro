@@ -442,8 +442,8 @@ button:hover {
     transform: translate(-50%, -50%);
     
     /* Definimos el tamaño del círculo */
-    width: 70%;      /* El círculo ocupará el 70% del ancho de la casilla */
-    height: 70%;     /* El círculo ocupará el 70% del alto de la casilla */
+    width: 90%;      /* El círculo ocupará el 70% del ancho de la casilla */
+    height: 90%;     /* El círculo ocupará el 70% del alto de la casilla */
     
     /* Dibujamos el círculo */
     border: 5px solid #e74c3c; /* Grosor y color del borde */
