@@ -435,16 +435,23 @@ button:hover {
 }
 
 .indicador-circulo::after {
-    content: "○";
-    font-size: 10rem;
-    color: #e74c3c;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-    /* Esto es lo que centra el contenido */
+    content: ""; /* Quitamos el carácter "○" */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    pointer-events: none; /* Esto evita que el círculo bloquee los clics en la pieza */
+    
+    /* Definimos el tamaño del círculo */
+    width: 70%;      /* El círculo ocupará el 70% del ancho de la casilla */
+    height: 70%;     /* El círculo ocupará el 70% del alto de la casilla */
+    
+    /* Dibujamos el círculo */
+    border: 5px solid #e74c3c; /* Grosor y color del borde */
+    border-radius: 50%;        /* Esto lo convierte en círculo perfecto */
+    
+    pointer-events: none;      /* Permite clics debajo del círculo */
+    box-sizing: border-box;    /* Asegura que el borde no aumente el tamaño */
+    z-index: 9999;
 }
 
 .indicador-menos::after {
