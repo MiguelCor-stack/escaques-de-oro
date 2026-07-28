@@ -203,7 +203,7 @@ button:hover {
     transform: scale(1.08);
 }
 
-/* ===================== LOGO ===================== */
+//* ===================== LOGO ===================== */
 .logo {
     display: flex;
     align-items: center;
@@ -233,6 +233,17 @@ button:hover {
     color: #aaa;
     text-transform: uppercase;
     letter-spacing: 3px;
+}
+
+/* Ajuste específico para que el logo se vea pequeño y perfecto en celulares */
+@media screen and (max-width: 768px) {
+    .logo-img {
+        width: 55px !important;
+        max-width: 55px !important;
+    }
+    .logo-text h1 {
+        font-size: 1.8rem !important;
+    }
 }
 
 /* ===================== TABLERO ===================== */
@@ -278,7 +289,6 @@ button:hover {
     0% {filter: brightness(1);}
     100% {filter: brightness(1.3);}
 }
-
 /* ===================== RESPONSIVE ===================== */
 /* ===================== RESPONSIVE UNIFICADO ===================== */
 @media screen and (max-width: 768px) {
