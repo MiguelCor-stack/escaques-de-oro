@@ -325,3 +325,13 @@ button:hover {
         font-size: 14px;
     }
 }
+@media screen and (max-width: 768px) {
+    body, header, nav, section, footer {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        margin: 0 !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
