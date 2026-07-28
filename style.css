@@ -462,17 +462,20 @@ button:hover {
 }
 /* Corrección total para el menú en celulares */
 @media screen and (max-width: 768px) {
-    nav {
+    /* Forzamos al header o contenedor general a apilar los elementos */
+    header, nav {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
+        width: 100% !important;
         height: auto !important;
     }
 
-    nav a {
+    /* Convertimos cada botón del menú en un bloque vertical */
+    nav a, header a {
         display: block !important;
-        width: 80% !important;
-        margin: 5px auto !important;
+        width: 90% !important;
+        margin: 4px auto !important;
         text-align: center !important;
     }
 }
