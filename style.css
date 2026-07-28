@@ -397,3 +397,11 @@ section#descripcion img, .desc-imagen img {
         vertical-align: middle !important;
     }
 }
+@media screen and (max-width: 768px) {
+    /* Reducir el tamaño del logo en dispositivos móviles */
+    .logo-img {
+        max-width: 70px !important; /* Cambia a 60px o 80px si lo prefieres más pequeño o más grande */
+        width: 100% !important;
+        height: auto !important;
+    }
+}
