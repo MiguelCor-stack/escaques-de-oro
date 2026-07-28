@@ -355,15 +355,35 @@ button:hover {
         text-align: center !important;
     }
 }
-/* Corregir tamaño de imagen en sección descripción */
-section#descripcion .desc-imagen img {
-    max-width: 100% !important;
-    height: auto !important;
-    display: block !important;
-    margin: 0 auto !important;
+/* Restaurar el diseño original: imagen al lado del texto */
+.desc-contenedor, #descripcion .desc-contenedor, .about-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
 }
 
-/* Asegurar que el contenedor no se desborde */
-section#descripcion .desc-contenedor {
-    overflow: hidden !important;
+/* Controlar la imagen para que recupere su tamaño original proporcionado al lado del texto */
+section#descripcion img, .desc-imagen img {
+    width: 100% !important;
+    max-width: 450px !important; /* Ajusta este valor si la quieres un poco más grande o pequeña */
+    height: auto !important;
+    display: block !important;
+    margin: 0 !important;
+}
+
+/* En celulares, la imagen pasa arriba y el texto abajo de forma ordenada */
+@media screen and (max-width: 768px) {
+    .desc-contenedor, #descripcion .desc-contenedor, .about-container {
+        flex-direction: column !important;
+        text-align: center !important;
+    }
+    
+    section#descripcion img, .desc-imagen img {
+        max-width: 100% !important;
+        margin: 0 auto 20px auto !important;
+    }
 }
