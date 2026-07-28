@@ -341,7 +341,7 @@ button:hover {
         box-sizing: border-box !important;
     }
 
-    nav {
+   nav {
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
@@ -355,6 +355,7 @@ button:hover {
         text-align: center !important;
     }
 }
+
 /* Restaurar el diseño original: imagen al lado del texto */
 .desc-contenedor, #descripcion .desc-contenedor, .about-container {
     display: flex !important;
@@ -369,7 +370,7 @@ button:hover {
 /* Controlar la imagen para que recupere su tamaño original proporcionado al lado del texto */
 section#descripcion img, .desc-imagen img {
     width: 100% !important;
-    max-width: 450px !important; /* Ajusta este valor si la quieres un poco más grande o pequeña */
+    max-width: 450px !important;
     height: auto !important;
     display: block !important;
     margin: 0 !important;
