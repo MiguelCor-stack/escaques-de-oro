@@ -280,15 +280,23 @@ button:hover {
 }
 
 /* ===================== RESPONSIVE ===================== */
-@media (max-width: 768px) {
-
-    header h1 {
-        font-size: 24px;
+/* ===================== RESPONSIVE UNIFICADO ===================== */
+@media screen and (max-width: 768px) {
+    nav {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
     }
 
     nav a {
-        display: block;
-        margin: 8px 0;
+        display: block !important;
+        margin: 6px 0 !important;
+        width: 80% !important;
+        text-align: center !important;
+    }
+
+    header h1 {
+        font-size: 24px;
     }
 
     .cards {
@@ -304,174 +312,16 @@ button:hover {
         padding: 40px 15px;
     }
 
+    .hero {
+        height: 70vh;
+        padding: 20px;
+    }
+
     .hero h2 {
         font-size: 20px;
     }
 
     .hero p {
         font-size: 14px;
-    }
-}
-/* ===================== DESCRIPCIÓN IMAGEN LADO IZQUIERDO ===================== */
-
-.desc-contenedor {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    flex-wrap: wrap;
-    text-align: left;
-}
-
-.desc-texto {
-    flex: 1;
-    min-width: 280px;
-}
-
-.desc-imagen {
-    flex: 1;
-    min-width: 280px;
-    display: flex;
-    justify-content: center;
-}
-
-.desc-imagen img {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-/* ===================== LÍNEA DECORATIVA TITULO ===================== */
-
-.logo-text p {
-    position: relative;
-    display: inline-block;
-    padding: 0 20px;
-    letter-spacing: 3px;
-}
-
-/* línea izquierda */
-.logo-text p::before,
-.logo-text p::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, gold);
-}
-
-/* izquierda */
-.logo-text p::before {
-    right: 100%;
-}
-
-/* derecha */
-.logo-text p::after {
-    left: 100%;
-    background: linear-gradient(90deg, gold, transparent);
-}
-.hero {
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-}
-@media (max-width: 768px) {
-    .hero {
-        height: 70vh; /* clave para que no sea gigante */
-        padding: 20px;
-    }
-
-    .hero h1 {
-        font-size: 24px;
-    }
-
-    .hero p {
-        font-size: 14px;
-    }
-}
-.perfil {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    max-width: 1000px;
-    margin: auto;
-    padding: 50px 20px;
-}
-
-.perfil img {
-    width: 220px;
-    height: 220px;
-    object-fit: cover;
-    border-radius: 15px;
-}
-/* ==========================================================================
-   INDICADORES CORREGIDOS PARA CHESSBOARD.JS (+ , ○ , -)
-   ========================================================================== */
-
-.square-55d63 {
-    position: relative !important; 
-}
-
-.indicador-mas::after,
-.indicador-circulo::after,
-.indicador-menos::after {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-weight: bold;
-    pointer-events: none; 
-    z-index: 9999;        
-    font-family: 'Arial', sans-serif;
-    line-height: 1;
-}
-
-.indicador-mas::after {
-    content: "+";
-    font-size: 2.8rem;
-    color: #2ecc71;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5); 
-}
-
-.indicador-circulo::after {
-    content: ""; /* Quitamos el carácter "○" */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-    /* Definimos el tamaño del círculo */
-    width: 95%;      /* El círculo ocupará el 70% del ancho de la casilla */
-    height: 95%;     /* El círculo ocupará el 70% del alto de la casilla */
-    
-    /* Dibujamos el círculo */
-    border: 5px solid #e74c3c; /* Grosor y color del borde */
-    border-radius: 50%;        /* Esto lo convierte en círculo perfecto */
-    
-    pointer-events: none;      /* Permite clics debajo del círculo */
-    box-sizing: border-box;    /* Asegura que el borde no aumente el tamaño */
-    z-index: 9999;
-}
-
-.indicador-menos::after {
-    content: "-";
-    font-size: 4rem;
-    color: #e67e22;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-}
-/* Corrección total para el menú en celulares */
-/* Corrección total y profesional para el menú en celulares */
-@media screen and (max-width: 768px) {
-    nav {
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-    }
-
-    nav a {
-        margin: 6px 0 !important;
-        width: 80% !important;
-        text-align: center !important;
     }
 }
