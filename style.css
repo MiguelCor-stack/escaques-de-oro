@@ -355,3 +355,15 @@ button:hover {
         text-align: center !important;
     }
 }
+/* Corregir tamaño de imagen en sección descripción */
+section#descripcion .desc-imagen img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Asegurar que el contenedor no se desborde */
+section#descripcion .desc-contenedor {
+    overflow: hidden !important;
+}
