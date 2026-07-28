@@ -422,3 +422,28 @@ section#descripcion img, .desc-imagen img {
         flex-direction: column !important;
     }
 }
+/* Alinear el texto del logo de forma horizontal en PC */
+.logo {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.logo-text {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+}
+
+/* En celular volvemos al modo vertical para que no se amontone */
+@media screen and (max-width: 768px) {
+    .logo {
+        flex-direction: column !important;
+    }
+    .logo-text {
+        align-items: center !important;
+        text-align: center !important;
+    }
+}
