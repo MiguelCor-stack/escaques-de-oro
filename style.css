@@ -447,3 +447,54 @@ section#descripcion img, .desc-imagen img {
         text-align: center !important;
     }
 }
+/* --- ESTILOS PARA EL MENÚ RESPONSIVE (MÓVIL) --- */
+
+/* Ocultar el botón hamburguesa por defecto en computadoras */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+/* Diseño para pantallas de celulares (menos de 768px de ancho) */
+@media (max-width: 768px) {
+    /* Mostrar el botón hamburguesa en móviles */
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        z-index: 1001;
+    }
+
+    /* Ocultar los enlaces de navegación por defecto en celulares */
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background-color: #1a1a1a; /* El mismo fondo oscuro de tu web */
+        position: absolute;
+        top: 60px; /* Ajusta según la altura de tu barra */
+        left: 0;
+        padding: 20px 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        z-index: 1000;
+    }
+
+    /* Clase que activaremos con JavaScript para mostrar el menú al hacer clic */
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* Estilo de los enlaces individuales dentro del menú móvil */
+    .nav-links a {
+        padding: 12px 20px;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
