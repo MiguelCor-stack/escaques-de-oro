@@ -416,3 +416,9 @@ section#descripcion img, .desc-imagen img {
         height: auto !important;
     }
 }
+/* Forzar que en el celular el logo y el texto vayan uno debajo del otro */
+@media screen and (max-width: 768px) {
+    .logo {
+        flex-direction: column !important;
+    }
+}
