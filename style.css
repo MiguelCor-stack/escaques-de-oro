@@ -206,7 +206,7 @@ button:hover {
 //* ===================== LOGO ===================== */
 .logo {
     display: flex;
-    flex-direction: row;
+    flex-direction: row !important;
     align-items: center;
     justify-content: center;
     gap: 15px;
