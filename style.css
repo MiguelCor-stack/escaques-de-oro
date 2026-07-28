@@ -505,3 +505,22 @@ button:hover {
 .spare-pieces-74924 {
     display: none !important;
 }
+/* Adaptación del menú para celulares */
+@media (max-width: 768px) {
+    /* Cambia la barra horizontal a una columna vertical para que no se amontonen */
+    nav, .menu-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        width: 100%;
+    }
+
+    /* Separa los enlaces del menú para que sean fáciles de presionar con el dedo */
+    nav a, .menu-container a {
+        display: block;
+        padding: 8px 10px;
+        font-size: 14px;
+        text-align: center;
+    }
+}
