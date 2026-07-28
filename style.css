@@ -461,81 +461,21 @@ button:hover {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 /* Corrección total para el menú en celulares */
-@media (max-width: 768px) {
-    /* Forzamos a que la barra de enlaces tire los elementos hacia abajo */
-    nav .nav-links, 
-    nav ul {
+@media screen and (max-width: 768px) {
+    nav {
         display: flex !important;
-        flex-direction: column !important; /* Los alinea uno debajo del otro */
-        align-items: center !important;
-        background-color: #111 !important; /* Fondo oscuro para que se note */
-        padding: 10px 0 !important;
-        width: 100% !important;
-    }
-
-    /* Le damos espacio a cada enlace para que no se amontonen */
-    nav ul li, 
-    nav .nav-links a,
-    nav ul li a {
-        display: block !important;
-        margin: 8px 0 !important;
-        font-size: 16px !important;
-        text-align: center !important;
-        width: 90% !important;
-    }
-
-    /* El botón verde de Creador Diagramas ahora tendrá su propio espacio limpio */
-    nav ul li a[href="#creador"],
-    .nav-links a.creador-btn,
-    nav a[href="#creador"] {
-        display: inline-block !important;
-        background-color: #2ecc71 !important;
-        color: white !important;
-        padding: 10px 20px !important;
-        border-radius: 5px !important;
-        font-weight: bold !important;
-        width: auto !important; /* Que no se encoja horizontalmente */
-    }
-
-
-#boardProblemas > div {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-.spare-pieces-74924 {
-    display: none !important;
-}
-/* Adaptación del menú para celulares */
-@media (max-width: 768px) {
-    /* Cambia la barra horizontal a una columna vertical para que no se amontonen */
-    nav, .menu-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 10px;
-        width: 100%;
-    }
-
-    /* Separa los enlaces del menú para que sean fáciles de presionar con el dedo */
-    nav a, .menu-container a {
-        display: block;
-        padding: 8px 10px;
-        font-size: 14px;
-        text-align: center;
-    }
-}
-@media (max-width: 768px) {
-    /* Selecciona la barra de navegación o el contenedor del menú superior */
-    nav, header, .menu, .navbar {
-        display: flex;
         flex-direction: column !important;
         align-items: center !important;
+        width: 100% !important;
         height: auto !important;
+        position: relative !important;
     }
 
-    /* Separa los elementos del menú para que no choquen entre sí */
-    nav a, header a, .menu a, .navbar a {
-        padding: 6px 0 !important;
-        font-size: 13px !important;
+    nav a {
+        display: block !important;
+        width: 100% !important;
+        text-align: center !important;
+        padding: 8px 0 !important;
+        margin: 2px 0 !important;
     }
 }
