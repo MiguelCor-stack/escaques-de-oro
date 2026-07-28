@@ -524,3 +524,18 @@ button:hover {
         text-align: center;
     }
 }
+@media (max-width: 768px) {
+    /* Selecciona la barra de navegación o el contenedor del menú superior */
+    nav, header, .menu, .navbar {
+        display: flex;
+        flex-direction: column !important;
+        align-items: center !important;
+        height: auto !important;
+    }
+
+    /* Separa los elementos del menú para que no choquen entre sí */
+    nav a, header a, .menu a, .navbar a {
+        padding: 6px 0 !important;
+        font-size: 13px !important;
+    }
+}
