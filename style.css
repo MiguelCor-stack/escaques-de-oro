@@ -326,12 +326,32 @@ button:hover {
     }
 }
 @media screen and (max-width: 768px) {
-    body, header, nav, section, footer {
+    body, html {
         width: 100% !important;
         max-width: 100% !important;
-        box-sizing: border-box !important;
+        overflow-x: hidden !important;
         margin: 0 !important;
-        padding-left: 10px !important;
-        padding-right: 10px !important;
+        padding: 0 !important;
+    }
+
+    /* Forzar a cualquier contenedor o sección a ocupar todo el ancho */
+    header, nav, section, footer, .container, .wrapper, div {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    nav {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+
+    nav a {
+        display: block !important;
+        width: 90% !important;
+        margin: 5px auto !important;
+        text-align: center !important;
     }
 }
