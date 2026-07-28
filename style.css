@@ -334,8 +334,9 @@ button:hover {
         padding: 0 !important;
     }
 
-    /* Forzar a cualquier contenedor o sección a ocupar todo el ancho */
-    header, nav, section, footer, .container, .wrapper, div {
+    /* Solo contenedores globales, sin tocar los divs internos */
+    header, nav, section, footer {
+        width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
     }
@@ -345,7 +346,6 @@ button:hover {
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 100% !important;
     }
 
     nav a {
