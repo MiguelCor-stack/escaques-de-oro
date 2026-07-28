@@ -388,3 +388,12 @@ section#descripcion img, .desc-imagen img {
         margin: 0 auto 20px auto !important;
     }
 }
+@media screen and (max-width: 768px) {
+    /* Ajustar tamaño y alineación del logo principal en móvil */
+    header img, .logo img, img.logo {
+        max-width: 70px !important; /* Puedes cambiar este valor a 60px o 80px según prefieras */
+        height: auto !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+    }
+}
