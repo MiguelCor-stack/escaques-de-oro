@@ -563,6 +563,7 @@ ${mensajeExtra || "Sin mensaje"}
         Turno: Blancas
     </button>
     <button id="setFenBtn" style="padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Cargar FEN</button>
+    <button id="getFenBtn" style="padding: 10px; background: #2980b9; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Copiar FEN</button>
     <button id="clearBtn" style="padding: 10px; background: #c0392b; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Vaciar Tablero</button>
     <button id="startBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Posición Inicial</button>
     <button id="flipBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Girar Vista</button>
@@ -602,6 +603,11 @@ $('#turnoBtn').on('click', function() {
     $('#setFenBtn').on('click', function() {
         var fen = $('#fenInput').val().trim();
         if (fen) { miTablero.position(fen); mostrarMensaje("¡FEN cargado!"); }
+    });
+    $('#getFenBtn').on('click', function() {
+        var fenActual = miTablero.fen(); 
+        $('#fenInput').val(fenActual);   
+        mostrarMensaje("📋 ¡FEN copiado a la caja!");
     });
     $('#clearBtn').on('click', function() { 
     miTablero.clear(); 
