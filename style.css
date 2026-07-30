@@ -535,3 +535,35 @@ section#descripcion img, .desc-imagen img {
     color: #f0ad4e;
     z-index: 10;
 }
+/* Estilos centrados y destacados para los indicadores */
+.square-55d63 {
+    position: relative;
+}
+
+.square-55d63.indicador-mas::after,
+.square-55d63.indicador-circulo::after,
+.square-55d63.indicador-menos::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 32px; /* Tamaño grande y visible */
+    font-weight: bold;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.square-55d63.indicador-mas::after {
+    content: "+";
+    color: #d9534f; /* Rojo */
+}
+
+.square-55d63.indicador-circulo::after {
+    content: "○";
+    color: #0275d8; /* Azul */
+}
+
+.square-55d63.indicador-menos::after {
+    content: "-";
+    color: #f0ad4e; /* Naranja/Amarillo */
+}
