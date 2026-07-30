@@ -711,12 +711,54 @@ $('#copyImgBtn').on('click', function() {
             mostrarMensaje("✅ ¡Ejercicio " + listaProblemasFicha.length + " agregado a la ficha!");
         });
 
-       $('#imprimirFichaBtn').on('click', function() {
+       $('#imprimirFichaBtn').on('click', async function() {
             if(listaProblemasFicha.length === 0) {
                 mostrarMensaje("⚠️ Agrega al menos un ejercicio primero.");
                 return;
             }
 
+            mostrarMensaje("⏳ Preparando fichas...");
+
+            // Guardamos la posición actual para restaurarla después
+            var fenActualAntes = miTablero.fen();
+            var orientacionAntes = miTablero.orientation();
+
+            var imagenesTableros = [];
+
+            // Recorremos cada problema guardado, lo cargamos un segundo en pantalla y le tomamos foto
+            for (let i = 0; i < listaProblemasFicha.length; i++) {
+                miTablero.position(listaProblemasFicha[i].fen);
+                
+                // Esperamos un instante a que renderice
+                await new Promise(resolve => setTimeout(resolve, 150));
+
+                var tableroOriginal = document.querySelector('.chessboard-63f37');
+                var clon = tableroOriginal.cloneNode(true);
+                
+                var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
+                if (piezasAbajo) piezasAbajo.remove();
+                var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
+                if (piezasArriba) piezasArriba.remove();
+
+                clon.style.position = 'absolute';
+                clon.style.left = '-9999px';
+                document.body.appendChild(clon);
+
+                let canvas = await html2canvas(clon, {
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    width: 430,
+                    height: 430
+                });
+
+                document.body.removeChild(clon);
+                imagenesTableros.push(canvas.toDataURL("image/png"));
+            }
+
+            // Restauramos el tablero a como lo tenía el usuario
+            miTablero.position(fenActualAntes);
+
+            // Abrimos la ventana de impresión con los tableros limpios de tu propia web
             var ventanaImpresion = window.open('', '_blank');
             
             var htmlImpresion = '<!DOCTYPE html>' +
@@ -733,8 +775,8 @@ $('#copyImgBtn').on('click', function() {
             '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 6px; margin-bottom: 10px; font-size: 9.5pt; }' +
             '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }' +
             '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 8px; background: #fff; page-break-inside: avoid; display: flex; flex-direction: column; align-items: center; }' +
-            '        .ex-header { width: 100%; display: flex; justify-content: space-between; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
-            '        .board-img { width: 170px; height: 170px; margin: 4px 0; border: 1px solid #333; }' +
+            '        .ex-header { width: 100%; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
+            '        .board-img { width: 160px; height: 160px; margin: 4px 0; }' +
             '        .answer { width: 100%; margin-top: 4px; font-size: 9pt; color: #555; }' +
             '        .line { border-bottom: 1px solid #7f8c8d; height: 14px; margin-top: 2px; }' +
             '    </style>' +
@@ -750,16 +792,10 @@ $('#copyImgBtn').on('click', function() {
             '    </div>' +
             '    <div class="grid">';
 
-            listaProblemasFicha.forEach((item, index) => {
-                // Generador gráfico oficial basado en el FEN actual del tablero
-                var fenClean = item.fen.replace(/ /g, '_');
-                var imageUrl = "https://fen2image.chessvision.ai/" + fenClean;
-
+            imagenesTableros.forEach((imgData, index) => {
                 htmlImpresion += '<div class="exercise">' +
-                    '<div class="ex-header">' +
-                    '<span>Ejercicio ' + (index + 1) + '</span>' +
-                    '</div>' +
-                    '<img class="board-img" src="' + imageUrl + '" alt="Tablero de ajedrez">' +
+                    '<div class="ex-header">Ejercicio ' + (index + 1) + '</div>' +
+                    '<img class="board-img" src="' + imgData + '" alt="Tablero">' +
                     '<div class="answer">' +
                     '<strong>Respuesta:</strong>' +
                     '<div class="line"></div>' +
@@ -776,6 +812,7 @@ $('#copyImgBtn').on('click', function() {
 
             ventanaImpresion.document.write(htmlImpresion);
             ventanaImpresion.document.close();
+            mostrarMensaje("");
         });
     });
 </script>
