@@ -255,6 +255,23 @@ document.getElementById("btn-magico").addEventListener("click", function(event) 
     event.preventDefault();
     copiarParaWord();
 });
+document.getElementById('startBtn').addEventListener('click', function() {
+    boardState = [
+        ["br","bn","bb","bq","bk","bb","bn","br"],
+        ["bp","bp","bp","bp","bp","bp","bp","bp"],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["","","","","","","",""],
+        ["wp","wp","wp","wp","wp","wp","wp","wp"],
+        ["wr","wn","wb","wq","wk","wb","wn","wr"]
+    ];
+    turn = "w";
+    drawBoard();
+    document.querySelectorAll('.square').forEach(casilla => {
+        casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
+    });
+});
 </script>
 
 </body>
