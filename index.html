@@ -674,22 +674,12 @@ $('#copyImgBtn').on('click', function() {
 <script>
     $(document).ready(function() {
         $('#startBtn').on('click', function() {
-            // Si tu librería tiene una función de limpieza o clear, la ejecutamos primero
-            if (typeof miTablero.clear === 'function') {
-                miTablero.clear();
-            }
             miTablero.start();
             
-            // Limpia cualquier clase de indicador
-            document.querySelectorAll('.square').forEach(casilla => {
+            // Usamos la clase exacta que utiliza tu chessboard.js (".square-55d63")
+            document.querySelectorAll('.square-55d63').forEach(casilla => {
                 casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
             });
-
-            // Remueve cualquier elemento añadido dentro de las casillas que no sea la etiqueta estándar de una pieza de ajedrez
-            $('.square').not(':has(img)').empty(); // O ajusta para vaciar contenido extra
-            
-            // Si tus símbolos usan una capa o contenedor flotante encima del tablero, los eliminamos por clase o id:
-            $('.simbolo-overlay, .custom-marker, .marcador').remove();
         });
 
         $('#flipBtn').on('click', function() { 
