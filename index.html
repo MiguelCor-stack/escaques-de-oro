@@ -711,7 +711,7 @@ $('#copyImgBtn').on('click', function() {
             mostrarMensaje("✅ ¡Ejercicio " + listaProblemasFicha.length + " agregado a la ficha!");
         });
 
-        $('#imprimirFichaBtn').on('click', function() {
+       $('#imprimirFichaBtn').on('click', function() {
             if(listaProblemasFicha.length === 0) {
                 mostrarMensaje("⚠️ Agrega al menos un ejercicio primero.");
                 return;
@@ -725,17 +725,18 @@ $('#copyImgBtn').on('click', function() {
             '    <meta charset="UTF-8">' +
             '    <title>Ficha de Práctica - Escaques de Oro</title>' +
             '    <style>' +
-            '        @page { size: A4; margin: 12mm; }' +
+            '        @page { size: A4; margin: 10mm; }' +
             '        body { font-family: Arial, sans-serif; color: #2c3e50; margin: 0; padding: 0; }' +
-            '        .header { border-bottom: 3px solid #27ae60; padding-bottom: 8px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; }' +
-            '        .logo { font-size: 18pt; font-weight: bold; color: #27ae60; }' +
-            '        .titulo { font-size: 14pt; font-weight: bold; text-align: right; }' +
-            '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 8px; margin-bottom: 15px; font-size: 10pt; }' +
-            '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }' +
-            '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 10px; background: #fff; page-break-inside: avoid; }' +
-            '        .ex-title { font-weight: bold; font-size: 10.5pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
-            '        .answer { margin-top: 8px; font-size: 9.5pt; color: #555; }' +
-            '        .line { border-bottom: 1px solid #7f8c8d; height: 18px; margin-top: 3px; }' +
+            '        .header { border-bottom: 3px solid #27ae60; padding-bottom: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }' +
+            '        .logo { font-size: 16pt; font-weight: bold; color: #27ae60; }' +
+            '        .titulo { font-size: 13pt; font-weight: bold; text-align: right; }' +
+            '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 6px; margin-bottom: 10px; font-size: 9.5pt; }' +
+            '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }' +
+            '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 8px; background: #fff; page-break-inside: avoid; display: flex; flex-direction: column; align-items: center; }' +
+            '        .ex-header { width: 100%; display: flex; justify-content: space-between; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
+            '        .board-img { width: 170px; height: 170px; margin: 4px 0; border: 1px solid #333; }' +
+            '        .answer { width: 100%; margin-top: 4px; font-size: 9pt; color: #555; }' +
+            '        .line { border-bottom: 1px solid #7f8c8d; height: 14px; margin-top: 2px; }' +
             '    </style>' +
             '</head>' +
             '<body>' +
@@ -750,9 +751,15 @@ $('#copyImgBtn').on('click', function() {
             '    <div class="grid">';
 
             listaProblemasFicha.forEach((item, index) => {
+                // Generador gráfico oficial basado en el FEN actual del tablero
+                var fenClean = item.fen.replace(/ /g, '_');
+                var imageUrl = "https://fen2image.chessvision.ai/" + fenClean;
+
                 htmlImpresion += '<div class="exercise">' +
-                    '<div class="ex-title">Ejercicio ' + (index + 1) + '</div>' +
-                    '<div style="font-size: 8pt; color: #666; margin-bottom: 4px;">FEN: ' + item.fen + '</div>' +
+                    '<div class="ex-header">' +
+                    '<span>Ejercicio ' + (index + 1) + '</span>' +
+                    '</div>' +
+                    '<img class="board-img" src="' + imageUrl + '" alt="Tablero de ajedrez">' +
                     '<div class="answer">' +
                     '<strong>Respuesta:</strong>' +
                     '<div class="line"></div>' +
