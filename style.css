@@ -524,12 +524,25 @@ section#descripcion img, .desc-imagen img {
     color: #d9534f;
 }
 
-/* Círculo ○ (El más grande) */
+/* CÍRCULO GIGANTE CENTRADO */
 .square-55d63.indicador-circulo::after {
-    content: "○";
-    font-size: 68px;
-    color: #0275d8;
-    font-weight: normal;
+    content: ""; /* Vacío para dibujarlo como elemento geométrico */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    /* Ocupa el 75% del tamaño de la casilla (puedes subirlo a 80% si lo quieres más grande) */
+    width: 75%;  
+    height: 75%; 
+    
+    /* Propiedades del círculo */
+    border: 6px solid #0275d8; /* Grosor y color azul del círculo */
+    border-radius: 50%;      /* Lo vuelve completamente redondo */
+    
+    z-index: 10;
+    pointer-events: none;
+    box-sizing: border-box; 
 }
 
 /* Símbolo - */
