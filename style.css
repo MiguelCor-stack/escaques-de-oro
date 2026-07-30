@@ -533,11 +533,11 @@ section#descripcion img, .desc-imagen img {
     transform: translate(-50%, -50%);
     
     /* Ocupa el 75% del tamaño de la casilla (puedes subirlo a 80% si lo quieres más grande) */
-    width: 75%;  
-    height: 75%; 
+    width: 90%;  
+    height: 90%; 
     
     /* Propiedades del círculo */
-    border: 6px solid #0275d8; /* Grosor y color azul del círculo */
+    border: 3px solid #0275d8; /* Grosor y color azul del círculo */
     border-radius: 50%;      /* Lo vuelve completamente redondo */
     
     z-index: 10;
