@@ -675,9 +675,15 @@ $('#copyImgBtn').on('click', function() {
     $(document).ready(function() {
         $('#startBtn').on('click', function() {
             miTablero.start();
+            
+            // Limpia clases de indicadores si las usan
             document.querySelectorAll('.square').forEach(casilla => {
                 casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
             });
+
+            // Borra cualquier elemento hijo extra (como símbolos, imágenes o iconos incrustados) que se hayan añadido en las casillas
+            // (Ajusta el selector si tus símbolos usan otra clase o etiqueta específica)
+            $('.square span, .square i, .square img, .marcador-simbolo').remove();
         });
 
         $('#flipBtn').on('click', function() { 
@@ -685,6 +691,4 @@ $('#copyImgBtn').on('click', function() {
         });
     });
 </script>
-
-
 </html>
