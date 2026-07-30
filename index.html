@@ -672,24 +672,19 @@ $('#copyImgBtn').on('click', function() {
     });
 </script>
 <script>
-document.getElementById('startBtn').addEventListener('click', function() {
-    if (typeof boardState !== 'undefined') {
-        boardState = [
-            ["br","bn","bb","bq","bk","bb","bn","br"],
-            ["bp","bp","bp","bp","bp","bp","bp","bp"],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["","","","","","","",""],
-            ["wp","wp","wp","wp","wp","wp","wp","wp"],
-            ["wr","wn","wb","wq","wk","wb","wn","wr"]
-        ];
-        turn = "w";
-        drawBoard();
-    }
-    document.querySelectorAll('.square').forEach(casilla => {
-        casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
+    $(document).ready(function() {
+        $('#startBtn').on('click', function() {
+            miTablero.start();
+            document.querySelectorAll('.square').forEach(casilla => {
+                casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
+            });
+        });
+
+        $('#flipBtn').on('click', function() { 
+            miTablero.flip(); 
+        });
     });
-});
 </script>
+
+
 </html>
