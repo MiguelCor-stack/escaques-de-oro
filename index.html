@@ -719,17 +719,11 @@ $('#copyImgBtn').on('click', function() {
 
             mostrarMensaje("⏳ Preparando fichas...");
 
-            // Guardamos la posición actual para restaurarla después
             var fenActualAntes = miTablero.fen();
-            var orientacionAntes = miTablero.orientation();
-
             var imagenesTableros = [];
 
-            // Recorremos cada problema guardado, lo cargamos un segundo en pantalla y le tomamos foto
             for (let i = 0; i < listaProblemasFicha.length; i++) {
                 miTablero.position(listaProblemasFicha[i].fen);
-                
-                // Esperamos un instante a que renderice
                 await new Promise(resolve => setTimeout(resolve, 150));
 
                 var tableroOriginal = document.querySelector('.chessboard-63f37');
@@ -755,10 +749,8 @@ $('#copyImgBtn').on('click', function() {
                 imagenesTableros.push(canvas.toDataURL("image/png"));
             }
 
-            // Restauramos el tablero a como lo tenía el usuario
             miTablero.position(fenActualAntes);
 
-            // Abrimos la ventana de impresión con los tableros limpios de tu propia web
             var ventanaImpresion = window.open('', '_blank');
             
             var htmlImpresion = '<!DOCTYPE html>' +
@@ -770,20 +762,25 @@ $('#copyImgBtn').on('click', function() {
             '        @page { size: A4; margin: 10mm; }' +
             '        body { font-family: Arial, sans-serif; color: #2c3e50; margin: 0; padding: 0; }' +
             '        .header { border-bottom: 3px solid #27ae60; padding-bottom: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }' +
+            '        .logo-area { display: flex; align-items: center; gap: 10px; }' +
+            '        .logo-img { width: 40px; height: 40px; object-fit: contain; }' +
             '        .logo { font-size: 16pt; font-weight: bold; color: #27ae60; }' +
             '        .titulo { font-size: 13pt; font-weight: bold; text-align: right; }' +
             '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 6px; margin-bottom: 10px; font-size: 9.5pt; }' +
             '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }' +
             '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 8px; background: #fff; page-break-inside: avoid; display: flex; flex-direction: column; align-items: center; }' +
             '        .ex-header { width: 100%; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
-            '        .board-img { width: 160px; height: 160px; margin: 4px 0; }' +
+            '        .board-img { width: 155px; height: 155px; margin: 4px 0; }' +
             '        .answer { width: 100%; margin-top: 4px; font-size: 9pt; color: #555; }' +
             '        .line { border-bottom: 1px solid #7f8c8d; height: 14px; margin-top: 2px; }' +
             '    </style>' +
             '</head>' +
             '<body>' +
             '    <div class="header">' +
-            '        <div class="logo">👑 Escaques de Oro</div>' +
+            '        <div class="logo-area">' +
+            '            <img src="logo.png" class="logo-img" alt="Logo">' +
+            '            <div class="logo">Escaques de Oro</div>' +
+            '        </div>' +
             '        <div class="titulo">Ficha de Práctica Táctica</div>' +
             '    </div>' +
             '    <div class="info-box">' +
