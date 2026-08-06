@@ -624,6 +624,15 @@ ${mensajeExtra || "Sin mensaje"}
     });
     $('#startBtn').on('click', function() { miTablero.start(); });
     $('#flipBtn').on('click', function() { miTablero.flip(); });
+    $('#agregarFichaBtn').on('click', function() {
+        var fenActual = miTablero.fen();
+        var turnoActual = esTurnoBlancas ? "Blancas" : "Negras";
+        mostrarMensaje("➕ ¡Posición añadida a la ficha correctamente!");
+    });
+
+    $('#imprimirFichaBtn').on('click', function() {
+        window.print();
+    });
 
     $('#copyImgBtn').on('click', function() {
         mostrarMensaje("⏳ Copiando...");
