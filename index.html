@@ -680,6 +680,22 @@ ${mensajeExtra || "Sin mensaje"}
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    // Pégalo aquí:
+    document.getElementById('subir-logo-input').addEventListener('change', function(e) {
+        var archivo = e.target.files[0];
+        if (archivo) {
+            var lector = new FileReader();
+            lector.onload = function(evento) {
+                document.getElementById('logo-preview').src = evento.target.result;
+            }
+            lector.readAsDataURL(archivo);
+        }
+    });
+</script>
 </script>
 
 <footer>
