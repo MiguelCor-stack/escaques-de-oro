@@ -567,7 +567,7 @@ ${mensajeExtra || "Sin mensaje"}
         <p style="text-align: center; font-size: 14px; color: #666; margin-bottom: 15px;">Arma tu posición con las piezas de repuesto y dale clic al botón verde para pegarla en Word.</p>
         
         <!-- Tablero HTML -->
-        <div id="boardProblemas" style="width: 100%; margin-bottom: 15px;"></div>
+<div id="boardProblemas" style="width: 100%; max-width: 400px; margin: 0 auto 15px auto;"></div>
         <input type="text" id="fenInput" placeholder="Pegar código FEN aquí..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
@@ -680,11 +680,7 @@ ${mensajeExtra || "Sin mensaje"}
     menuToggle.addEventListener('click', () => {
         navLinks.classList.toggle('active');
     });
-    menuToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
 
-    // Pégalo aquí:
     document.getElementById('subir-logo-input').addEventListener('change', function(e) {
         var archivo = e.target.files[0];
         if (archivo) {
@@ -696,10 +692,9 @@ ${mensajeExtra || "Sin mensaje"}
         }
     });
 </script>
-</script>
 
 <footer>
-        <p>© 2026 Academia de Ajedrez Escaques de Oro</p>
-    </footer>
-
+    <p>© 2026 Academia de Ajedrez Escaques de Oro</p>
+</footer>
+</body>
 </html>
