@@ -549,49 +549,44 @@ ${mensajeExtra || "Sin mensaje"}
 </script>
 <!-- 🧩 SECCIÓN DEL CREADOR DE PROBLEMAS PARA WORD -->
 <section id="creador" style="background: #f4f6f9; padding: 60px 20px; display: flex; flex-direction: column; align-items: center;">
-    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 480px; width: 100%;">
-        <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 600px;">
+    <div style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 600px;">
         
-    <!-- PEGA ESTO AQUÍ ARRIBA -->
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <label for="subir-logo-input" title="Haz clic para cambiar el logo" style="cursor: pointer;">
-                <img id="logo-preview" src="logo.png" alt="Logo" style="height: 40px; max-width: 120px; object-fit: contain; border: 2px dashed #ccc; padding: 2px; background: #fff;" />
-            </label>
-            <input type="file" id="subir-logo-input" accept="image/*" style="display: none;">
-            <input type="text" id="titulo-ficha" value="Escaques de Oro" style="font-size: 18px; font-weight: bold; color: #2c3e50; border: none; background: transparent; outline: none; width: 250px;">
+        <!-- Cabecera de Logo y Título -->
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; border-bottom: 2px solid #27ae60; padding-bottom: 10px;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <label for="subir-logo-input" title="Haz clic para cambiar el logo" style="cursor: pointer;">
+                    <img id="logo-preview" src="logo.png" alt="Logo" style="height: 40px; max-width: 120px; object-fit: contain; border: 2px dashed #ccc; padding: 2px; background: #fff;" />
+                </label>
+                <input type="file" id="subir-logo-input" accept="image/*" style="display: none;">
+                <input type="text" id="titulo-ficha" value="Escaques de Oro" style="font-size: 18px; font-weight: bold; color: #2c3e50; border: none; background: transparent; outline: none; width: 250px;">
+            </div>
+            <button type="button" onclick="document.getElementById('subir-logo-input').click()" style="background: #e0e0e0; padding: 5px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; border: 1px solid #ccc;">🖼️ Cambiar</button>
         </div>
-        <button type="button" onclick="document.getElementById('subir-logo-input').click()" style="background: #e0e0e0; padding: 5px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; border: 1px solid #ccc;">🖼️ Cambiar</button>
-    </div>
 
-    <!-- Y aquí continúa tu código original que ya tenías -->
-    <h2 style="text-align: center; margin-top: 0; color: #2c3e50; font-family: 'Poppins', sans-serif;">Crea tus Diagramas</h2>
+        <h2 style="text-align: center; margin-top: 0; color: #2c3e50; font-family: 'Poppins', sans-serif;">Crea tus Diagramas</h2>
         <h2 style="text-align: center; margin-top: 0; color: #2c3e50; font-family: 'Poppins', sans-serif;">Creador de Problemas</h2>
         <p style="text-align: center; font-size: 14px; color: #666; margin-bottom: 15px;">Arma tu posición con las piezas de repuesto y dale clic al botón verde para pegarla en Word.</p>
         
         <!-- Tablero HTML -->
-        
-    <div id="boardProblemas" style="width: 100%; margin-bottom: 15px;"></div>
-    <input type="text" id="fenInput" placeholder="Pegar código FEN aquí..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
+        <div id="boardProblemas" style="width: 100%; margin-bottom: 15px;"></div>
+        <input type="text" id="fenInput" placeholder="Pegar código FEN aquí..." style="width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 10px;">
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
-    <button id="turnoBtn" style="grid-column: span 2; padding: 10px; background: #333; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
-        Turno: Blancas
-    </button>
-    <button id="setFenBtn" style="padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Cargar FEN</button>
-    <button id="getFenBtn" style="padding: 10px; background: #2980b9; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Copiar FEN</button>
-    <button id="clearBtn" style="padding: 10px; background: #c0392b; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Vaciar Tablero</button>
-    <button id="startBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Posición Inicial</button>
-    <button id="flipBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Girar Vista</button>
-    <button id="agregarFichaBtn" style="padding: 10px; background: #27ae60; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">➕ Añadir a la Ficha</button>
-    <button id="imprimirFichaBtn" style="padding: 10px; background: #8e44ad; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">🖨️ Imprimir / Guardar PDF</button>
-</div>
-</div>
-        
-        <button id="copyImgBtn" style="display: block; width: auto; max-width: 320px; margin: 15px auto; padding: 12px 20px; background: #27ae60; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;">
-    📸 Copiar Imagen para Word
-</button>
+            <button id="turnoBtn" style="grid-column: span 2; padding: 10px; background: #333; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+                Turno: Blancas
+            </button>
+            <button id="setFenBtn" style="padding: 10px; background: #34495e; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Cargar FEN</button>
+            <button id="getFenBtn" style="padding: 10px; background: #2980b9; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Copiar FEN</button>
+            <button id="clearBtn" style="padding: 10px; background: #c0392b; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Vaciar Tablero</button>
+            <button id="startBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Posición Inicial</button>
+            <button id="flipBtn" style="padding: 10px; background: #7f8c8d; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Girar Vista</button>
+            <button id="agregarFichaBtn" style="padding: 10px; background: #27ae60; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">➕ Añadir a la Ficha</button>
+            <button id="imprimirFichaBtn" style="padding: 10px; background: #8e44ad; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">🖨️ Imprimir / Guardar PDF</button>
+        </div>
 
+        <button id="copyImgBtn" style="display: block; width: auto; max-width: 320px; margin: 15px auto; padding: 12px 20px; background: #27ae60; color: white; border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s;">
+            📸 Copiar Imagen para Word
+        </button>
         
         <div id="statusMsg" style="text-align: center; color: #27ae60; font-weight: bold; margin-top: 10px; min-height: 20px;"></div>
     </div>
@@ -599,11 +594,6 @@ ${mensajeExtra || "Sin mensaje"}
 
 <!-- LÓGICA DEL CREADOR DE PROBLEMAS -->
 <script>
-    // Inicializar el tablero editable con piezas sueltas (sparePieces)
-    // Inicializar el tablero editable apuntando a las imágenes en la nube
-    // Inicializar el tablero editable con las imágenes oficiales de Chessboardjs
-    // Configuración con piezas de texto (Unicode) para evitar bloqueos de imagen
-    // Inicializar el tablero buscando las piezas dentro de nuestro propio servidor
     var boardConfig = {
         draggable: true,
         dropOffBoard: 'trash',
@@ -612,14 +602,14 @@ ${mensajeExtra || "Sin mensaje"}
         pieceTheme: 'img/chesspieces/wikipedia/{piece}.png'
     };
     var miTablero = Chessboard('boardProblemas', boardConfig);
-     // Lógica para cambiar el turno
-let esTurnoBlancas = true;
-$('#turnoBtn').on('click', function() {
-    esTurnoBlancas = !esTurnoBlancas;
-    $(this).text(esTurnoBlancas ? "Turno: Blancas" : "Turno: Negras");
-    $(this).css("background-color", esTurnoBlancas ? "#333" : "#555");
-});
-    // Acciones de los botones
+    
+    let esTurnoBlancas = true;
+    $('#turnoBtn').on('click', function() {
+        esTurnoBlancas = !esTurnoBlancas;
+        $(this).text(esTurnoBlancas ? "Turno: Blancas" : "Turno: Negras");
+        $(this).css("background-color", esTurnoBlancas ? "#333" : "#555");
+    });
+
     $('#setFenBtn').on('click', function() {
         var fen = $('#fenInput').val().trim();
         if (fen) { miTablero.position(fen); mostrarMensaje("¡FEN cargado!"); }
@@ -630,57 +620,52 @@ $('#turnoBtn').on('click', function() {
         mostrarMensaje("📋 ¡FEN copiado a la caja!");
     });
     $('#clearBtn').on('click', function() { 
-    miTablero.clear(); 
-    $('.indicador-mas, .indicador-circulo, .indicador-menos').removeClass('indicador-mas indicador-circulo indicador-menos');
-});
+        miTablero.clear(); 
+        $('.indicador-mas, .indicador-circulo, .indicador-menos').removeClass('indicador-mas indicador-circulo indicador-menos');
+    });
     $('#startBtn').on('click', function() { miTablero.start(); });
     $('#flipBtn').on('click', function() { miTablero.flip(); });
 
-    // Captura y exportación a Word
-    // Captura y exportación a Word
-    // Captura y exportación a Word corregida para imágenes externas
-   // Captura garantizada: Descarga el diagrama como imagen PNG
-$('#copyImgBtn').on('click', function() {
-    mostrarMensaje("⏳ Copiando...");
+    $('#copyImgBtn').on('click', function() {
+        mostrarMensaje("⏳ Copiando...");
 
-    var tableroOriginal = document.querySelector('.chessboard-63f37');
-    var clon = tableroOriginal.cloneNode(true);
-    
-    var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
-    if (piezasAbajo) piezasAbajo.remove();
-
-    var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
-    if (piezasArriba) piezasArriba.remove();
-
-    clon.style.position = 'absolute';
-    clon.style.left = '-9999px';
-    document.body.appendChild(clon);
-
-    html2canvas(clon, {
-        useCORS: true,
-        backgroundColor: "#ffffff",
-        width: 430,
-        height: 430
-    }).then(function(canvas) {
-        document.body.removeChild(clon);
-
-        // --- ESCALADO A TAMAÑO PEQUEÑO ---
-        var newSize = 250; // <--- Cambia este valor: más bajo = más pequeña la imagen
-        var scaleCanvas = document.createElement('canvas');
-        scaleCanvas.width = newSize;
-        scaleCanvas.height = newSize;
-        var ctx = scaleCanvas.getContext('2d');
+        var tableroOriginal = document.querySelector('.chessboard-63f37');
+        var clon = tableroOriginal.cloneNode(true);
         
-        // Dibujamos el tablero original en el nuevo tamaño reducido
-        ctx.drawImage(canvas, 0, 0, newSize, newSize);
+        var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
+        if (piezasAbajo) piezasAbajo.remove();
 
-        scaleCanvas.toBlob(function(blob) {
-            navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-                .then(function() { mostrarMensaje("✅ ¡Copiado en tamaño pequeño!"); })
-                .catch(function(err) { mostrarMensaje("❌ Error"); });
+        var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
+        if (piezasArriba) piezasArriba.remove();
+
+        clon.style.position = 'absolute';
+        clon.style.left = '-9999px';
+        document.body.appendChild(clon);
+
+        html2canvas(clon, {
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            width: 430,
+            height: 430
+        }).then(function(canvas) {
+            document.body.removeChild(clon);
+
+            var newSize = 250;
+            var scaleCanvas = document.createElement('canvas');
+            scaleCanvas.width = newSize;
+            scaleCanvas.height = newSize;
+            var ctx = scaleCanvas.getContext('2d');
+            
+            ctx.drawImage(canvas, 0, 0, newSize, newSize);
+
+            scaleCanvas.toBlob(function(blob) {
+                navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
+                    .then(function() { mostrarMensaje("✅ ¡Copiado en tamaño pequeño!"); })
+                    .catch(function(err) { mostrarMensaje("❌ Error"); });
+            });
         });
     });
-});
+
     function mostrarMensaje(msg) {
         $('#statusMsg').text(msg);
         setTimeout(function() {
@@ -688,7 +673,7 @@ $('#copyImgBtn').on('click', function() {
         }, 3500);
     }
 </script>
-</body>
+
 <script>
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');
@@ -697,9 +682,9 @@ $('#copyImgBtn').on('click', function() {
         navLinks.classList.toggle('active');
     });
 </script>
+
 <script>
-    $(document).ready(function() {
-        $('#startBtn').on('click', function() {
+    $(document).ready(function() {$('#startBtn').on('click', function() {
             miTablero.start();
             document.querySelectorAll('.square-55d63').forEach(casilla => {
                 casilla.classList.remove('indicador-mas', 'indicador-circulo', 'indicador-menos');
@@ -728,109 +713,109 @@ $('#copyImgBtn').on('click', function() {
             mostrarMensaje("✅ ¡Ejercicio " + listaProblemasFicha.length + " agregado a la ficha!");
         });
 
-       $('#imprimirFichaBtn').on('click', async function() {
-    if(listaProblemasFicha.length === 0) {
-        mostrarMensaje("⚠️ Agrega al menos un ejercicio primero.");
-        return;
-    }
+        $('#imprimirFichaBtn').on('click', async function() {
+            if(listaProblemasFicha.length === 0) {
+                mostrarMensaje("⚠️ Agrega al menos un ejercicio primero.");
+                return;
+            }
 
-    mostrarMensaje("⏳ Preparando fichas...");
+            mostrarMensaje("⏳ Preparando fichas...");
 
-    var tituloAcademia = $('#titulo-ficha').val() || "Escaques de Oro";
-    var logoSrc = $('#logo-preview').attr('src') || "logo.png";
+            var tituloAcademia = $('#titulo-ficha').val() || "Escaques de Oro";
+            var logoSrc = $('#logo-preview').attr('src') || "logo.png";
 
-    var fenActualAntes = miTablero.fen();
-    var imagenesTableros = [];
+            var fenActualAntes = miTablero.fen();
+            var imagenesTableros = [];
 
-    for (let i = 0; i < listaProblemasFicha.length; i++) {
-        miTablero.position(listaProblemasFicha[i].fen);
-        await new Promise(resolve => setTimeout(resolve, 150));
+            for (let i = 0; i < listaProblemasFicha.length; i++) {
+                miTablero.position(listaProblemasFicha[i].fen);
+                await new Promise(resolve => setTimeout(resolve, 150));
 
-        var tableroOriginal = document.querySelector('.chessboard-63f37');
-        var clon = tableroOriginal.cloneNode(true);
-        
-        var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
-        if (piezasAbajo) piezasAbajo.remove();
-        var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
-        if (piezasArriba) piezasArriba.remove();
+                var tableroOriginal = document.querySelector('.chessboard-63f37');
+                var clon = tableroOriginal.cloneNode(true);
+                
+                var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
+                if (piezasAbajo) piezasAbajo.remove();
+                var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
+                if (piezasArriba) piezasArriba.remove();
 
-        clon.style.position = 'absolute';
-        clon.style.left = '-9999px';
-        document.body.appendChild(clon);
+                clon.style.position = 'absolute';
+                clon.style.left = '-9999px';
+                document.body.appendChild(clon);
 
-        let canvas = await html2canvas(clon, {
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            width: 430,
-            height: 430
+                let canvas = await html2canvas(clon, {
+                    useCORS: true,
+                    backgroundColor: "#ffffff",
+                    width: 430,
+                    height: 430
+                });
+
+                document.body.removeChild(clon);
+                imagenesTableros.push(canvas.toDataURL("image/png"));
+            }
+
+            miTablero.position(fenActualAntes);
+
+            var ventanaImpresion = window.open('', '_blank');
+            
+            var htmlImpresion = '<!DOCTYPE html>' +
+            '<html lang="es">' +
+            '<head>' +
+            '    <meta charset="UTF-8">' +
+            '    <title>Ficha de Práctica - ' + tituloAcademia + '</title>' +
+            '    <style>' +
+            '        @page { size: A4; margin: 10mm; }' +
+            '        body { font-family: Arial, sans-serif; color: #2c3e50; margin: 0; padding: 0; }' +
+            '        .header { border-bottom: 3px solid #27ae60; padding-bottom: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }' +
+            '        .logo-area { display: flex; align-items: center; gap: 10px; }' +
+            '        .logo-img { width: 40px; height: 40px; object-fit: contain; }' +
+            '        .logo { font-size: 16pt; font-weight: bold; color: #27ae60; }' +
+            '        .titulo { font-size: 13pt; font-weight: bold; text-align: right; }' +
+            '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 6px; margin-bottom: 10px; font-size: 9.5pt; }' +
+            '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }' +
+            '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 8px; background: #fff; page-break-inside: avoid; display: flex; flex-direction: column; align-items: center; }' +
+            '        .ex-header { width: 100%; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
+            '        .board-img { width: 155px; height: 155px; margin: 4px 0; }' +
+            '        .answer { width: 100%; margin-top: 4px; font-size: 9pt; color: #555; }' +
+            '        .line { border-bottom: 1px solid #7f8c8d; height: 14px; margin-top: 2px; }' +
+            '    </style>' +
+            '</head>' +
+            '<body>' +
+            '    <div class="header">' +
+            '        <div class="logo-area">' +
+            '            <img src="' + logoSrc + '" class="logo-img" alt="Logo">' +
+            '            <div class="logo">' + tituloAcademia + '</div>' +
+            '        </div>' +
+            '        <div class="titulo">Ficha de Práctica Táctica</div>' +
+            '    </div>' +
+            '    <div class="info-box">' +
+            '        <strong>Apellidos y Nombres:</strong> _________________________________________ &nbsp;&nbsp;&nbsp;' +
+            '        <strong>Grado:</strong> ________ &nbsp;&nbsp;&nbsp; <strong>Fecha:</strong> ____________' +
+            '    </div>' +
+            '    <div class="grid">';
+
+            imagenesTableros.forEach((imgData, index) => {
+                htmlImpresion += '<div class="exercise">' +
+                    '<div class="ex-header">Ejercicio ' + (index + 1) + '</div>' +
+                    '<img class="board-img" src="' + imgData + '" alt="Tablero">' +
+                    '<div class="answer">' +
+                    '<strong>Respuesta:</strong>' +
+                    '<div class="line"></div>' +
+                    '</div>' +
+                    '</div>';
+            });
+
+            htmlImpresion += '</div>' +
+            '<script>' +
+            '    window.onload = function() { window.print(); }' +
+            '<\/script>' +
+            '</body>' +
+            '</html>';
+
+            ventanaImpresion.document.write(htmlImpresion);
+            ventanaImpresion.document.close();
+            mostrarMensaje("");
         });
-
-        document.body.removeChild(clon);
-        imagenesTableros.push(canvas.toDataURL("image/png"));
-    }
-
-    miTablero.position(fenActualAntes);
-
-    var ventanaImpresion = window.open('', '_blank');
-    
-    var htmlImpresion = '<!DOCTYPE html>' +
-    '<html lang="es">' +
-    '<head>' +
-    '    <meta charset="UTF-8">' +
-    '    <title>Ficha de Práctica - ' + tituloAcademia + '</title>' +
-    '    <style>' +
-    '        @page { size: A4; margin: 10mm; }' +
-    '        body { font-family: Arial, sans-serif; color: #2c3e50; margin: 0; padding: 0; }' +
-    '        .header { border-bottom: 3px solid #27ae60; padding-bottom: 6px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }' +
-    '        .logo-area { display: flex; align-items: center; gap: 10px; }' +
-    '        .logo-img { width: 40px; height: 40px; object-fit: contain; }' +
-    '        .logo { font-size: 16pt; font-weight: bold; color: #27ae60; }' +
-    '        .titulo { font-size: 13pt; font-weight: bold; text-align: right; }' +
-    '        .info-box { background: #f8f9fa; border: 1px solid #dcdde1; padding: 6px; margin-bottom: 10px; font-size: 9.5pt; }' +
-    '        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }' +
-    '        .exercise { border: 1px solid #bdc3c7; border-radius: 6px; padding: 8px; background: #fff; page-break-inside: avoid; display: flex; flex-direction: column; align-items: center; }' +
-    '        .ex-header { width: 100%; font-weight: bold; font-size: 10pt; color: #2980b9; margin-bottom: 5px; border-bottom: 1px solid #ecf0f1; padding-bottom: 3px; }' +
-    '        .board-img { width: 155px; height: 155px; margin: 4px 0; }' +
-    '        .answer { width: 100%; margin-top: 4px; font-size: 9pt; color: #555; }' +
-    '        .line { border-bottom: 1px solid #7f8c8d; height: 14px; margin-top: 2px; }' +
-    '    </style>' +
-    '</head>' +
-    '<body>' +
-    '    <div class="header">' +
-    '        <div class="logo-area">' +
-    '            <img src="' + logoSrc + '" class="logo-img" alt="Logo">' +
-    '            <div class="logo">' + tituloAcademia + '</div>' +
-    '        </div>' +
-    '        <div class="titulo">Ficha de Práctica Táctica</div>' +
-    '    </div>' +
-    '    <div class="info-box">' +
-    '        <strong>Apellidos y Nombres:</strong> _________________________________________ &nbsp;&nbsp;&nbsp;' +
-    '        <strong>Grado:</strong> ________ &nbsp;&nbsp;&nbsp; <strong>Fecha:</strong> ____________' +
-    '    </div>' +
-    '    <div class="grid">';
-
-    imagenesTableros.forEach((imgData, index) => {
-        htmlImpresion += '<div class="exercise">' +
-            '<div class="ex-header">Ejercicio ' + (index + 1) + '</div>' +
-            '<img class="board-img" src="' + imgData + '" alt="Tablero">' +
-            '<div class="answer">' +
-            '<strong>Respuesta:</strong>' +
-            '<div class="line"></div>' +
-            '</div>' +
-            '</div>';
-    });
-
-    htmlImpresion += '</div>' +
-    '<script>' +
-    '    window.onload = function() { window.print(); }' +
-    '<\/script>' +
-    '</body>' +
-    '</html>';
-
-    ventanaImpresion.document.write(htmlImpresion);
-    ventanaImpresion.document.close();
-    mostrarMensaje("");
-});
     });
 </script>
 </html>
