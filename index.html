@@ -558,6 +558,7 @@ ${mensajeExtra || "Sin mensaje"}
                 </label>
                 <input type="file" id="subir-logo-input" accept="image/*" style="display: none;">
                 <input type="text" id="titulo-ficha" value="Escaques de Oro" style="font-size: 18px; font-weight: bold; color: #2c3e50; border: none; background: transparent; outline: none; width: 250px;">
+                <input type="text" id="titulo-problema" placeholder="Título del Problema (ej. Mate en 1)" style="font-size: 16px; margin-top: 5px; width: 100%; padding: 5px;">
             </div>
             <button type="button" onclick="document.getElementById('subir-logo-input').click()" style="background: #e0e0e0; padding: 5px 8px; font-size: 11px; border-radius: 4px; cursor: pointer; border: 1px solid #ccc;">🖼️ Cambiar</button>
         </div>
@@ -675,33 +676,34 @@ ${mensajeExtra || "Sin mensaje"}
 
         var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
         var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'Escaques de Oro';
+        // Aquí capturamos el valor de tu nuevo campo:
+        var tituloProblema = document.getElementById('titulo-problema') ? document.getElementById('titulo-problema').value : '';
 
         var ventanaImpresion = window.open('', '', 'height=900,width=1000');
         ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
         ventanaImpresion.document.write('<style>');
-        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
+        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 5px; }');
         
-        // Encabezado más compacto y limpio
-        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }');
+        // Estilos del encabezado
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; }');
         ventanaImpresion.document.write('.encabezado img { max-height: 35px; margin-right: 15px; }');
         ventanaImpresion.document.write('.info-header { flex-grow: 1; }');
         ventanaImpresion.document.write('h2 { margin: 0; font-size: 18px; }');
+        ventanaImpresion.document.write('.campo-titulo { font-size: 14px; margin-top: 2px; font-weight: bold; }');
         
-        // Campo para Título del Problema
-        ventanaImpresion.document.write('.campo-titulo { font-size: 14px; margin-top: 5px; font-weight: bold; }');
-        
-        // Grilla ajustada para que 6 diagramas grandes quepan en una hoja
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 12px 5px; justify-content: space-between; }');
+        // Estilos de los ejercicios (manteniendo el diseño compacto)
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 5px; justify-content: space-between; }');
         ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 90%; height: auto; margin: 0 auto; display: block; }');
-        ventanaImpresion.document.write('.respuesta { font-size: 11px; margin-top: 2px; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
+        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 2px; }');
         ventanaImpresion.document.write('</style></head><body>');
 
+        // Impresión del encabezado con el nuevo campo
         ventanaImpresion.document.write('<div class="encabezado">');
         if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
         ventanaImpresion.document.write('<div class="info-header">');
         ventanaImpresion.document.write('<h2>' + tituloInstitucion + '</h2>');
-        ventanaImpresion.document.write('<div class="campo-titulo">Título del Problema: ___________________________________________</div>');
+        if (tituloProblema) { ventanaImpresion.document.write('<div class="campo-titulo">' + tituloProblema + '</div>'); }
         ventanaImpresion.document.write('</div></div>');
 
         ventanaImpresion.document.write('<div class="grid-ejercicios">');
