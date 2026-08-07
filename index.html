@@ -667,7 +667,7 @@ ${mensajeExtra || "Sin mensaje"}
         });
     });
 
-   $('#imprimirFichaBtn').on('click', function() {
+  $('#imprimirFichaBtn').on('click', function() {
         if (listaFichas.length === 0) {
             alert("Primero debes añadir diagramas a la ficha usando el botón 'Añadir a la Ficha'.");
             return;
@@ -706,7 +706,6 @@ ${mensajeExtra || "Sin mensaje"}
         ventanaImpresion.document.close();
         setTimeout(function() { ventanaImpresion.print(); ventanaImpresion.close(); }, 500);
     });
-
         var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
 
         var ventanaImpresion = window.open('', '', 'height=800,width=900');
