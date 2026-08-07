@@ -673,7 +673,7 @@ ${mensajeExtra || "Sin mensaje"}
         alert("Ya se agregaron los seis ejercicios máximos permitidos para la ficha.");
         return;
     }
-    // Lógica existente para agregar el ejercicio a listaFichas
+    // Lógica para añadir el ejercicio a listaFichas
     // ...
 });
 
@@ -707,9 +707,9 @@ $('#imprimirFichaBtn').on('click', function() {
     ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
     ventanaImpresion.document.write('.item-ejercicio img { max-width: 68%; height: auto; margin: 0 auto 3px auto; display: block; }');
     
-    // Línea de respuesta en el mismo renglón
+    // Línea de respuesta en el mismo renglón pero con ancho controlado (ya no ocupa todo el flex-grow completo)
     ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; font-size: 11px; font-weight: bold; padding-left: 5px; }');
-    ventanaImpresion.document.write('.linea-guiones { flex-grow: 1; border-bottom: 1px solid #000; margin-left: 5px; height: 10px; }');
+    ventanaImpresion.document.write('.linea-guiones { width: 120px; border-bottom: 1px solid #000; margin-left: 5px; display: inline-block; height: 10px; }');
     ventanaImpresion.document.write('</style></head><body>');
 
     for (var i = 0; i < listaFichas.length; i += 6) {
