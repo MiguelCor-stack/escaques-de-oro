@@ -675,39 +675,38 @@ ${mensajeExtra || "Sin mensaje"}
     }
 
     var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
-    var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'Escaques de Oro';
+    var tituloInstitucion = 'Escaques de Oro'; // Logo/Marca
     var tituloProblema = document.getElementById('titulo-problema') ? document.getElementById('titulo-problema').value : '';
 
     var ventanaImpresion = window.open('', '', 'height=900,width=1000');
     ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
     ventanaImpresion.document.write('<style>');
-    // Ajustes de estilo
-    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 20px; }');
-    ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px; }');
-    ventanaImpresion.document.write('.encabezado img { max-height: 50px; margin-right: 20px; }');
-    // Mejora 3: Títulos más grandes
-    ventanaImpresion.document.write('h2 { margin: 0; font-size: 26px; }');
-    ventanaImpresion.document.write('.campo-titulo { font-size: 20px; margin-top: 8px; font-weight: bold; }');
+    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 15px; }');
     
-    // Mejora 1: Más espacio vertical entre tableros
-    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 45px 10px; justify-content: space-between; }');
-    ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 48%; text-align: left; page-break-inside: avoid; }');
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 90%; height: auto; margin: 0 auto 15px auto; display: block; }');
+    // Ajuste: Logo pequeño y arriba, Título del problema grande
+    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 20px; }');
+    ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }');
+    ventanaImpresion.document.write('.logo-container img { max-height: 30px; margin-right: 8px; }');
+    ventanaImpresion.document.write('.logo-container span { font-size: 14px; font-weight: bold; }');
+    ventanaImpresion.document.write('h1 { margin: 0; font-size: 28px; }'); // Título del problema grande
     
-    // Mejora 2: Línea de respuesta más larga y desplazada
-    ventanaImpresion.document.write('.respuesta { font-size: 14px; margin-top: 5px; font-weight: bold; padding-left: 10px; }');
-    ventanaImpresion.document.write('.circulo-turno { font-size: 16px; margin-right: 8px; }');
+    // Ajuste: 6 ejercicios por página, más compactos
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 20px 10px; justify-content: space-between; }');
+    ventanaImpresion.document.write('.item-ejercicio { width: 32%; text-align: left; page-break-inside: avoid; }'); // 3 columnas para que entren 6
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 90%; height: auto; margin: 0 auto 5px auto; display: block; }');
+    
+    ventanaImpresion.document.write('.respuesta { font-size: 12px; font-weight: bold; padding-left: 5px; }');
     ventanaImpresion.document.write('</style></head><body>');
 
-    // Encabezado
+    // Encabezado con nueva jerarquía
     ventanaImpresion.document.write('<div class="encabezado">');
+    ventanaImpresion.document.write('<div class="logo-container">');
     if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
-    ventanaImpresion.document.write('<div class="info-header">');
-    ventanaImpresion.document.write('<h2>' + tituloInstitucion + '</h2>');
-    if (tituloProblema) { ventanaImpresion.document.write('<div class="campo-titulo">' + tituloProblema + '</div>'); }
-    ventanaImpresion.document.write('</div></div>');
+    ventanaImpresion.document.write('<span>' + tituloInstitucion + '</span></div>');
+    ventanaImpresion.document.write('<h1>' + tituloProblema + '</h1>');
+    ventanaImpresion.document.write('</div>');
 
-    // Grid de ejercicios
+    // Grid
     ventanaImpresion.document.write('<div class="grid-ejercicios">');
     for (var i = 0; i < listaFichas.length; i++) {
         var textoTurno = listaFichas[i].turno || '';
@@ -715,8 +714,8 @@ ${mensajeExtra || "Sin mensaje"}
 
         ventanaImpresion.document.write('<div class="item-ejercicio">');
         ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
-        // Aquí ajusté la longitud de la línea de respuesta
-        ventanaImpresion.document.write('<div class="respuesta">' + simbolo + ' Ejercicio ' + (i + 1) + ': _________________________________</div>');
+        // Abreviado: "Ej."
+        ventanaImpresion.document.write('<div class="respuesta">' + simbolo + ' Ej. ' + (i + 1) + ': _________</div>');
         ventanaImpresion.document.write('</div>');
     }
     ventanaImpresion.document.write('</div></body></html>');
