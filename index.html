@@ -668,56 +668,61 @@ ${mensajeExtra || "Sin mensaje"}
         });
     });
 
-  $('#imprimirFichaBtn').on('click', function() {
-        if (listaFichas.length === 0) {
-            alert("Primero debes añadir diagramas a la ficha.");
-            return;
+ $('#imprimirFichaBtn').on('click', function() {
+    if (listaFichas.length === 0) {
+        alert("Primero debes añadir diagramas a la ficha.");
+        return;
+    }
+
+    var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
+    var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'Escaques de Oro';
+    var tituloProblema = document.getElementById('titulo-problema') ? document.getElementById('titulo-problema').value : '';
+
+    var ventanaImpresion = window.open('', '', 'height=900,width=1000');
+    ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
+    ventanaImpresion.document.write('<style>');
+    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 5px; }');
+    ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; }');
+    ventanaImpresion.document.write('.encabezado img { max-height: 35px; margin-right: 15px; }');
+    ventanaImpresion.document.write('.info-header { flex-grow: 1; }');
+    ventanaImpresion.document.write('h2 { margin: 0; font-size: 18px; }');
+    ventanaImpresion.document.write('.campo-titulo { font-size: 14px; margin-top: 2px; font-weight: bold; }');
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 5px; justify-content: space-between; }');
+    ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
+    ventanaImpresion.document.write('.respuesta { font-size: 11px; margin-top: 3px; font-weight: bold; display: flex; align-items: center; justify-content: center; }');
+    ventanaImpresion.document.write('.circulo-turno { font-size: 14px; margin-right: 6px; }');
+    ventanaImpresion.document.write('</style></head><body>');
+
+    ventanaImpresion.document.write('<div class="encabezado">');
+    if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
+    ventanaImpresion.document.write('<div class="info-header">');
+    ventanaImpresion.document.write('<h2>' + tituloInstitucion + '</h2>');
+    if (tituloProblema) { ventanaImpresion.document.write('<div class="campo-titulo">' + tituloProblema + '</div>'); }
+    ventanaImpresion.document.write('</div></div>');
+
+    ventanaImpresion.document.write('<div class="grid-ejercicios">');
+    for (var i = 0; i < listaFichas.length; i++) {
+        var textoTurno = listaFichas[i].turno || '';
+        var simbolo = '';
+        
+        // Si el texto guardado incluye "Negras", ponemos el círculo oscuro, si no, el blanco
+        if (textoTurno.includes('Negras')) {
+            simbolo = '<span class="circulo-turno">⚫</span>';
+        } else {
+            simbolo = '<span class="circulo-turno">⚪</span>';
         }
 
-        var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
-        var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'Escaques de Oro';
-        // Aquí capturamos el valor de tu nuevo campo:
-        var tituloProblema = document.getElementById('titulo-problema') ? document.getElementById('titulo-problema').value : '';
-
-        var ventanaImpresion = window.open('', '', 'height=900,width=1000');
-        ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
-        ventanaImpresion.document.write('<style>');
-        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 5px; }');
-        
-        // Estilos del encabezado
-        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 10px; }');
-        ventanaImpresion.document.write('.encabezado img { max-height: 35px; margin-right: 15px; }');
-        ventanaImpresion.document.write('.info-header { flex-grow: 1; }');
-        ventanaImpresion.document.write('h2 { margin: 0; font-size: 18px; }');
-        ventanaImpresion.document.write('.campo-titulo { font-size: 14px; margin-top: 2px; font-weight: bold; }');
-        
-        // Estilos de los ejercicios (manteniendo el diseño compacto)
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 5px; justify-content: space-between; }');
-        ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
-        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 2px; }');
-        ventanaImpresion.document.write('</style></head><body>');
-
-        // Impresión del encabezado con el nuevo campo
-        ventanaImpresion.document.write('<div class="encabezado">');
-        if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
-        ventanaImpresion.document.write('<div class="info-header">');
-        ventanaImpresion.document.write('<h2>' + tituloInstitucion + '</h2>');
-        if (tituloProblema) { ventanaImpresion.document.write('<div class="campo-titulo">' + tituloProblema + '</div>'); }
-        ventanaImpresion.document.write('</div></div>');
-
-        ventanaImpresion.document.write('<div class="grid-ejercicios">');
-        for (var i = 0; i < listaFichas.length; i++) {
-            ventanaImpresion.document.write('<div class="item-ejercicio">');
-            ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
-            ventanaImpresion.document.write('<div class="respuesta">Ejercicio ' + (i + 1) + ' - Respuesta: ______</div>');
-            ventanaImpresion.document.write('</div>');
-        }
-        ventanaImpresion.document.write('</div></body></html>');
-        
-        ventanaImpresion.document.close();
-        setTimeout(function() { ventanaImpresion.print(); ventanaImpresion.close(); }, 500);
-    });
+        ventanaImpresion.document.write('<div class="item-ejercicio">');
+        ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
+        ventanaImpresion.document.write('<div class="respuesta">' + simbolo + ' Ejercicio ' + (i + 1) + ' - Resp: ______</div>');
+        ventanaImpresion.document.write('</div>');
+    }
+    ventanaImpresion.document.write('</div></body></html>');
+    
+    ventanaImpresion.document.close();
+    setTimeout(function() { ventanaImpresion.print(); ventanaImpresion.close(); }, 500);
+});
     $('#copyImgBtn').on('click', function() {
         mostrarMensaje("⏳ Copiando...");
 
