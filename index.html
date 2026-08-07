@@ -680,21 +680,29 @@ ${mensajeExtra || "Sin mensaje"}
         ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
         ventanaImpresion.document.write('<style>');
         ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
-        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px; }');
-        ventanaImpresion.document.write('.encabezado img { max-height: 40px; }');
-        ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
         
-        // AQUÍ ESTÁ EL CAMBIO: gap de 18px vertical y 5px horizontal para separar las filas
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 18px 5px; justify-content: space-between; }');
+        // Encabezado más compacto y limpio
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 15px; }');
+        ventanaImpresion.document.write('.encabezado img { max-height: 35px; margin-right: 15px; }');
+        ventanaImpresion.document.write('.info-header { flex-grow: 1; }');
+        ventanaImpresion.document.write('h2 { margin: 0; font-size: 18px; }');
+        
+        // Campo para Título del Problema
+        ventanaImpresion.document.write('.campo-titulo { font-size: 14px; margin-top: 5px; font-weight: bold; }');
+        
+        // Grilla ajustada para que 6 diagramas grandes quepan en una hoja
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 12px 5px; justify-content: space-between; }');
         ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
-        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 4px; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 90%; height: auto; margin: 0 auto; display: block; }');
+        ventanaImpresion.document.write('.respuesta { font-size: 11px; margin-top: 2px; }');
         ventanaImpresion.document.write('</style></head><body>');
 
         ventanaImpresion.document.write('<div class="encabezado">');
         if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
-        ventanaImpresion.document.write('<div class="titulo-academia"><h2>' + tituloInstitucion + '</h2></div>');
-        ventanaImpresion.document.write('</div>');
+        ventanaImpresion.document.write('<div class="info-header">');
+        ventanaImpresion.document.write('<h2>' + tituloInstitucion + '</h2>');
+        ventanaImpresion.document.write('<div class="campo-titulo">Título del Problema: ___________________________________________</div>');
+        ventanaImpresion.document.write('</div></div>');
 
         ventanaImpresion.document.write('<div class="grid-ejercicios">');
         for (var i = 0; i < listaFichas.length; i++) {
