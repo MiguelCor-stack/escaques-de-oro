@@ -669,7 +669,7 @@ ${mensajeExtra || "Sin mensaje"}
 
   $('#imprimirFichaBtn').on('click', function() {
         if (listaFichas.length === 0) {
-            alert("Primero debes añadir diagramas a la ficha usando el botón 'Añadir a la Ficha'.");
+            alert("Primero debes añadir diagramas a la ficha.");
             return;
         }
 
@@ -679,30 +679,29 @@ ${mensajeExtra || "Sin mensaje"}
         var ventanaImpresion = window.open('', '', 'height=900,width=1000');
         ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
         ventanaImpresion.document.write('<style>');
-        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 8px; color: #333; }');
-        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 8px; }');
-        ventanaImpresion.document.write('.encabezado img { max-height: 45px; width: auto; }');
+        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; margin-bottom: 10px; }');
+        ventanaImpresion.document.write('.encabezado img { max-height: 40px; }');
         ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
-        ventanaImpresion.document.write('h2 { margin: 0; font-size: 19px; } p { font-size: 12px; margin: 0; }');
         
-        // Estilos optimizados para que los 6 diagramas grandes entren perfectamente en una sola hoja
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }');
-        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #bbb; padding: 4px; border-radius: 4px; width: 48%; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 210px; height: auto; margin: 2px auto; display: block; }');
-        
+        // DISEÑO 3x2: Quitando bordes y márgenes internos para que el tablero ocupe todo
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 5px; justify-content: space-between; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
+        // Aquí forzamos el tablero a crecer al máximo posible
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
+        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 2px; }');
         ventanaImpresion.document.write('</style></head><body>');
 
         ventanaImpresion.document.write('<div class="encabezado">');
         if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
-        ventanaImpresion.document.write('<div class="titulo-academia"><h2>' + tituloInstitucion + '</h2><p>Ficha de Ejercicios de Ajedrez</p></div>');
+        ventanaImpresion.document.write('<div class="titulo-academia"><h2>' + tituloInstitucion + '</h2></div>');
         ventanaImpresion.document.write('</div>');
 
         ventanaImpresion.document.write('<div class="grid-ejercicios">');
         for (var i = 0; i < listaFichas.length; i++) {
             ventanaImpresion.document.write('<div class="item-ejercicio">');
-            ventanaImpresion.document.write('<h4 style="margin:2px 0; font-size:13px;">Ejercicio ' + (i + 1) + '</h4>');
             ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
-            ventanaImpresion.document.write('<div style="margin-top:2px; border-top:1px dashed #777; padding-top:2px; font-size:11px;">Respuesta: ______</div>');
+            ventanaImpresion.document.write('<div class="respuesta">Ejercicio ' + (i + 1) + ' - Respuesta: ______</div>');
             ventanaImpresion.document.write('</div>');
         }
         ventanaImpresion.document.write('</div></body></html>');
