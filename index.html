@@ -681,25 +681,26 @@ ${mensajeExtra || "Sin mensaje"}
     var ventanaImpresion = window.open('', '', 'height=900,width=1000');
     ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
     ventanaImpresion.document.write('<style>');
-    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 15px; }');
+    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
     
     ventanaImpresion.document.write('.pagina-ficha { page-break-after: always; height: 100vh; box-sizing: border-box; }');
     ventanaImpresion.document.write('.pagina-ficha:last-child { page-break-after: avoid; }');
 
-    // Encabezado: Mayor margen inferior para dar espacio a los primeros tableros
-    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 50px; }');
-    ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }');
-    ventanaImpresion.document.write('.logo-container img { max-height: 25px; margin-right: 8px; }');
-    ventanaImpresion.document.write('.logo-container span { font-size: 14px; font-weight: bold; }');
-    ventanaImpresion.document.write('h1 { margin: 5px 0 0 0; font-size: 22px; }');
+    // Encabezado con un espacio superior equilibrado para los primeros tableros
+    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 20px; }');
+    ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }');
+    ventanaImpresion.document.write('.logo-container img { max-height: 24px; margin-right: 6px; }');
+    ventanaImpresion.document.write('.logo-container span { font-size: 13px; font-weight: bold; }');
+    ventanaImpresion.document.write('h1 { margin: 2px 0 0 0; font-size: 20px; }');
     
-    // Grid: Espaciado vertical más amplio entre filas
-    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 40px 10px; justify-content: space-between; }');
+    // Grid optimizado para que los 6 quepan exactamente en una hoja
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 12px 10px; justify-content: space-between; }');
     ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 80%; height: auto; margin: 0 auto 10px auto; display: block; }');
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 75%; height: auto; margin: 0 auto 4px auto; display: block; }');
     
-    // Respuesta: Línea más larga
-    ventanaImpresion.document.write('.respuesta { font-size: 12px; font-weight: bold; padding-left: 10px; line-height: 1.5; }');
+    // Estilo para colocar el indicador y la línea de respuesta perfectamente en el mismo renglón
+    ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; font-size: 11px; font-weight: bold; padding-left: 5px; }');
+    ventanaImpresion.document.write('.linea-guiones { flex-grow: 1; border-bottom: 1px solid #000; margin-left: 5px; height: 10px; }');
     ventanaImpresion.document.write('</style></head><body>');
 
     for (var i = 0; i < listaFichas.length; i += 6) {
@@ -719,8 +720,8 @@ ${mensajeExtra || "Sin mensaje"}
 
             ventanaImpresion.document.write('<div class="item-ejercicio">');
             ventanaImpresion.document.write('<img src="' + listaFichas[j].imgUrl + '">');
-            // Línea de respuesta extendida
-            ventanaImpresion.document.write('<div class="respuesta">' + simbolo + ' Ej. ' + (j + 1) + ': ___________________________________________</div>');
+            // Elementos en el mismo renglón: Símbolo + Número + Línea extendida automáticamente
+            ventanaImpresion.document.write('<div class="respuesta-linea"><span>' + simbolo + ' Ej. ' + (j + 1) + ':</span><span class="linea-guiones"></span></div>');
             ventanaImpresion.document.write('</div>');
         }
         ventanaImpresion.document.write('</div>'); 
