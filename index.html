@@ -675,27 +675,28 @@ ${mensajeExtra || "Sin mensaje"}
     }
 
     var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
-    var tituloInstitucion = 'ACADEMIA DE AJEDREZ ESCAQUES DE ORO'; // Texto actualizado
+    // Recuperamos el valor del campo editable, con el nombre por defecto como respaldo
+    var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'ACADEMIA DE AJEDREZ ESCAQUES DE ORO';
     var tituloProblema = document.getElementById('titulo-problema') ? document.getElementById('titulo-problema').value : '';
 
     var ventanaImpresion = window.open('', '', 'height=900,width=1000');
     ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
     ventanaImpresion.document.write('<style>');
-    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 25px; }');
+    // Márgenes más estrechos para que quepan 6 ejercicios
+    ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
     
-    // Encabezado
-    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 30px; }');
-    ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 5px; }');
-    ventanaImpresion.document.write('.logo-container img { max-height: 35px; margin-right: 10px; }');
-    ventanaImpresion.document.write('.logo-container span { font-size: 15px; font-weight: bold; }');
-    ventanaImpresion.document.write('h1 { margin: 5px 0 0 0; font-size: 28px; }');
+    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 15px; }');
+    ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }');
+    ventanaImpresion.document.write('.logo-container img { max-height: 25px; margin-right: 8px; }');
+    ventanaImpresion.document.write('.logo-container span { font-size: 14px; font-weight: bold; }');
+    ventanaImpresion.document.write('h1 { margin: 2px 0 0 0; font-size: 22px; }');
     
-    // Mejora: 2 columnas (3 filas x 2 columnas = 6 ejercicios)
-    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 40px 20px; justify-content: space-between; }');
+    // Grid compacto para que 6 ejercicios quepan en una hoja
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 15px 10px; justify-content: space-between; }');
     ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto 10px auto; display: block; }');
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 85%; height: auto; margin: 0 auto 2px auto; display: block; }');
     
-    ventanaImpresion.document.write('.respuesta { font-size: 14px; font-weight: bold; padding-left: 10px; }');
+    ventanaImpresion.document.write('.respuesta { font-size: 12px; font-weight: bold; padding-left: 10px; }');
     ventanaImpresion.document.write('</style></head><body>');
 
     ventanaImpresion.document.write('<div class="encabezado">');
