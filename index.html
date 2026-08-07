@@ -692,26 +692,26 @@ $('#imprimirFichaBtn').on('click', function() {
     ventanaImpresion.document.write('<style>');
     ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
     
-    // Página optimizada para eliminar el espacio vacío inferior
+    // Página optimizada
     ventanaImpresion.document.write('.pagina-ficha { page-break-after: always; box-sizing: border-box; padding-bottom: 0px; margin-top: 5px; }');
     ventanaImpresion.document.write('.pagina-ficha:last-child { page-break-after: avoid; }');
 
-    // Encabezado con espacio superior equilibrado
+    // Encabezado
     ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 15px; }');
     ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }');
     ventanaImpresion.document.write('.logo-container img { max-height: 22px; margin-right: 6px; }');
     ventanaImpresion.document.write('.logo-container span { font-size: 13px; font-weight: bold; }');
     ventanaImpresion.document.write('h1 { margin: 2px 0 0 0; font-size: 19px; }');
     
-    // Grid optimizado para los 6 ejercicios en una sola hoja
-    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 10px; justify-content: space-between; }');
-    ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
+    // Grid y separación superior añadida (margin-top de 12px para separarlos de arriba)
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 15px 10px; justify-content: space-between; }');
+    ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; margin-top: 8px; }'); 
     
-    // Tableros ampliados al 95% para ocupar casi todo el espacio disponible
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto 4px auto; display: block; }');
+    // Tableros ampliados al 98% para aprovechar al máximo el espacio vertical
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 98%; height: auto; margin: 0 auto 6px auto; display: block; }');
     
-    // Línea de respuesta ajustada exactamente al nuevo ancho del tablero (95%)
-    ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; width: 95%; margin: 0 auto; font-size: 11px; font-weight: bold; }');
+    // Línea de respuesta ajustada al 98%
+    ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; width: 98%; margin: 0 auto; font-size: 11px; font-weight: bold; }');
     ventanaImpresion.document.write('.linea-guiones { flex-grow: 1; border-bottom: 1px solid #000; margin-left: 5px; height: 10px; }');
     
     ventanaImpresion.document.write('</style></head><body>');
