@@ -668,7 +668,16 @@ ${mensajeExtra || "Sin mensaje"}
         });
     });
 
- $('#imprimirFichaBtn').on('click', function() {
+ $('#agregarFichaBtn').on('click', function() {
+    if (listaFichas.length >= 6) {
+        alert("Ya se agregaron los seis ejercicios máximos permitidos para la ficha.");
+        return;
+    }
+    // Lógica existente para agregar el ejercicio a listaFichas
+    // ...
+});
+
+$('#imprimirFichaBtn').on('click', function() {
     if (listaFichas.length === 0) {
         alert("Primero debes añadir diagramas a la ficha.");
         return;
@@ -683,22 +692,22 @@ ${mensajeExtra || "Sin mensaje"}
     ventanaImpresion.document.write('<style>');
     ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; }');
     
-    ventanaImpresion.document.write('.pagina-ficha { page-break-after: always; height: 100vh; box-sizing: border-box; }');
+    ventanaImpresion.document.write('.pagina-ficha { page-break-after: always; box-sizing: border-box; padding-bottom: 10px; }');
     ventanaImpresion.document.write('.pagina-ficha:last-child { page-break-after: avoid; }');
 
-    // Encabezado con un espacio superior equilibrado para los primeros tableros
-    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 6px; margin-bottom: 20px; }');
+    // Encabezado con espacio superior equilibrado
+    ventanaImpresion.document.write('.encabezado { text-align: center; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 15px; }');
     ventanaImpresion.document.write('.logo-container { display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }');
-    ventanaImpresion.document.write('.logo-container img { max-height: 24px; margin-right: 6px; }');
+    ventanaImpresion.document.write('.logo-container img { max-height: 22px; margin-right: 6px; }');
     ventanaImpresion.document.write('.logo-container span { font-size: 13px; font-weight: bold; }');
-    ventanaImpresion.document.write('h1 { margin: 2px 0 0 0; font-size: 20px; }');
+    ventanaImpresion.document.write('h1 { margin: 2px 0 0 0; font-size: 19px; }');
     
-    // Grid optimizado para que los 6 quepan exactamente en una hoja
-    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 12px 10px; justify-content: space-between; }');
+    // Grid optimizado para los 6 ejercicios en una sola hoja
+    ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 10px; justify-content: space-between; }');
     ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 75%; height: auto; margin: 0 auto 4px auto; display: block; }');
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 68%; height: auto; margin: 0 auto 3px auto; display: block; }');
     
-    // Estilo para colocar el indicador y la línea de respuesta perfectamente en el mismo renglón
+    // Línea de respuesta en el mismo renglón
     ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; font-size: 11px; font-weight: bold; padding-left: 5px; }');
     ventanaImpresion.document.write('.linea-guiones { flex-grow: 1; border-bottom: 1px solid #000; margin-left: 5px; height: 10px; }');
     ventanaImpresion.document.write('</style></head><body>');
@@ -720,7 +729,6 @@ ${mensajeExtra || "Sin mensaje"}
 
             ventanaImpresion.document.write('<div class="item-ejercicio">');
             ventanaImpresion.document.write('<img src="' + listaFichas[j].imgUrl + '">');
-            // Elementos en el mismo renglón: Símbolo + Número + Línea extendida automáticamente
             ventanaImpresion.document.write('<div class="respuesta-linea"><span>' + simbolo + ' Ej. ' + (j + 1) + ':</span><span class="linea-guiones"></span></div>');
             ventanaImpresion.document.write('</div>');
         }
