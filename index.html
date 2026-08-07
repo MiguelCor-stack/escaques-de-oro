@@ -669,13 +669,14 @@ ${mensajeExtra || "Sin mensaje"}
 
   $('#imprimirFichaBtn').on('click', function() {
         if (listaFichas.length === 0) {
-            alert("Primero debes añadir diagramas a la ficha.");
+            alert("Primero debes añadir diagramas a la ficha usando el botón 'Añadir a la Ficha'.");
             return;
         }
 
         var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
+        var tituloInstitucion = document.getElementById('titulo-ficha') ? document.getElementById('titulo-ficha').value : 'Escaques de Oro';
+
         var ventanaImpresion = window.open('', '', 'height=900,width=1000');
-        
         ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
         ventanaImpresion.document.write('<style>');
         ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 20px; color: #333; }');
@@ -683,24 +684,25 @@ ${mensajeExtra || "Sin mensaje"}
         ventanaImpresion.document.write('.encabezado img { max-height: 60px; width: auto; }');
         ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
         ventanaImpresion.document.write('h2 { margin: 0; font-size: 22px; } p { font-size: 14px; margin: 0; }');
-        // Ajuste de cuadrícula para 6 elementos que llenan la hoja
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 15px; justify-content: space-between; }');
-        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #aaa; padding: 10px; border-radius: 8px; width: 32%; min-height: 180px; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 140px; height: auto; margin: 10px auto; display: block; }');
+        
+        // Ajuste a 2 columnas amplias (48% de ancho cada una) para llenar la hoja
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-between; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #aaa; padding: 15px; border-radius: 8px; width: 48%; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 220px; height: auto; margin: 10px auto; display: block; }');
+        
         ventanaImpresion.document.write('</style></head><body>');
 
         ventanaImpresion.document.write('<div class="encabezado">');
         if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
-        // Aquí actualizamos el nombre a Colegio Santa Mónica
-        ventanaImpresion.document.write('<div class="titulo-academia"><h2>Colegio Santa Mónica</h2><p>Ficha de Ejercicios de Ajedrez</p></div>');
+        ventanaImpresion.document.write('<div class="titulo-academia"><h2>' + tituloInstitucion + '</h2><p>Ficha de Ejercicios de Ajedrez</p></div>');
         ventanaImpresion.document.write('</div>');
 
         ventanaImpresion.document.write('<div class="grid-ejercicios">');
         for (var i = 0; i < listaFichas.length; i++) {
             ventanaImpresion.document.write('<div class="item-ejercicio">');
-            ventanaImpresion.document.write('<h4 style="margin:5px 0; font-size:14px;">Ejercicio ' + (i + 1) + '</h4>');
+            ventanaImpresion.document.write('<h4 style="margin:5px 0; font-size:15px;">Ejercicio ' + (i + 1) + '</h4>');
             ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
-            ventanaImpresion.document.write('<div style="margin-top:10px; border-top:1px dashed #777; padding-top:5px; font-size:12px;">Respuesta: ______</div>');
+            ventanaImpresion.document.write('<div style="margin-top:12px; border-top:1px dashed #777; padding-top:6px; font-size:13px;">Respuesta: ______</div>');
             ventanaImpresion.document.write('</div>');
         }
         ventanaImpresion.document.write('</div></body></html>');
