@@ -707,11 +707,11 @@ $('#imprimirFichaBtn').on('click', function() {
     ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px 10px; justify-content: space-between; }');
     ventanaImpresion.document.write('.item-ejercicio { width: 48%; text-align: left; page-break-inside: avoid; }'); 
     
-    // Imagen del tablero ajustada para aprovechar mejor el espacio vertical
-    ventanaImpresion.document.write('.item-ejercicio img { max-width: 73%; height: auto; margin: 0 auto 5px auto; display: block; }');
+    // Tableros ampliados al 82% para ocupar mejor el espacio vertical de la hoja
+    ventanaImpresion.document.write('.item-ejercicio img { max-width: 82%; height: auto; margin: 0 auto 4px auto; display: block; }');
     
-    // Línea de respuesta con el mismo ancho que el tablero (73%)
-    ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; width: 73%; margin: 0 auto; font-size: 11px; font-weight: bold; }');
+    // Línea de respuesta ajustada al mismo ancho del tablero (82%)
+    ventanaImpresion.document.write('.respuesta-linea { display: flex; align-items: baseline; width: 82%; margin: 0 auto; font-size: 11px; font-weight: bold; }');
     ventanaImpresion.document.write('.linea-guiones { flex-grow: 1; border-bottom: 1px solid #000; margin-left: 5px; height: 10px; }');
     
     ventanaImpresion.document.write('</style></head><body>');
