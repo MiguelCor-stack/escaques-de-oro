@@ -684,12 +684,11 @@ ${mensajeExtra || "Sin mensaje"}
         ventanaImpresion.document.write('.encabezado img { max-height: 40px; }');
         ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
         
-        // DISEÑO 3x2: Quitando bordes y márgenes internos para que el tablero ocupe todo
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 5px; justify-content: space-between; }');
+        // AQUÍ ESTÁ EL CAMBIO: gap de 18px vertical y 5px horizontal para separar las filas
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 18px 5px; justify-content: space-between; }');
         ventanaImpresion.document.write('.item-ejercicio { border: none; padding: 0; width: 49%; text-align: center; page-break-inside: avoid; }');
-        // Aquí forzamos el tablero a crecer al máximo posible
         ventanaImpresion.document.write('.item-ejercicio img { max-width: 95%; height: auto; margin: 0 auto; display: block; }');
-        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 2px; }');
+        ventanaImpresion.document.write('.respuesta { font-size: 10px; margin-top: 4px; }');
         ventanaImpresion.document.write('</style></head><body>');
 
         ventanaImpresion.document.write('<div class="encabezado">');
