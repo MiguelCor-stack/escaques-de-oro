@@ -667,11 +667,45 @@ ${mensajeExtra || "Sin mensaje"}
         });
     });
 
-    $('#imprimirFichaBtn').on('click', function() {
+   $('#imprimirFichaBtn').on('click', function() {
         if (listaFichas.length === 0) {
             alert("Primero debes añadir diagramas a la ficha usando el botón 'Añadir a la Ficha'.");
             return;
         }
+
+        var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
+
+        var ventanaImpresion = window.open('', '', 'height=900,width=1000');
+        ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios - Escaques de Oro</title>');
+        ventanaImpresion.document.write('<style>');
+        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 15px; color: #333; }');
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 10px; margin-bottom: 15px; }');
+        ventanaImpresion.document.write('.encabezado img { max-height: 55px; width: auto; }');
+        ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
+        ventanaImpresion.document.write('h2 { margin: 0; font-size: 20px; } p { font-size: 13px; }');
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #ccc; padding: 10px; border-radius: 6px; width: 30%; margin-bottom: 12px; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 130px; height: auto; margin: 5px auto; display: block; }');
+        ventanaImpresion.document.write('</style></head><body>');
+
+        ventanaImpresion.document.write('<div class="encabezado">');
+        if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
+        ventanaImpresion.document.write('<div class="titulo-academia"><h2>Academia de Ajedrez Escaques de Oro</h2><p>Ficha de Ejercicios</p></div>');
+        ventanaImpresion.document.write('</div>');
+
+        ventanaImpresion.document.write('<div class="grid-ejercicios">');
+        for (var i = 0; i < listaFichas.length; i++) {
+            ventanaImpresion.document.write('<div class="item-ejercicio">');
+            ventanaImpresion.document.write('<h4 style="margin:5px 0; font-size:14px;">Ejercicio ' + (i + 1) + '</h4>');
+            ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
+            ventanaImpresion.document.write('<div style="margin-top:6px; border-top:1px dashed #aaa; padding-top:4px; font-size:11px;">Respuesta: ______</div>');
+            ventanaImpresion.document.write('</div>');
+        }
+        ventanaImpresion.document.write('</div></body></html>');
+        
+        ventanaImpresion.document.close();
+        setTimeout(function() { ventanaImpresion.print(); ventanaImpresion.close(); }, 500);
+    });
 
         var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
 
