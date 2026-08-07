@@ -627,26 +627,44 @@ ${mensajeExtra || "Sin mensaje"}
     // Array para almacenar los diagramas añadidos
     var listaFichas = [];
 
-    $('#agregarFichaBtn').on('click', function() {
-        var fenActual = $('#fenInput').val() || miTablero.fen();
-        var turnoTexto = $('#turnoBtn').text();
-        
-        // Clonamos el tablero para guardar la posición actual
+  $('#agregarFichaBtn').on('click', function() {
         var tableroOriginal = document.querySelector('.chessboard-63f37');
         var clon = tableroOriginal.cloneNode(true);
-        // Quitamos piezas de reserva si existen en el clon para el PDF
+        
         var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
         if (piezasAbajo) piezasAbajo.remove();
         var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
         if (piezasArriba) piezasArriba.remove();
 
-        listaFichas.push({
-            fen: fenActual,
-            turno: turnoTexto,
-            htmlTablero: clon.outerHTML
-        });
+        clon.style.position = 'absolute';
+        clon.style.left = '-9999px';
+        document.body.appendChild(clon);
 
-        mostrarMensaje("➕ ¡Diagrama añadido! (Total acumulado: " + listaFichas.length + ")");
+        html2canvas(clon, {
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            width: 430,
+            height: 430
+        }).then(function(canvas) {
+            document.body.removeChild(clon);
+            
+            var newSize = 250;
+            var scaleCanvas = document.createElement('canvas');
+            scaleCanvas.width = newSize;
+            scaleCanvas.height = newSize;
+            var ctx = scaleCanvas.getContext('2d');
+            ctx.drawImage(canvas, 0, 0, newSize, newSize);
+            
+            var imagenDataUrl = scaleCanvas.toDataURL("image/png");
+            var turnoTexto = $('#turnoBtn').text();
+
+            listaFichas.push({
+                turno: turnoTexto,
+                imgUrl: imagenDataUrl
+            });
+
+            mostrarMensaje("➕ ¡Diagrama añadido! (Total: " + listaFichas.length + ")");
+        });
     });
 
     $('#imprimirFichaBtn').on('click', function() {
@@ -664,9 +682,9 @@ ${mensajeExtra || "Sin mensaje"}
         ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }');
         ventanaImpresion.document.write('.encabezado img { max-height: 70px; width: auto; }');
         ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
-        ventanaImpresion.document.write('h2 { margin: 0; } .grid-ejercicios { display: flex; flex-wrap: wrap; gap: 20px; }');
-        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 45%; margin-bottom: 20px; text-align: center; page-break-inside: avoid; }');
-        ventanaImpresion.document.write('svg { max-width: 150px; height: auto; }');
+        ventanaImpresion.document.write('h2 { margin: 0; } .grid-ejercicios { display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 42%; margin-bottom: 20px; text-align: center; page-break-inside: avoid; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 180px; height: auto; margin: 10px auto; display: block; }');
         ventanaImpresion.document.write('</style></head><body>');
 
         ventanaImpresion.document.write('<div class="encabezado">');
@@ -678,7 +696,7 @@ ${mensajeExtra || "Sin mensaje"}
         for (var i = 0; i < listaFichas.length; i++) {
             ventanaImpresion.document.write('<div class="item-ejercicio">');
             ventanaImpresion.document.write('<h4>Ejercicio ' + (i + 1) + '</h4>');
-            ventanaImpresion.document.write(listaFichas[i].htmlTablero);
+            ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
             ventanaImpresion.document.write('<div style="margin-top:10px; border-top:1px dashed #aaa; padding-top:5px; font-size:12px;">Respuesta: __________</div>');
             ventanaImpresion.document.write('</div>');
         }
@@ -741,6 +759,7 @@ ${mensajeExtra || "Sin mensaje"}
     const navLinks = document.getElementById('nav-links');
 
     menuToggle.addEventListener('click', () => {
+
         navLinks.classList.toggle('active');
     });
 
