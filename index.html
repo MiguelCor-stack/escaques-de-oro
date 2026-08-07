@@ -624,14 +624,68 @@ ${mensajeExtra || "Sin mensaje"}
     });
     $('#startBtn').on('click', function() { miTablero.start(); });
     $('#flipBtn').on('click', function() { miTablero.flip(); });
+    // Array para almacenar los diagramas añadidos
+    var listaFichas = [];
+
     $('#agregarFichaBtn').on('click', function() {
-        var fenActual = miTablero.fen();
-        var turnoActual = esTurnoBlancas ? "Blancas" : "Negras";
-        mostrarMensaje("➕ ¡Posición añadida a la ficha correctamente!");
+        var fenActual = $('#fenInput').val() || miTablero.fen();
+        var turnoTexto = $('#turnoBtn').text();
+        
+        // Clonamos el tablero para guardar la posición actual
+        var tableroOriginal = document.querySelector('.chessboard-63f37');
+        var clon = tableroOriginal.cloneNode(true);
+        // Quitamos piezas de reserva si existen en el clon para el PDF
+        var piezasAbajo = clon.querySelector('.spare-pieces-bottom-ae20f');
+        if (piezasAbajo) piezasAbajo.remove();
+        var piezasArriba = clon.querySelector('.spare-pieces-top-4028b');
+        if (piezasArriba) piezasArriba.remove();
+
+        listaFichas.push({
+            fen: fenActual,
+            turno: turnoTexto,
+            htmlTablero: clon.outerHTML
+        });
+
+        mostrarMensaje("➕ ¡Diagrama añadido! (Total acumulado: " + listaFichas.length + ")");
     });
 
     $('#imprimirFichaBtn').on('click', function() {
-        window.print();
+        if (listaFichas.length === 0) {
+            alert("Primero debes añadir diagramas a la ficha usando el botón 'Añadir a la Ficha'.");
+            return;
+        }
+
+        var logoSrc = document.getElementById('logo-preview') ? document.getElementById('logo-preview').src : '';
+
+        var ventanaImpresion = window.open('', '', 'height=800,width=900');
+        ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios - Escaques de Oro</title>');
+        ventanaImpresion.document.write('<style>');
+        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 20px; color: #333; }');
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 20px; }');
+        ventanaImpresion.document.write('.encabezado img { max-height: 70px; width: auto; }');
+        ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
+        ventanaImpresion.document.write('h2 { margin: 0; } .grid-ejercicios { display: flex; flex-wrap: wrap; gap: 20px; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #ccc; padding: 15px; border-radius: 8px; width: 45%; margin-bottom: 20px; text-align: center; page-break-inside: avoid; }');
+        ventanaImpresion.document.write('svg { max-width: 150px; height: auto; }');
+        ventanaImpresion.document.write('</style></head><body>');
+
+        ventanaImpresion.document.write('<div class="encabezado">');
+        if (logoSrc) { ventanaImpresion.document.write('<img src="' + logoSrc + '">'); }
+        ventanaImpresion.document.write('<div class="titulo-academia"><h2>Academia de Ajedrez Escaques de Oro</h2><p>Ficha de Ejercicios</p></div>');
+        ventanaImpresion.document.write('</div>');
+
+        ventanaImpresion.document.write('<div class="grid-ejercicios">');
+        for (var i = 0; i < listaFichas.length; i++) {
+            ventanaImpresion.document.write('<div class="item-ejercicio">');
+            ventanaImpresion.document.write('<h4>Ejercicio ' + (i + 1) + '</h4>');
+            ventanaImpresion.document.write(listaFichas[i].htmlTablero);
+            ventanaImpresion.document.write('<div style="margin-top:10px; border-top:1px dashed #aaa; padding-top:5px; font-size:12px;">Respuesta: __________</div>');
+            ventanaImpresion.document.write('</div>');
+        }
+        ventanaImpresion.document.write('</div></body></html>');
+        
+        ventanaImpresion.document.close();
+        setTimeout(function() { ventanaImpresion.print(); ventanaImpresion.close(); }, 500);
     });
 
     $('#copyImgBtn').on('click', function() {
