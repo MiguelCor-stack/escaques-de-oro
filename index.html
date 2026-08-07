@@ -679,17 +679,16 @@ ${mensajeExtra || "Sin mensaje"}
         var ventanaImpresion = window.open('', '', 'height=900,width=1000');
         ventanaImpresion.document.write('<html><head><title>Ficha de Ejercicios</title>');
         ventanaImpresion.document.write('<style>');
-        // Márgenes más compactos para que todo entre en una sola hoja
-        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 10px; color: #333; }');
-        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 6px; margin-bottom: 10px; }');
-        ventanaImpresion.document.write('.encabezado img { max-height: 50px; width: auto; }');
+        ventanaImpresion.document.write('body { font-family: Arial, sans-serif; margin: 8px; color: #333; }');
+        ventanaImpresion.document.write('.encabezado { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 5px; margin-bottom: 8px; }');
+        ventanaImpresion.document.write('.encabezado img { max-height: 45px; width: auto; }');
         ventanaImpresion.document.write('.titulo-academia { text-align: center; flex-grow: 1; }');
-        ventanaImpresion.document.write('h2 { margin: 0; font-size: 20px; } p { font-size: 13px; margin: 0; }');
+        ventanaImpresion.document.write('h2 { margin: 0; font-size: 19px; } p { font-size: 12px; margin: 0; }');
         
-        // Espaciado y tamaños optimizados para 2 columnas y 3 filas (6 en total)
-        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between; }');
-        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #aaa; padding: 8px; border-radius: 6px; width: 48%; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
-        ventanaImpresion.document.write('.item-ejercicio img { max-width: 175px; height: auto; margin: 4px auto; display: block; }');
+        // Estilos optimizados para que los 6 diagramas grandes entren perfectamente en una sola hoja
+        ventanaImpresion.document.write('.grid-ejercicios { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; }');
+        ventanaImpresion.document.write('.item-ejercicio { border: 1px solid #bbb; padding: 4px; border-radius: 4px; width: 48%; text-align: center; page-break-inside: avoid; box-sizing: border-box; }');
+        ventanaImpresion.document.write('.item-ejercicio img { max-width: 210px; height: auto; margin: 2px auto; display: block; }');
         
         ventanaImpresion.document.write('</style></head><body>');
 
@@ -703,7 +702,7 @@ ${mensajeExtra || "Sin mensaje"}
             ventanaImpresion.document.write('<div class="item-ejercicio">');
             ventanaImpresion.document.write('<h4 style="margin:2px 0; font-size:13px;">Ejercicio ' + (i + 1) + '</h4>');
             ventanaImpresion.document.write('<img src="' + listaFichas[i].imgUrl + '">');
-            ventanaImpresion.document.write('<div style="margin-top:4px; border-top:1px dashed #777; padding-top:2px; font-size:11px;">Respuesta: ______</div>');
+            ventanaImpresion.document.write('<div style="margin-top:2px; border-top:1px dashed #777; padding-top:2px; font-size:11px;">Respuesta: ______</div>');
             ventanaImpresion.document.write('</div>');
         }
         ventanaImpresion.document.write('</div></body></html>');
